@@ -78,6 +78,7 @@ coverage.xml
 
 # Django stuff:
 db.sqlite3-journal
+db.sqlite3
 
 # Flask stuff:
 instance/
