@@ -2,7 +2,7 @@ from django.db import models
 
 #contains the category
 class Category(models.Model):
-    category = models.CharField(max_lenght=50)
+    category = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
