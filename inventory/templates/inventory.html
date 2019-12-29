@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Inventory
+{% endblock %}
+
+{% block heading %}
+  <!--
+  <ol class="breadcrumb my-4">
+    <li class="breadcrumb-item active">Item</li>      
+  </ol>
+  -->
+{% endblock %}
+
+{% block content %}
+  
+    <table class="table table-css"><div style="color:#ea2088; font-style: bold; font-size: 2rem;">Inventory</div>
+      <thead class="thead-inverse">
+        <tr>
+            <th width="45%">Name</th>
+            <th width="20%">Stock</th>
+            <th width="10%">Price</th>
+            <th width="25%">Options</th>
+        </tr>
+      </thead>
+      {% comment %}
+      <tbody>
+        {% for forum in admin_forums %}
+          <tr>
+            <td>
+              <a href="{% url 'forum-threads' forum.id %}">{{ forum.name }}</a>
+              <small class="fal d-block">{{ forum.description }}</small>
+            </td>
+            <td class="align-middle">{{ forum.get_posts_count }}</td>
+            <td class="align-middle">{{ forum.thread.count }}</td>
+            <td class="align-middle">
+              {% with post=forum.get_last_post %}
+                {% if post.thread.forum == forum %}
+                  <small>
+                    <a href="{% url 'thread-posts' post.thread.id %}">
+                      {{ post.subject }}
+                    </a><br>
+                    {{ post }}<br>
+                    By <a href="{% url 'profile' post.created_by.username %}">{{ post.created_by.username }}</a> at {{ post.created_at }}
+                  </small>
+                {% else %}
+                  No Posts
+                {% endif %}
+              {% endwith %}
+            </td>          
+          </tr>
+        {% endfor %}
+      </tbody>
+      
+      {% endcomment %}
+    </table>
+  </div>
+{% endblock %}
