@@ -2,7 +2,7 @@ from django.db import models
 
 #contains the category
 class Category(models.Model):
-    category = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
@@ -13,7 +13,7 @@ class Stock(models.Model):
     category = models.ForeignKey(Category, on_delete = models.CASCADE)
     name = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=100)
-    price = models.IntegerField(max_length=100)
+    price = models.IntegerField()
     quantity = models.IntegerField(default=0)
 
     def __str__(self):

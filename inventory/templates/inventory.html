@@ -16,6 +16,8 @@
 
 
 {% block content %}
+
+    <a href="{% url 'new-stock' %}"> <button class="ghost-green">Add to Inventory</button> </a>
   
     <table class="table table-css"><div style="color:#ea2088; font-style: bold; font-size: 2rem;">Inventory</div>
         
@@ -30,7 +32,7 @@
         </thead>
       
       {% comment %}
-      
+      TODO: display stock
         <tbody>
             {% for forum in admin_forums %}
             <tr>
