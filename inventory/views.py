@@ -1,4 +1,6 @@
 from django.shortcuts import render                                         # 'render' function used to render a html page
+from .forms import NewStockForm
+from django.contrib import messages
 
 def home(request):                                                          # home page function
     return render(request, 'home.html')                                     # request to render the 'home.html'
