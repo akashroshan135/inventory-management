@@ -20,19 +20,17 @@
     <a href="{% url 'new-stock' %}"> <button class="ghost-green">Add to Inventory</button> </a>
   
     <table class="table table-css"><div style="color:#ea2088; font-style: bold; font-size: 2rem;">Inventory</div>
+        
         {# FIXME: adjust column sizes#}
         <thead class="thead-inverse">
             <tr>
-                <th width="45%">Name</th>
+                <th width="40%">Name</th>
                 <th width="20%">Stock</th>
                 <th width="10%">Price</th>
-                <th width="25%">Options</th>
+                <th width="30%">Options</th>
             </tr>
-        
         </thead>
       
-    {% comment %}
-    TODO: check display
         <tbody>
             {% for stock in stock_items %}
             <tr>
@@ -42,7 +40,13 @@
                 </td>
                 <td class="align-middle">{{ stock.quantity }}</td>
                 <td class="align-middle">{{ stock.price }}</td>
-                <td class="align-middle"> TODO: add buttons
+                <td class="align-middle">
+                    <center>
+                        {# TODO: add button functionality #}
+                        <button class="ghost-green">New Sale</button>
+                        <a href="{% url 'edit-stock' stock.pk %}"> <button class="ghost-button">Edit Details</button> </a>
+                    </center>
+                    {% comment %}
                     {% with post=stock.get_last_post %}
                         {% if post.thread.stock == stock %}
                             <small>
@@ -56,12 +60,11 @@
                             No Posts
                         {% endif %}
                     {% endwith %}
+                    {% endcomment %}
                 </td>          
             </tr>
             {% endfor %}
         </tbody>
-
-    {% endcomment %}
 
     </table>
 

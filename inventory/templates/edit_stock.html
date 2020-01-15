@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+
+{% block title %} {{title}} {% endblock %}
+
+
+{% block heading %}
+
+    <!--
+    <ol class="breadcrumb my-4">
+        <li class="breadcrumb-item active">Item</li>      
+    </ol>
+    -->
+
+{% endblock %}
+
+
+{% block content %}
+                
+    <form method="post">
+
+        {% csrf_token %}
+    
+        {% for field in form.visible_fields %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+            </div>
+        {% endfor %}
+    
+        <center>
+            <br>
+            <button type="submit" class="ghost-green">{{ savebtn }}</button>
+            <button type="#" class="ghost-blue">Reset</button>
+            {% if delbtn %}
+                <button type="#" class="ghost-red">Delete Stock</button>
+            {% endif %}
+        </center>
+
+    </form>
+
+{% endblock %}

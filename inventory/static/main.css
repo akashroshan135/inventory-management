@@ -276,9 +276,9 @@ html { width: 100%; height:100%; overflow:hidden; }
 }
 
 .ghost-button {
-  color: #228DFF;
+  color: rgb(255, 255, 255);
   background-color: transparent;
-  border: 2px solid #228DFF;
+  border: 2px solid rgb(255, 255, 255);
   font-size: 17px;
   padding: 7px 12px;
   font-weight: bolder;
@@ -293,7 +293,7 @@ html { width: 100%; height:100%; overflow:hidden; }
  .ghost-button:hover, .ghost-button:active {
   color:#fff;
   background-color:transparent;
-  box-shadow: 0 2px 7px #ea2088;
+  box-shadow: 0 2px 7px #ffffff;
  }
 
 
