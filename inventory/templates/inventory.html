@@ -18,15 +18,16 @@
 {% block content %}
 
     <a href="{% url 'new-stock' %}"> <button class="ghost-green">Add to Inventory</button> </a>
-  
+    
+    {# TODO: integrate search into this page #}
     <table class="table table-css"><div style="color:#ea2088; font-style: bold; font-size: 3rem;">Inventory</div>
         
         {# FIXME: adjust column sizes#}
         <thead class="thead-inverse">
             <tr>
-                <th width="40%">Name</th>
-                <th width="20%">Stock</th>
-                <th width="10%">Price</th>
+                <th width="40%">Stock Name</th>
+                <th width="15%">Current Stock</th>
+                <th width="15%">Current Price</th>
                 <th width="30%">Options</th>
             </tr>
         </thead>

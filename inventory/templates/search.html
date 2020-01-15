@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+
+{% block title %} Search {% endblock %}
+
+
+{% block heading %}
+
+    <!--
+    <ol class="breadcrumb my-4">
+        <li class="breadcrumb-item active">Item</li>      
+    </ol>
+    -->
+
+{% endblock %}
+
+
+{% block content %}
+
+    <div style="color:#ea2088; font-style: bold; font-size: 3rem;">{{title}}</div>
+    
+    <form method="get">
+            <div class="form-group">
+                <label>Name : </label>
+                {% render_field filter.form.name class="textinput form-control" %}
+            </div>        
+        <button type="submit" class="btn ghost-green">Search</button>
+    
+    </form>
+    
+    <ul>
+    
+        {% for item in filter.qs %}
+            <li>{{ item.name }}</li>
+        {% endfor %}
+
+    </ul>
+
+
+{% endblock %}

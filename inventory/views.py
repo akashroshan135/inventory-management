@@ -1,15 +1,15 @@
-from django.shortcuts import render                                                     # 'render' function used to render a html page
+from django.shortcuts import render
 from django.views.generic import (
     TemplateView, 
     ListView,
     CreateView, 
     UpdateView,
     DeleteView
-)                                                                                       # various views for class based views
-from .models import Stock                                                               # imports models
-from .forms import StockForm                                                            # imports forms
-from django.contrib.messages.views import SuccessMessageMixin                           # mixin used to display success message
-from django.contrib import messages                                                     # used for messages 
+)
+from .models import Stock
+from .forms import StockForm
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 
 
 class HomeView(TemplateView):                                                           # class to render home page

@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'widget_tweaks',                        # uses 'django-widget-tweaks' app
+
     'inventory.apps.InventoryConfig',       # includes the installed app 'inventory'
 ]
 

@@ -3,7 +3,7 @@ from .models import Stock
 
 class StockForm(forms.ModelForm):
     #FIXME: fix the following code to something that doesn't look like garbage
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):                                                        # used to set css classes to the various fields
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'class': 'textinput form-control'})
         self.fields['stock_type'].widget.attrs.update({'class': 'textinput form-control'})
