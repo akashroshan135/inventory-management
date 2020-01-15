@@ -20,7 +20,7 @@
     <a href="{% url 'new-stock' %}"> <button class="ghost-green">Add to Inventory</button> </a>
   
     <table class="table table-css"><div style="color:#ea2088; font-style: bold; font-size: 2rem;">Inventory</div>
-        
+        {# FIXME: adjust column sizes#}
         <thead class="thead-inverse">
             <tr>
                 <th width="45%">Name</th>
@@ -31,20 +31,20 @@
         
         </thead>
       
-      {% comment %}
-      TODO: display stock
+    {% comment %}
+    TODO: check display
         <tbody>
-            {% for forum in admin_forums %}
+            {% for stock in stock_items %}
             <tr>
                 <td>
-                    <a href="{% url 'forum-threads' forum.id %}">{{ forum.name }}</a>
-                    <small class="fal d-block">{{ forum.description }}</small>
+                    <a href="#">{{ stock.name }}</a>
+                    <small class="fal d-block">{{ stock.description }}</small>
                 </td>
-                <td class="align-middle">{{ forum.get_posts_count }}</td>
-                <td class="align-middle">{{ forum.thread.count }}</td>
-                <td class="align-middle">
-                    {% with post=forum.get_last_post %}
-                        {% if post.thread.forum == forum %}
+                <td class="align-middle">{{ stock.quantity }}</td>
+                <td class="align-middle">{{ stock.price }}</td>
+                <td class="align-middle"> TODO: add buttons
+                    {% with post=stock.get_last_post %}
+                        {% if post.thread.stock == stock %}
                             <small>
                                 <a href="{% url 'thread-posts' post.thread.id %}">
                                     {{ post.subject }}
@@ -61,7 +61,7 @@
             {% endfor %}
         </tbody>
 
-      {% endcomment %}
+    {% endcomment %}
 
     </table>
 

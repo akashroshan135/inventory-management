@@ -16,14 +16,14 @@
 
 
 {% block content %}
-  
+
   <form method="post">
 
     {% csrf_token %}
   
     <div class="form-group">
-      <label for="id_stock">Stock Name</label>
-      <input type="text" class="textinput form-control" id="id_stock" name="name">
+        <label for="id_stock">Stock Name</label>
+        <input type="text" class="textinput form-control" id="id_stock" name="name">
     </div>
   
     <div class="form-group">
@@ -37,8 +37,8 @@
     </div>
 
     <div class="form-group">
-      <label for="id_quantity">Current Quantity in Inventory</label>
-      <input type="text" class="textinput form-control" id="id_quantity" name="quantity">
+        <label for="id_quantity">Current Quantity in Inventory</label>
+        <input type="text" class="textinput form-control" id="id_quantity" name="quantity">
     </div>
 
     <button type="submit" class="ghost-green">Add to Inventory</button>
