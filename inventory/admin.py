@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Stock, Category, Purchases
+from .models import Stock, Purchases
 
 #class ForumAdmin(admin.ModelAdmin):
 #    list_display = ('name', 'forum_type', 'forum')

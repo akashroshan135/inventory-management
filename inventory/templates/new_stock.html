@@ -16,33 +16,45 @@
 
 
 {% block content %}
+                
+    <form method="post">
 
-  <form method="post">
+        {% csrf_token %}
 
-    {% csrf_token %}
-  
-    <div class="form-group">
-        <label for="id_stock">Stock Name</label>
-        <input type="text" class="textinput form-control" id="id_stock" name="name">
-    </div>
-  
-    <div class="form-group">
-        <label for="id_cat">Category</label>
-        <!-- TODO: Dropdown list of the categories -->
-    </div>
+        {# TODO: add css highlighting effects #}
+        {% for field in form.visible_fields %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+            </div>
+        {% endfor %}
 
-    <div class="form-group">
-        <label for="id_desc">Description</label>
-        <textarea class="textinput form-control" id="id_desc" name="desc"></textarea>
-    </div>
+        {% comment %}
 
-    <div class="form-group">
-        <label for="id_quantity">Current Quantity in Inventory</label>
-        <input type="text" class="textinput form-control" id="id_quantity" name="quantity">
-    </div>
+        <div class="form-group">
+            <label for="id_stock">Stock Name</label>
+            <input type="text" class="textinput form-control" id="id_stock" name="name">
+        </div>
+    
+        <div class="form-group">
+            <label for="id_type">Type</label>
+            <!--supposed to show list-->
+        </div>
 
-    <button type="submit" class="ghost-green">Add to Inventory</button>
+        <div class="form-group">
+            <label for="id_desc">Description</label>
+            <textarea class="textinput form-control" id="id_desc" name="desc"></textarea>
+        </div>
 
-  </form>
+        <div class="form-group">
+            <label for="id_quantity">Current Quantity in Inventory</label>
+            <input type="text" class="textinput form-control" id="id_quantity" name="quantity">
+        </div>
+
+        {% endcomment %}
+
+        <button type="submit" class="ghost-green">Add to Inventory</button>
+
+    </form>
 
 {% endblock %}
