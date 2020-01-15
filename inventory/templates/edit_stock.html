@@ -16,7 +16,9 @@
 
 
 {% block content %}
-                
+
+    <div style="color:#ea2088; font-style: bold; font-size: 3rem;">{{title}}</div>
+    
     <form method="post">
 
         {% csrf_token %}
@@ -27,16 +29,18 @@
                 {{ field }}
             </div>
         {% endfor %}
-    
+
+        <br>
         <center>
-            <br>
-            <button type="submit" class="ghost-green">{{ savebtn }}</button>
-            <button type="#" class="ghost-blue">Reset</button>
+            <button type="submit" class="btn ghost-green">{{ savebtn }}</button>
+            {% if title == "New Stock" %}
+                <button type="reset" class="btn ghost-blue" >Reset</button>
+            {% endif %}
             {% if delbtn %}
-                <button type="#" class="ghost-red">Delete Stock</button>
+                <a href="{% url 'delete-stock' object.pk %}" class="btn ghost-red"> Delete Stock </a>
             {% endif %}
         </center>
-
+        
     </form>
 
 {% endblock %}

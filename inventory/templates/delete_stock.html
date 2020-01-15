@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+
+{% block title %} Delete Stock {% endblock %}
+
+
+{% block heading %}
+
+    <!--
+    <ol class="breadcrumb my-4">
+        <li class="breadcrumb-item active">Item</li>      
+    </ol>
+    -->
+
+{% endblock %}
+
+
+{% block content %}
+                
+    <form method="post">
+        
+        {% csrf_token %}
+        
+        <fieldset class="form-group">
+            <div style="color:#ea2088; font-style: bold; font-size: 3rem;">Delete Stock</div>
+            <h2>Are you sure you want to delete the stock item "{{ object.name }}"?</h2>
+        </fieldset>
+
+        <center>
+            <div class="form-group">  
+                <button type="submit" class="btn ghost-red">Yes, Delete</button>
+                <a href="{% url 'inventory' %}" class="btn ghost-blue">Cancel</a>
+            </div>
+        </center>
+        
+    </form>
+
+{% endblock %}
