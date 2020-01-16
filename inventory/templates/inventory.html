@@ -1,67 +1,46 @@
 {% extends "base.html" %}
 
+{% load widget_tweaks %}
+
 
 {% block title %} Inventory {% endblock %}
 
 
-{% block heading %}
-
-    <!--
-    <ol class="breadcrumb my-4">
-        <li class="breadcrumb-item active">Item</li>      
-    </ol>
-    -->
-
-{% endblock %}
-
-
 {% block content %}
 
-    <a href="{% url 'new-stock' %}"> <button class="ghost-green">Add to Inventory</button> </a>
+    <a href="{% url 'new-stock' %}" class="btn ghost-blue">Add to Inventory</a>
     
-    {# TODO: integrate search into this page #}
-    <table class="table table-css"><div style="color:#ea2088; font-style: bold; font-size: 3rem;">Inventory</div>
+    <table class="table table-css"><div style="color: #ea2088; font-style: bold; font-size: 3rem;">Inventory</div>
+        
+        <form method="get">
+            <div class="form-group">
+                {% render_field filter.form.name class="textinput form-control" placeholder="Search stock"%}
+                <button type="submit" class="btn ghost-green">Search</button>
+            </div>        
+        </form>
         
         {# FIXME: adjust column sizes#}
         <thead class="thead-inverse">
             <tr>
-                <th width="40%">Stock Name</th>
+                <th width="55%">Stock Name</th>
                 <th width="15%">Current Stock</th>
                 <th width="15%">Current Price</th>
-                <th width="30%">Options</th>
+                <th width="15%">Options</th>
             </tr>
         </thead>
       
         <tbody>
-            {% for stock in stock_items %}
+            {% for stock in filter.qs %}
             <tr>
                 <td>
-                    <a href="#">{{ stock.name }}</a>
-                    <small class="fal d-block">{{ stock.description }}</small>
+                    <h4> <a href="#">{{ stock.name }}</a> </h4>
                 </td>
                 <td class="align-middle">{{ stock.quantity }}</td>
                 <td class="align-middle">{{ stock.price }}</td>
                 <td class="align-middle">
                     <center>
-                        {# TODO: add button functionality #}
-                        <button class="ghost-green">New Sale</button>
-                        <a href="{% url 'edit-stock' stock.pk %}"> <button class="ghost-button">Edit Details</button> </a>
+                        <a href="{% url 'edit-stock' stock.pk %}" class="btn ghost-button">Edit Details</a>
                     </center>
-                    {% comment %}
-                    {% with post=stock.get_last_post %}
-                        {% if post.thread.stock == stock %}
-                            <small>
-                                <a href="{% url 'thread-posts' post.thread.id %}">
-                                    {{ post.subject }}
-                                </a><br>
-                                {{ post }}<br>
-                                By <a href="{% url 'profile' post.created_by.username %}">{{ post.created_by.username }}</a> at {{ post.created_at }}
-                            </small>
-                        {% else %}
-                            No Posts
-                        {% endif %}
-                    {% endwith %}
-                    {% endcomment %}
                 </td>          
             </tr>
             {% endfor %}

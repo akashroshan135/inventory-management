@@ -65,6 +65,7 @@
     <br><br><br>
     
     <main role="main" class="container">
+        
         {% if messages %}
             {% for message in messages %}
                 <br>
@@ -74,9 +75,8 @@
             {% endfor %}
         {% endif %}
 
-        {% block heading %}{% endblock %}
-
         {% block content %}{% endblock %}
+    
     </main>    
         
         

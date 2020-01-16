@@ -16,12 +16,6 @@ class HomeView(TemplateView):                                                   
     template_name = "home.html"                                                         # 'home.html' used as the template
 
 
-class InventoryListView(ListView):                                                      # class to render inventory page
-    model = Stock                                                                       # setting 'Stock' model as model
-    context_object_name = 'stock_items'                                                 # 'Stock' model set as 'stock_items' context
-    template_name = "inventory.html"                                                    # 'inventory.html' used as the template
-
-
 class StockCreateView(SuccessMessageMixin, CreateView):                                 # createview class to add new stock, mixin used to display message
     model = Stock                                                                       # setting 'Stock' model as model
     form_class = StockForm                                                              # setting 'StockForm' form as form
