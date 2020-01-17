@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
 
-{% block title %} Delete Stock {% endblock %}
+{% block title %} Delete Stock {% endblock title %}
+
+
+{% block sidebar %} <div class="col-md-3"></div> {% endblock sidebar %}
 
 
 {% block content %}
@@ -15,13 +18,11 @@
             <h2>Are you sure you want to delete the stock item "{{ object.name }}"?</h2>
         </fieldset>
 
-        <center>
-            <div class="form-group">  
-                <button type="submit" class="btn ghost-red">Yes, Delete</button>
-                <a href="{% url 'inventory' %}" class="btn ghost-blue">Cancel</a>
-            </div>
-        </center>
+        <div class="form-group">  
+            <button type="submit" class="btn ghost-red">Yes, Delete</button>
+            <a href="{% url 'inventory' %}" class="btn ghost-blue">Cancel</a>
+        </div>
         
     </form>
 
-{% endblock %}
+{% endblock content %}

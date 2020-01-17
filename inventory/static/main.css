@@ -288,16 +288,16 @@ html { width: 100%; height:100%; overflow:hidden; }
   font-family: 'Open Sans', sans-serif;
   min-width: 120px;
   border-radius: 8px;
- }
+}
 
- .ghost-button:hover, .ghost-button:active {
+.ghost-button:hover, .ghost-button:active {
   color:#fff;
   background-color:transparent;
   box-shadow: 0 2px 7px #ffffff;
- }
+}
 
 
- .ghost-blue {
+.ghost-blue {
   color: #228DFF;
   background-color: transparent;
   border: 2px solid #228DFF;
@@ -310,16 +310,16 @@ html { width: 100%; height:100%; overflow:hidden; }
   font-family: 'Open Sans', sans-serif;
   min-width: 120px;
   border-radius: 8px;
- }
+}
 
- .ghost-blue:hover, .ghost-blue:active {
+.ghost-blue:hover, .ghost-blue:active {
   color:#fff;
   background-color:transparent;
   box-shadow: 0 2px 7px #0000ff;
- }
+}
 
 
- .ghost-green {
+.ghost-green {
   color: #00ff00;
   background-color: transparent;
   border: 2px solid #00ff00;
@@ -332,16 +332,16 @@ html { width: 100%; height:100%; overflow:hidden; }
   font-family: 'Open Sans', sans-serif;
   min-width: 120px;
   border-radius: 8px;
- }
+}
 
- .ghost-green:hover, .ghost-green:active {
+.ghost-green:hover, .ghost-green:active {
   color:#fff;
   background-color:transparent;
   box-shadow: 0 2px 7px #00ff00;
- }
+}
  
 
- .ghost-pink {
+.ghost-pink {
   color: #ea2088;
   background-color: transparent;
   border: 2px solid #ea2088;
@@ -354,16 +354,16 @@ html { width: 100%; height:100%; overflow:hidden; }
   font-family: 'Open Sans', sans-serif;
   min-width: 120px;
   border-radius: 8px;
- }
+}
 
- .ghost-pink:hover, .ghost-red:active {
+.ghost-pink:hover, .ghost-pink:active {
   color:#fff;
   background-color:transparent;
   box-shadow: 0 2px 7px #ea2088;
- }
+}
 
 
- .ghost-red {
+.ghost-red {
   color: #ff0000;
   background-color: transparent;
   border: 2px solid #ff0000;
@@ -376,13 +376,13 @@ html { width: 100%; height:100%; overflow:hidden; }
   font-family: 'Open Sans', sans-serif;
   min-width: 120px;
   border-radius: 8px;
- }
+}
 
- .ghost-red:hover, .ghost-red:active {
+.ghost-red:hover, .ghost-red:active {
   color:#fff;
   background-color:transparent;
   box-shadow: 0 2px 7px #ff0000;
- }
+}
 
 
 .glow{
@@ -398,7 +398,8 @@ html { width: 100%; height:100%; overflow:hidden; }
 .btn-pink{
   color:#fff;
   background-color:#ea2088;
-  border-left-color: #fff;
+  border-color: #fff;
+  border-left-color: #ea2088;
 }
 
 .btn-pink:hover{
