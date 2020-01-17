@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 
-{% block title %} Inventory {% endblock %}
+{% block title %} Inventory {% endblock title %}
 
 
 {% block content %}
@@ -13,14 +13,16 @@
     <table class="table table-css"><div style="color: #ea2088; font-style: bold; font-size: 3rem;">Inventory</div>
         
         <form method="get">
-            <div class="input-group">
-                {% render_field filter.form.name class="form-control textinput" placeholder="Search" %}
+            <div class="input-group search">
+                {% render_field filter.form.name class="form-control textinput" placeholder="Search stocks" %}
                 <div class="input-group-append">
                    <button type="submit" class="btn btn-pink"> Search </button>
                 </div>
             </div>
         </form>
+
         <br>
+        
         {# FIXME: adjust column sizes#}
         <thead class="thead-inverse">
             <tr>
@@ -50,4 +52,4 @@
 
     </table>
 
-{% endblock %}
+{% endblock content %}

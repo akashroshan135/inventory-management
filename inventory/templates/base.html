@@ -19,7 +19,7 @@
     <!-- Main CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">    
     
-    <title>Company - {% block title %}Title Missing{% endblock %}</title>
+    <title>Company - {% block title %}Title Missing{% endblock title %}</title>
 
 </head>
 
@@ -71,6 +71,7 @@
     <main role="main" class="container-fluid">
         <div class="row">
 
+            {% block sidebar%}
             <!-- Left Sidebar -->
             <div class="col-md-3">
                 <div class="content-section">
@@ -85,8 +86,8 @@
                     </p>
                 </div>
             </div>
+            {% endblock sidebar %}
 
-        
             <div class="col-md-8">
             
                 {% if messages %}
@@ -95,7 +96,7 @@
                     {% endfor %}
                 {% endif %}
                 
-                {% block content %}{% endblock %}
+                {% block content %}{% endblock content %}
             
             </div>
             

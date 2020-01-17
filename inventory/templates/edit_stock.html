@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
 
-{% block title %} {{title}} {% endblock %}
+{% block title %} {{title}} {% endblock title %}
+
+
+{% block sidebar %} <div class="col-md-2"></div> {% endblock sidebar %}
 
 
 {% block content %}
@@ -28,8 +31,9 @@
             {% if delbtn %}
                 <a href="{% url 'delete-stock' object.pk %}" class="btn ghost-red"> Delete Stock </a>
             {% endif %}
+            <a href="{% url 'inventory' %}" class="btn ghost-button">Cancel</a>
         </center>
         
     </form>
 
-{% endblock %}
+{% endblock content %}
