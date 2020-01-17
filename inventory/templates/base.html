@@ -28,7 +28,7 @@
     <header class="site-header">
         {# {% if user.is_authenticated %} #}
             <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-                <div class="container">
+                <div class="container-fluid">
                     <a class="navbar-brand titlefont mr-4" href="{% url 'home' %}">Company</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -68,19 +68,38 @@
     
     <br><br><br>
     
-    <main role="main" class="container">
-        
-        {% if messages %}
-            {% for message in messages %}
-                <br>
-                <div class="alert alert-{{ message.tags }}">         
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
+    <main role="main" class="container-fluid">
+        <div class="row">
 
-        {% block content %}{% endblock %}
-    
+            <!-- Left Sidebar -->
+            <div class="col-md-3">
+                <div class="content-section">
+                    <h3>Sidebar</h3>
+                    <p class='text-muted'>Test info
+                    <ul class="list-group">
+                        <a href="#" class="list-group-item list-group-item-light textinput">Option #1</a>
+                        <a href="#" class="list-group-item list-group-item-light textinput">Option #2</a>
+                        <a href="#" class="list-group-item list-group-item-light textinput">Option #3</a>
+                        <a href="#" class="list-group-item list-group-item-light textinput">Option #4</a>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+
+        
+            <div class="col-md-8">
+            
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}"> {{ message }} </div>
+                    {% endfor %}
+                {% endif %}
+                
+                {% block content %}{% endblock %}
+            
+            </div>
+            
+        </div>
     </main>    
         
     <!--

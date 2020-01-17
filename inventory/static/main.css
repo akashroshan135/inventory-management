@@ -394,3 +394,15 @@ html { width: 100%; height:100%; overflow:hidden; }
   color: white;
   box-shadow: 0 2px 7px #ea2088;
 }
+
+.btn-pink{
+  color:#fff;
+  background-color:#ea2088;
+  border-left-color: #fff;
+}
+
+.btn-pink:hover{
+  color:#fff;
+  background-color:#f03d99;
+  border-color:#f03d99;
+}

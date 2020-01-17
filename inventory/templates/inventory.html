@@ -13,12 +13,14 @@
     <table class="table table-css"><div style="color: #ea2088; font-style: bold; font-size: 3rem;">Inventory</div>
         
         <form method="get">
-            <div class="form-group">
-                {% render_field filter.form.name class="textinput form-control" placeholder="Search stock"%}
-                <button type="submit" class="btn ghost-green">Search</button>
-            </div>        
+            <div class="input-group">
+                {% render_field filter.form.name class="form-control textinput" placeholder="Search" %}
+                <div class="input-group-append">
+                   <button type="submit" class="btn btn-pink"> Search </button>
+                </div>
+            </div>
         </form>
-        
+        <br>
         {# FIXME: adjust column sizes#}
         <thead class="thead-inverse">
             <tr>
