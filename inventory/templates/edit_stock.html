@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+
+{% block title %} {{title}} {% endblock title %}
+
+
+{% block sidebar %} <div class="col-md-2"></div> {% endblock sidebar %}
+
+
+{% block content %}
+
+    <div style="color:#ea2088; font-style: bold; font-size: 3rem;">{{title}}</div>
+    
+    <form method="post">
+
+        {% csrf_token %}
+    
+        {% for field in form.visible_fields %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+            </div>
+        {% endfor %}
+
+        <br>
+        <center>
+            <button type="submit" class="btn ghost-green">{{ savebtn }}</button>
+            {% if title == "New Stock" %}
+                <button type="reset" class="btn ghost-blue" >Reset</button>
+            {% endif %}
+            {% if delbtn %}
+                <a href="{% url 'delete-stock' object.pk %}" class="btn ghost-red"> Delete Stock </a>
+            {% endif %}
+            <a href="{% url 'inventory' %}" class="btn ghost-button">Cancel</a>
+        </center>
+        
+    </form>
+
+{% endblock content %}
