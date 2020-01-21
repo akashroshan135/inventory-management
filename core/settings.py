@@ -38,9 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'widget_tweaks',                        # uses 'django-widget-tweaks' app
+    'widget_tweaks',                            # uses 'django-widget-tweaks' app
 
-    'inventory.apps.InventoryConfig',       # includes the installed app 'inventory'
+    'inventory.apps.InventoryConfig',           # includes the installed app 'inventory'
+    'transactions.apps.TransactionsConfig',     # includes the installed app 'transactions'
+
 ]
 
 MIDDLEWARE = [
