@@ -8,10 +8,11 @@ class StockForm(forms.ModelForm):
         self.fields['name'].widget.attrs.update({'class': 'textinput form-control'})
         self.fields['stock_type'].widget.attrs.update({'class': 'textinput form-control'})
         self.fields['quantity'].widget.attrs.update({'class': 'textinput form-control'})
+        self.fields['price'].widget.attrs.update({'class': 'textinput form-control'})
 
     class Meta:
         model = Stock
-        fields = ['name', 'stock_type', 'description', 'quantity']
+        fields = ['name', 'stock_type', 'description', 'quantity', 'price']
         widgets = {
             'description' : forms.Textarea(
                 attrs = {
