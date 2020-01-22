@@ -11,8 +11,12 @@
 }
 
 #sidebar {
-    min-width: 250px;
-    max-width: 250px;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
     background: #4F102B;
     color: #fff;
     transition: all 0.3s;
@@ -83,6 +87,12 @@ a.nav-button {
     color: #4F102B;
 }
 
+.bottomleft {
+    bottom: 0;
+    position: absolute;
+    min-width: 250px;
+    max-width: 250px;
+}
 
 /* ---------------------------------------------------
     CONTENT STYLE
@@ -90,6 +100,7 @@ a.nav-button {
 
 #content {
     width: 100%;
+    margin-left: 250px;
     padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;

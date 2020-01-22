@@ -67,8 +67,22 @@
                 <li>
                     <a class="sidebar-text sidebar-button" href="#">About</a>
                 </li>
-            </ul>
 
+                <li class="bottomleft">
+                    {% if user.is_authenticated %}
+                        <a href="#UserSubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button">{{ request.user.username }}</a>
+                    {% else %}
+                        <a href="#UserSubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button">Not Logged in</a>
+                    {% endif %}
+                    <ul class="collapse list-unstyled" id="UserSubmenu">
+                        {% if request.user.is_superuser %}
+                            <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'admin:index' %}">Admin Page</a> </li>
+                        {% endif %}
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="#">Logout</a> </li>
+                    </ul>
+                </li>
+
+            </ul>
             {% comment %}
             <ul class="list-unstyled CTAs">
                 <li>
@@ -99,7 +113,8 @@
                     
                 </div>
             </div>
-        <br>
+            <br>
+
         </div>
     
     </main>    

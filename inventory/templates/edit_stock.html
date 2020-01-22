@@ -6,20 +6,46 @@
 
 {% block content %}
 
-    <div style="color:#ea2088; font-style: bold; font-size: 3rem;">{{title}}</div>
+    <div style="color:#ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">{{title}}</div><br>
     
     <form method="post">
-
-        {% csrf_token %}
     
-        {% for field in form.visible_fields %}
-            <div class="form-group">
-                {{ field.label_tag }}
-                {{ field }}
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        
+        <div class="form-group">
+            {{ form.name.errors }}
+            <label for="{{ form.name.id_for_label }}">Name:</label>
+            {{ form.name }}
+        </div>
+
+        <div class="form-group">
+            {{ form.stock_type.errors }}
+            <label for="{{ form.stock_type.id_for_label }}">Stock Type:</label>
+            {{ form.stock_type }}
+        </div>
+
+        <div class="form-group">
+            {{ form.description.errors }}
+            <label for="{{ form.description.id_for_label }}">Description:</label>
+            {{ form.description }}
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                {{ form.quantity.errors }}
+                <label for="{{ form.quantity.id_for_label }}">Quantity:</label>
+                {{ form.quantity }}
             </div>
-        {% endfor %}
+            <div class="form-group col-md-6">
+                {{ form.price.errors }}
+                <label for="{{ form.price.id_for_label }}">Price:</label>
+                {{ form.price }}
+            </div>
+        </div>
 
         <br>
+
         <center>
             <button type="submit" class="btn ghost-green">{{ savebtn }}</button>
             {% if title == "New Stock" %}
