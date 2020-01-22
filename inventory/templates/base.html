@@ -22,44 +22,45 @@
 <body>
 
     <header class="site-header">
-        {# {% if user.is_authenticated %} #}
-            <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-                <div class="container-fluid">
-                    <a class="navbar-brand titlefont mr-4" href="{% url 'home' %}">Company</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                    </button>
-                
-                    <div class="collapse navbar-collapse" id="navbarToggle">
-                        <div class="navbar-nav mr-auto">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand titlefont mr-4" href="{% url 'home' %}">Company</a>
+            
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    
+                    <!-- Navbar Left Side -->
+                    <div class="navbar-nav mr-auto">
+                    {% comment %}                            
                         <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
                         <a class="nav-item nav-link" href="{% url 'inventory' %}">Inventory</a>
                         <a class="nav-item nav-link" href="#">Purchases</a>
-                        {#  <a class="nav-item nav-link" href="{% url 'about' %}">About</<a>  #}
-            
-                        </div>
-                        <!-- Navbar Right Side -->
-                        <div class="navbar-nav">
-                            <div class="collapse navbar-collapse" id="navbarToggle">
-                                <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-item nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ request.user.username }}</a>
-                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-                                            {% if request.user.is_superuser %}
-                                                <a class="dropdown-item" href="{% url 'admin:index' %}">Admin Page</a>
-                                            {% endif %}
-                                            <div class="dropdown-divider"></div> 
-                                            <a class="dropdown-item" href="">Log Out</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                        <a class="nav-item nav-link" href="{% url 'about' %}">About</<a>
+                    {% endcomment %}
+                    </div>
+
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav">
+                        <div class="collapse navbar-collapse" id="navbarToggle">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-item nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ request.user.username }}</a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+                                        {% if request.user.is_superuser %}
+                                            <a class="dropdown-item" href="{% url 'admin:index' %}">Admin Page</a>
+                                        {% endif %}
+                                        <div class="dropdown-divider"></div> 
+                                        <a class="dropdown-item" href="">Log Out</a>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
+                
                 </div>
-            </nav>
-            <div class="the-blur"></div>
-        {# {% endif %} #}
+                
+            </div>
+        </nav>
+        <div class="the-blur"></div>
     </header>
     
     <br><br><br>
@@ -71,13 +72,25 @@
             <!-- Left Sidebar -->
             <div class="col-md-3">
                 <div class="content-section">
-                    <h3>Sidebar</h3>
-                    <p class='text-muted'>Test info
+                    <h3>Navigation</h3>
+                    <p class='text-muted'>Naivigate through the various sections
                     <ul class="list-group">
-                        <a href="#" class="list-group-item list-group-item-light textinput">Option #1</a>
-                        <a href="#" class="list-group-item list-group-item-light textinput">Option #2</a>
-                        <a href="#" class="list-group-item list-group-item-light textinput">Option #3</a>
-                        <a href="#" class="list-group-item list-group-item-light textinput">Option #4</a>
+                        <a href="{% url 'home' %}" class="list-group-item list-group-item-light textinput">Home</a>
+                        <li class="list-group-item list-group-item-light textinput dropdown">
+                            <a class="list-group-item-light textinput dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Inventory</a>
+                            <div class="dropdown-menu textinput">
+                                <a class="list-group-item list-group-item-light textinput" href="{% url 'inventory' %}">Inventory List</a> 
+                                <a class="list-group-item list-group-item-light textinput" href="{% url 'new-stock' %}">New Stock</a>
+                            </div>
+                        </li>
+                        <li class="list-group-item list-group-item-light textinput dropdown">
+                            <a class="list-group-item-light textinput dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Purchases</a>
+                            <div class="dropdown-menu textinput">
+                                <a class="list-group-item list-group-item-light textinput" href="{% url 'purchases' %}">Purchases List</a>
+                                <a class="list-group-item list-group-item-light textinput" href="{% url 'new-purchase' %}">New Purchase</a>
+                            </div>
+                        </li>
+                        <a href="#" class="list-group-item list-group-item-light textinput">About</a>
                     </ul>
                     </p>
                 </div>
@@ -100,9 +113,9 @@
     </main>    
         
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="{% static 'jquery-3.3.1.slim.min.js' %}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="{% static 'popper.min.js' %}" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="{% static 'bootstrap.min.js' %}" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="{% static 'jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap.min.js' %}"></script>
 
 </body>
 </html>
