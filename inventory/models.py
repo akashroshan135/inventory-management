@@ -17,13 +17,3 @@ class Stock(models.Model):
 
     def __str__(self):
 	    return self.name
-
-#contains the purchases made
-class Purchase(models.Model):
-    id = models.AutoField(primary_key=True)
-    description = models.CharField(max_length=100)
-    time = models.DateTimeField(auto_now=True)
-    quantity = models.IntegerField(default=0)
-
-    def __str__(self):
-	    return self.name
