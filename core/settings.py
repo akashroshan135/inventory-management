@@ -40,8 +40,9 @@ INSTALLED_APPS = [
 
     'widget_tweaks',                            # uses 'django-widget-tweaks' app
 
-    'inventory.apps.InventoryConfig',           # includes the installed app 'inventory'
-    'transactions.apps.TransactionsConfig',     # includes the installed app 'transactions'
+    'homepage.apps.HomepageConfig',
+    'inventory.apps.InventoryConfig',
+    'transactions.apps.TransactionsConfig',
 
 ]
 

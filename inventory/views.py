@@ -6,14 +6,10 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from .models import Stock
-from .forms import StockForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
-
-
-class HomeView(TemplateView):                                                           # class to render home page
-    template_name = "home.html"                                                         # 'home.html' used as the template
+from .models import Stock
+from .forms import StockForm
 
 
 class StockCreateView(SuccessMessageMixin, CreateView):                                 # createview class to add new stock, mixin used to display message
