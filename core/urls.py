@@ -21,5 +21,6 @@ from django.conf.urls.static import static                      # used for stati
 urlpatterns = [
     path('admin/', admin.site.urls, name = 'admin'),
 
-    path('', include('inventory.urls')),                        # the localhost will redirect to the 'inventory' app urls
+    path('', include('inventory.urls')),
+    path('transactions/', include('transactions.urls')),
 ]

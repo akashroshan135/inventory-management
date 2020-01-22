@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+
+{% block title %} Inventory {% endblock title %}
+
+
+{% block content %}
+
+    <a href="{% url 'new-purchase' %}" class="btn ghost-blue">New Purchase</a>
+    
+    <table class="table table-css"><div style="color: #ea2088; font-style: bold; font-size: 3rem;">Purchases</div>
+        
+        <br>
+        
+        <thead class="thead-inverse">
+            <tr>
+                <th width="55%">Bill no</th>
+                <th width="15%">Supplier</th>
+                <th width="15%">Stock</th>
+                <th width="15%">Quantity purchased</th>
+            </tr>
+        </thead>
+      
+        <tbody>
+            {% for purchase in object_list %}
+            <tr>
+                <td>
+                    <h4> <a href="#">{{ purchase.billno }}</a> </h4>
+                </td>
+                <td class="align-middle">{{ purchase.supplier }}</td>
+                <td class="align-middle">{{ purchase.stock }}</td>
+                <td class="align-middle">{{ purchase.quantity }}</td>          
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+{% endblock content %}
