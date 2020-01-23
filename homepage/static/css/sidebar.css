@@ -16,8 +16,9 @@
     top: 0;
     left: 0;
     height: 100vh;
-    z-index: 999;
-    background: #4F102B;
+    z-index: 999;    opacity: 0.1;
+
+    background: rgb(0, 0, 0);
     color: #fff;
     transition: all 0.3s;
 }
@@ -28,12 +29,11 @@
 
 .sidebar-header {
     padding: 20px;
-    background: #4F102B;
+    /*background: #4F102B;*/
 }
 
 .sidebar-components {
     padding: 20px 0;
-    border-bottom: 1px solid #4F102B;
 }
 
 .sidebar-paragraph {
@@ -60,7 +60,7 @@ a.right-arrow[data-toggle="collapse"] {
 }
 
 .sidebar-button:hover {
-    color: #4F102B;
+    color: #fd79a8;
     background: #fff;
 }
 
