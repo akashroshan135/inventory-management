@@ -17,7 +17,7 @@ class PurchaseBill(models.Model):
     time = models.DateTimeField(auto_now=True)
     supplier = models.ForeignKey(Supplier, on_delete = models.CASCADE, related_name='purchasesupplier')
 
-    def __str__(self):
+    def __int__(self):
 	    return self.billno
 
 #contains the purchase stocks made
@@ -27,5 +27,5 @@ class PurchaseStock(models.Model):
     quantity = models.IntegerField(default=1)
     price = models.IntegerField(default=1)
 
-    def __str__(self):
+    def __int__(self):
 	    return self.billno

@@ -17,75 +17,57 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="id_name" class="panel-body-text">Supplier Name</label>
-                        <input type="text" class="form-control" id="id_name" value="{{ supplier.name }}" disabled>
+                        <input type="text" class="form-control textinput" id="id_name" value="{{ supplier.name }}" disabled>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="id_phone" class="panel-body-text">Phone No</label>
-                        <input type="text" class="form-control" id="id_phone" value="{{ supplier.phone }}" disabled>
+                        <input type="text" class="form-control textinput" id="id_phone" value="{{ supplier.phone }}" disabled>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="id_email" class="panel-body-text">Email</label>
-                    <input type="email" class="form-control" id="id_email" value="{{ supplier.email }}" disabled>
+                    <input type="email" class="form-control textinput" id="id_email" value="{{ supplier.email }}" disabled>
                 </div>
 
             </div>
         </div>
 
-
-
-        <form method="post">
-    
-        {% csrf_token %}
-
-
-
-        
-
-
-        {% comment %}
-        
-        {{ form.non_field_errors }}
-        
-        <div class="form-group">
-            {{ form.name.errors }}
-            <label for="{{ form.name.id_for_label }}">Name:</label>
-            {{ form.name }}
-        </div>
-
-        <div class="form-group">
-            {{ form.stock_type.errors }}
-            <label for="{{ form.stock_type.id_for_label }}">Stock Type:</label>
-            {{ form.stock_type }}
-        </div>
-
-        <div class="form-group">
-            {{ form.description.errors }}
-            <label for="{{ form.description.id_for_label }}">Description:</label>
-            {{ form.description }}
-        </div>
-
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                {{ form.quantity.errors }}
-                <label for="{{ form.quantity.id_for_label }}">Quantity:</label>
-                {{ form.quantity }}
-            </div>
-            <div class="form-group col-md-6">
-                {{ form.price.errors }}
-                <label for="{{ form.price.id_for_label }}">Price:</label>
-                {{ form.price }}
-            </div>
-        </div>
-        {% endcomment %}
-
         <br>
 
-        <center>
-            <button type="submit" class="btn ghost-green">Add to purchases</button>
-            <a href="{% url 'purchases' %}" class="btn ghost-button">Cancel</a>
-        </center>
-        
-    </form>
+        <form method="post" class="panel panel-default">
+            
+            {% csrf_token %}
+            {{ stockform.non_field_errors }}
+
+            <div class="panel-heading panel-heading-text">Product Details</div>
+            
+            <div class="panel-body">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        {{ stockform.stock.errors }}
+                        <label for="{{ stockform.stock.id_for_label }}"class="panel-body-text">Stock:</label>
+                        {{ stockform.stock }}
+                    </div>
+                    <div class="form-group col-md-3">
+                        {{ stockform.quantity.errors }}
+                        <label for="{{ stockform.quantity.id_for_label }}"class="panel-body-text">Quantity:</label>
+                        {{ stockform.quantity }}
+                    </div>
+                    <div class="form-group col-md-3">
+                        {{ stockform.price.errors }}
+                        <label for="{{ stockform.price.id_for_label }}"class="panel-body-text">Price:</label>
+                        {{ stockform.price }}
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <center>
+                <button type="submit" class="btn ghost-green">Add to purchases</button>
+                <a href="{% url 'purchases' %}" class="btn ghost-button">Cancel</a>
+            </center>
+            
+        </form>
 
 {% endblock content %}
