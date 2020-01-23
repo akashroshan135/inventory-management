@@ -1,13 +1,23 @@
 from django import forms
-from .models import Purchase
+from .models import PurchaseBill, PurchaseStock
 
-class PurchaseForm(forms.ModelForm):
+
+class SelectSupplierForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['supplier'].widget.attrs.update({'class': 'textinput form-control'})
-        self.fields['stock'].widget.attrs.update({'class': 'textinput form-control'})
-        self.fields['quantity'].widget.attrs.update({'class': 'textinput form-control'})
 
     class Meta:
-        model = Purchase
-        fields = ['supplier', 'stock', 'quantity']
+        model = PurchaseBill
+        fields = ['supplier']
+
+
+class PurchaseBillForm(forms.ModelForm):
+    class Meta:
+        model = PurchaseBill
+        fields = ['billno', 'supplier']
+
+class PurchaseStockForm(forms.ModelForm):
+    class Meta:
+        model = PurchaseStock
+        fields = ['stock', 'quantity', 'price']

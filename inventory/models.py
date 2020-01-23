@@ -12,8 +12,8 @@ class Stock(models.Model):
     stock_type = models.CharField(max_length=2, choices=type)
     name = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=255)
-    price = models.IntegerField(default=0)
-    quantity = models.IntegerField(default=0)
+    quantity = models.IntegerField(default=1)
+    price = models.IntegerField(default=1)
 
     def __str__(self):
 	    return self.name

@@ -11,14 +11,21 @@ class Supplier(models.Model):
     def __str__(self):
 	    return self.name
 
-#contains the purchases made
-class Purchase(models.Model):
+#contains the purchase bills made
+class PurchaseBill(models.Model):
     billno = models.AutoField(primary_key=True)
-    description = models.CharField(max_length=100)
     time = models.DateTimeField(auto_now=True)
     supplier = models.ForeignKey(Supplier, on_delete = models.CASCADE, related_name='purchasesupplier')
-    stock = models.ForeignKey(Stock, on_delete = models.CASCADE, related_name='purchasestock')
+
+    def __str__(self):
+	    return self.billno
+
+#contains the purchase stocks made
+class PurchaseStock(models.Model):
+    billno = models.ForeignKey(PurchaseBill, on_delete = models.CASCADE, related_name='purchasebillno')
+    stock = models.ForeignKey(Stock, on_delete = models.CASCADE, related_name='purchasestocksupplier')
     quantity = models.IntegerField(default=1)
+    price = models.IntegerField(default=1)
 
     def __str__(self):
 	    return self.billno

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+
+{% block title %} New Purchase {% endblock title %}
+
+
+{% block content %}
+
+    <div style="color:#ea2088; font-style: bold; font-size: 3rem;">New Purchase</div>
+    
+    <form method="post">
+
+        {% csrf_token %}
+        
+        {% for field in form.visible_fields %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+            </div>
+        {% endfor %}
+
+        <br>
+        <center>
+            <button type="submit" class="btn ghost-green">Next</button>
+            <a href="{% url 'purchases' %}" class="btn ghost-button">Cancel</a>
+        </center>
+        
+    </form>
+
+{% endblock content %}

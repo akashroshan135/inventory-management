@@ -14,10 +14,11 @@
         
         <thead class="thead-inverse">
             <tr>
-                <th width="30%">Bill no</th>
+                <th width="10%">Bill no</th>
                 <th width="25%">Supplier</th>
                 <th width="25%">Stock</th>
                 <th width="20%">Quantity purchased</th>
+                <th width="20%">Purchased</th>
             </tr>
         </thead>
       
@@ -30,6 +31,7 @@
                 <td class="align-middle">{{ purchase.supplier }}</td>
                 <td class="align-middle">{{ purchase.stock }}</td>
                 <td class="align-middle">{{ purchase.quantity }}</td>          
+                <td class="align-middle">{{ purchase.time }}</td>          
             </tr>
             {% endfor %}
         </tbody>
