@@ -249,14 +249,18 @@ html { width: 100%; height:100%; overflow:hidden; }
 
 /* Navbar title CSS */
 .titlefont{
-
-    color: #228DFF;
-    font-family: Audiowide;
-  }
+  color: #228DFF;
+  font-family: Audiowide;
+}
 
 
 .textinput{
   background-color: #4F102B;
+  color: white;
+}
+
+.textinput:disabled{
+  background-color: rgb(158, 27, 84);
   color: white;
 }
 

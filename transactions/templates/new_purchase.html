@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 
 {% block title %} New Purchase {% endblock title %}
@@ -37,29 +38,38 @@
         <form method="post" class="panel panel-default">
             
             {% csrf_token %}
-            {{ stockform.non_field_errors }}
+            {{ formset.management_form }}
 
             <div class="panel-heading panel-heading-text">Product Details</div>
             
-            <div class="panel-body">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        {{ stockform.stock.errors }}
-                        <label for="{{ stockform.stock.id_for_label }}"class="panel-body-text">Stock:</label>
-                        {{ stockform.stock }}
-                    </div>
-                    <div class="form-group col-md-3">
-                        {{ stockform.quantity.errors }}
-                        <label for="{{ stockform.quantity.id_for_label }}"class="panel-body-text">Quantity:</label>
-                        {{ stockform.quantity }}
-                    </div>
-                    <div class="form-group col-md-3">
-                        {{ stockform.price.errors }}
-                        <label for="{{ stockform.price.id_for_label }}"class="panel-body-text">Price:</label>
-                        {{ stockform.price }}
+                <div id="stockitem"> 
+                    <div class="panel-body">
+                    {% for form in formset %}
+                        <div class="row form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.stock.errors }}
+                                <label class="panel-body-text">Stock:</label>
+                                {{ form.stock }}
+                            </div>
+                            <div class="form-group col-md-2">
+                                {{ form.quantity.errors }}
+                                <label class="panel-body-text">Quantity:</label>
+                                {{ form.quantity }}
+                            </div>
+                            <div class="form-group col-md-3">
+                                {{ form.price.errors }}
+                                <label class="panel-body-text">Price:</label>
+                                {{ form.price }}
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label class="panel-body-text" style="color: #000">.</label>
+                                <button class="form-control btn btn-success add-form-row">+</button>
+                            </div>
+                        </div>
+                    {% endfor %}
                     </div>
                 </div>
-            </div>
+
 
             <br>
 
@@ -69,5 +79,77 @@
             </center>
             
         </form>
+
+    </div>
+
+    <!-- Custom JS to add and remove item forms -->
+    <script src="{% static 'js/jquery-3.2.1.slim.min.js' %}" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        
+        function updateElementIndex(el, prefix, ndx) {
+            var id_regex = new RegExp('(' + prefix + '-\\d+)');
+            var replacement = prefix + '-' + ndx;
+            if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+            if (el.id) el.id = el.id.replace(id_regex, replacement);
+            if (el.name) el.name = el.name.replace(id_regex, replacement);
+        }
+        
+        function cloneMore(selector, prefix) {
+            var newElement = $(selector).clone(true);
+            var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+            newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function() {
+                var name = $(this).attr('name')
+                if(name) {
+                    name = name.replace('-' + (total-1) + '-', '-' + total + '-');
+                    var id = 'id_' + name;
+                    $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+                }
+            });
+            newElement.find('label').each(function() {
+                var forValue = $(this).attr('for');
+                if (forValue) {
+                forValue = forValue.replace('-' + (total-1) + '-', '-' + total + '-');
+                $(this).attr({'for': forValue});
+                }
+            });
+            total++;
+            $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+            $(selector).after(newElement);
+            var conditionRow = $('.form-row:not(:last)');
+            conditionRow.find('.btn.add-form-row')
+            .removeClass('btn-success').addClass('btn-danger')
+            .removeClass('add-form-row').addClass('remove-form-row')
+            .html('-');
+            return false;
+        }
+        
+        function deleteForm(prefix, btn) {
+            var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+            if (total > 1){
+                btn.closest('.form-row').remove();
+                var forms = $('.form-row');
+                $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+                for (var i=0, formCount=forms.length; i<formCount; i++) {
+                    $(forms.get(i)).find(':input').each(function() {
+                        updateElementIndex(this, prefix, i);
+                    });
+                }
+            }
+            return false;
+        }
+        
+        $(document).on('click', '.add-form-row', function(e){
+            e.preventDefault();
+            cloneMore('.form-row:last', 'form');
+            return false;
+        });
+        
+        $(document).on('click', '.remove-form-row', function(e){
+            e.preventDefault();
+            deleteForm('form', $(this));
+            return false;
+        });
+
+    </script>
 
 {% endblock content %}

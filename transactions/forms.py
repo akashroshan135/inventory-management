@@ -1,5 +1,6 @@
 from django import forms
-from .models import PurchaseBill, PurchaseStock
+from django.forms import formset_factory
+from .models import PurchaseBill, PurchaseItem
 
 
 class SelectSupplierForm(forms.ModelForm):
@@ -11,12 +12,14 @@ class SelectSupplierForm(forms.ModelForm):
         fields = ['supplier']
 
 
-class PurchaseStockForm(forms.ModelForm):
+class PurchaseItemForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['stock'].widget.attrs.update({'class': 'textinput form-control'})
-        self.fields['quantity'].widget.attrs.update({'class': 'textinput form-control'})
-        self.fields['price'].widget.attrs.update({'class': 'textinput form-control'})
+        self.fields['stock'].widget.attrs.update({'class': 'textinput form-control', 'required': 'true'})
+        self.fields['quantity'].widget.attrs.update({'class': 'textinput form-control', 'required': 'true'})
+        self.fields['price'].widget.attrs.update({'class': 'textinput form-control', 'required': 'true'})
     class Meta:
-        model = PurchaseStock
+        model = PurchaseItem
         fields = ['stock', 'quantity', 'price']
+
+PurchaseItemFormset = formset_factory(PurchaseItemForm, extra=1)

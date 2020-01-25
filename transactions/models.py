@@ -17,15 +17,15 @@ class PurchaseBill(models.Model):
     time = models.DateTimeField(auto_now=True)
     supplier = models.ForeignKey(Supplier, on_delete = models.CASCADE, related_name='purchasesupplier')
 
-    def __int__(self):
-	    return self.billno
+    def __str__(self):
+	    return "Bill no: " + str(self.billno)
 
 #contains the purchase stocks made
-class PurchaseStock(models.Model):
+class PurchaseItem(models.Model):
     billno = models.ForeignKey(PurchaseBill, on_delete = models.CASCADE, related_name='purchasebillno')
-    stock = models.ForeignKey(Stock, on_delete = models.CASCADE, related_name='purchasestocksupplier')
+    stock = models.ForeignKey(Stock, on_delete = models.CASCADE, related_name='purchaseitemsupplier')
     quantity = models.IntegerField(default=1)
     price = models.IntegerField(default=1)
 
-    def __int__(self):
-	    return self.billno
+    def __str__(self):
+	    return "Bill no: " + str(self.billno.billno) + ", Item = " + self.stock.name
