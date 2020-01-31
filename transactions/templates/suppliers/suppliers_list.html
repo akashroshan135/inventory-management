@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+
+{% block title %} Suppliers List {% endblock title %}
+
+
+{% block content %}
+    
+    <table class="table table-css"><div style="color: #ea2088; font-style: bold; font-size: 3rem;">Suppliers List</div>
+        
+        <br>
+        
+        <thead class="thead-inverse">
+            <tr>
+                <th width="30%">Name</th>
+                <th width="20%">Phone No</th>
+                <th width="25%">Email Address</th>
+                <th width="25%">Actions</th>
+            </tr>
+        </thead>
+        <a href="{% url 'new-supplier' %}" class="btn ghost-blue">New Supplier</a>
+        <tbody>
+            {% for supplier in object_list %}
+            <tr>
+                <td>
+                    <h3> <a href="#">{{ supplier.name }}</a> </h3>
+                </td>
+                <td class=""> {{ supplier.phone }} </td>
+                <td class="align-middle"> {{ supplier.email }} </td>
+                <td class="align-middle">
+                    <center>
+                        <a href="{% url 'edit-supplier' supplier.pk %}" class="btn ghost-button">Edit Details</a>
+                    </center>
+                </td>              
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+{% endblock content %}

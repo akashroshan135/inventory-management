@@ -2,21 +2,29 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import (
     View, 
     ListView,
+    CreateView,
+    UpdateView
 )
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
+from .models import PurchaseBill, Supplier, PurchaseItem
+from .forms import SelectSupplierForm, PurchaseItemFormset, SupplierForm
 from inventory.models import Stock
-from .models import PurchaseBill, Supplier
-from .forms import SelectSupplierForm, PurchaseItemFormset
 
-#FIXME: currently only displays billno. Display billno, items purchased and supplier
-class PurchaseView(ListView):
+
+
+class PurchaseView(View):
     model = PurchaseBill
-    template_name = "purchases.html"
+    template_name = "purchases/purchases_list.html"
+
+    def get(self, request, *args, **kwargs):
+        bills = PurchaseBill.objects.all()
+        return render(request, self.template_name, {'bills': bills})
 
 
 class SelectSupplierView(View):                                                 # CBV used to select the suppiler
     form_class = SelectSupplierForm
-    template_name = 'select_supplier.html'
+    template_name = 'purchases/select_supplier.html'
 
     def get(self, request, *args, **kwargs):                                    # loads the form page
         form = self.form_class
@@ -32,7 +40,7 @@ class SelectSupplierView(View):                                                 
 
 
 class PurchaseCreateView(View):                                                 # used to generate a bill object and save items 
-    template_name = 'new_purchase.html'
+    template_name = 'purchases/new_purchase.html'
 
     def get(self, request, pk):
         formset = PurchaseItemFormset(request.GET or None)                      # renders an empty formset
@@ -50,12 +58,50 @@ class PurchaseCreateView(View):                                                 
             billobj = PurchaseBill(supplier=supplierobj)                        # a new object of class 'PurchaseBill' is created with supplier field set to 'supplierobj'
             billobj.save()                                                      # saves object into the db
             for form in formset:                                                # for loop to save each individual form as its own object
-                item = form.save(commit=False)
-                item.billno = billobj                                           # links the bill object to the items
+                billitem = form.save(commit=False)
+                billitem.billno = billobj                                       # links the bill object to the items
+                item = get_object_or_404(Stock, name=billitem.stock.name)       # gets the item
+                item.quantity += billitem.quantity                              # updates quantity
                 item.save()
+                billitem.save()
             return redirect('purchases')
         context = {
             'formset'   : formset,
             'supplier'  : supplierobj
         }
         return render(request, self.template_name, context)
+
+
+
+class SupplierListView(ListView):
+    model = Supplier
+    template_name = "suppliers/suppliers_list.html"
+
+
+class SupplierCreateView(SuccessMessageMixin, CreateView):
+    model = Supplier
+    form_class = SupplierForm
+    success_url = '/transactions/suppliers'
+    success_message = "Supplier has been created successfully"
+    template_name = "suppliers/edit_supplier.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'New Supplier'
+        context["savebtn"] = 'Add Supplier'
+        return context     
+
+
+class SupplierUpdateView(SuccessMessageMixin, UpdateView):
+    model = Supplier
+    form_class = SupplierForm
+    success_url = '/transactions/suppliers'
+    success_message = "Supplier details has been updated successfully"
+    template_name = "suppliers/edit_supplier.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'Edit Supplier'
+        context["savebtn"] = 'Save Changes'
+        context["delbtn"] = 'Delete Supplier'
+        return context

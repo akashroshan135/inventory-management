@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+
+{% block title %} Purchases List {% endblock title %}
+
+
+{% block content %}
+    
+    <table class="table table-css"><div style="color: #ea2088; font-style: bold; font-size: 3rem;">Purchases List</div>
+        
+        <br>
+        
+        <thead class="thead-inverse">
+            <tr>
+                <th width="10%">Bill No</th>
+                <th width="20%">Supplier</th>
+                <th width="25%">Stocks Purchased</th>
+                <th width="20%">Quantity Purchased</th>
+                <th width="25%">Purchased (Date and Time)</th>
+            </tr>
+        </thead>
+      
+        <tbody>
+            {% for purchase in bills %}
+            <tr>
+                <td>
+                    <h3> <a href="#">{{ purchase.billno }}</a> </h3>
+                </td>
+                <td class=""> <a href="#">{{ purchase.supplier }}</a> </td>
+                <td class="align-middle">{% for item in purchase.get_items_list %} <a href="#">{{ item.stock.name }}</a> <br> {% endfor %}</td>
+                <td class="align-middle">{% for item in purchase.get_items_list %} {{ item.quantity }} <br> {% endfor %}</td>          
+                <td class="">{{ purchase.time }}</td>          
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+{% endblock content %}
