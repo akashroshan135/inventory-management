@@ -7,8 +7,20 @@ from django.views.generic import (
 )
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
-from .models import PurchaseBill, Supplier, PurchaseItem
-from .forms import SelectSupplierForm, PurchaseItemFormset, SupplierForm
+from .models import (
+    PurchaseBill, 
+    Supplier, 
+    PurchaseItem, 
+    SaleBill,  
+    SaleItem
+)
+from .forms import (
+    SelectSupplierForm, 
+    PurchaseItemFormset, 
+    SupplierForm, 
+    SaleForm,
+    SaleItemFormset
+)
 from inventory.models import Stock
 
 
@@ -64,7 +76,9 @@ class PurchaseCreateView(View):                                                 
                 item.quantity += billitem.quantity                              # updates quantity
                 item.save()
                 billitem.save()
-            return redirect('purchases')
+            messages.success(request, "Purchased items have been registered successfully")
+            return redirect('purchases-list')
+        formset = PurchaseItemFormset(request.GET or None)
         context = {
             'formset'   : formset,
             'supplier'  : supplierobj
@@ -116,3 +130,49 @@ class SupplierView(View):
             'bills'     : bills
         }
         return render(request, 'suppliers/supplier.html', context)
+
+
+
+class SaleView(View):
+    model = SaleBill
+    template_name = "sales/sales_list.html"
+
+    def get(self, request, *args, **kwargs):
+        bills = SaleBill.objects.all()
+        return render(request, self.template_name, {'bills': bills})
+
+
+class SaleCreateView(View):                                                     # used to generate a bill object and save items 
+    template_name = 'sales/new_sale.html'
+
+    def get(self, request):
+        form = SaleForm(request.GET or None)
+        formset = SaleItemFormset(request.GET or None)                          # renders an empty formset
+        context = {
+            'form'      : form,
+            'formset'   : formset,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = SaleForm(request.POST)
+        formset = SaleItemFormset(request.POST)                             # recieves a post method for the formset
+        if form.is_valid() and formset.is_valid():
+            billobj = form.save(commit=False)
+            billobj.save()     
+            for form in formset:                                                # for loop to save each individual form as its own object
+                billitem = form.save(commit=False)
+                billitem.billno = billobj                                       # links the bill object to the items
+                item = get_object_or_404(Stock, name=billitem.stock.name)       # gets the item
+                item.quantity -= billitem.quantity                              # updates quantity
+                item.save()
+                billitem.save()
+            messages.success(request, "Sold items have been registered successfully")
+            return redirect('sales-list')
+        form = SaleForm(request.GET or None)
+        formset = SaleItemFormset(request.GET or None)
+        context = {
+            'form'      : form,
+            'formset'   : formset,
+        }
+        return render(request, self.template_name, context)

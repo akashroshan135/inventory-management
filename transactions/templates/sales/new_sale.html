@@ -2,7 +2,7 @@
 {% load static %}
 
 
-{% block title %} New Purchase {% endblock title %}
+{% block title %} New Sale {% endblock title %}
 
 
 {% block content %}
@@ -11,55 +11,61 @@
     
         <br>
 
-        <div class="panel panel-default">
-            <div class="panel-heading panel-heading-text">Supplier Details</div>
-            <div class="panel-body">
-                
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="id_name" class="panel-body-text">Supplier Name</label>
-                        <input type="text" class="form-control textinput" id="id_name" value="{{ supplier.name }}" disabled>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="id_phone" class="panel-body-text">Phone No</label>
-                        <input type="text" class="form-control textinput" id="id_phone" value="{{ supplier.phone }}" disabled>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="id_email" class="panel-body-text">Email</label>
-                    <input type="email" class="form-control textinput" id="id_email" value="{{ supplier.email }}" disabled>
-                </div>
+    <form method="post" class="panel panel-default">
+        
+        {% csrf_token %}
+        {{ form.non_field_errors }}
 
+        <div class="panel-heading panel-heading-text">Customer Details</div>
+        <div class="panel-body">
+                        
+            <div class="form-group">
+                {{ form.name.errors }}
+                <label for="{{ form.name.id_for_label }}" class="panel-body-text">Customer Name</label>
+                {{ form.name }}                
             </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    {{ form.phone.errors }}
+                    <label for="{{ form.phone.id_for_label }}" class="panel-body-text">Phone No</label>
+                    {{ form.phone }}
+                </div>
+                <div class="form-group col-md-6">
+                    {{ form.email.errors }}
+                    <label for="{{ form.email.id_for_label }}" class="panel-body-text">Email</label>
+                    {{ form.email }}
+                </div>
+            </div>
+
         </div>
 
         <br>
 
-        <form method="post" class="panel panel-default">
+        <div class="panel panel-default">
             
-            {% csrf_token %}
             {{ formset.management_form }}
 
             <div class="panel-heading panel-heading-text">Product Details</div>
             
                 <div id="stockitem"> 
                     <div class="panel-body">
-                    {% for form in formset %}
+                    {% for iform in formset %}
                         <div class="row form-row">
                             <div class="form-group col-md-6">
-                                {{ form.stock.errors }}
+                                {{ iform.stock.errors }}
                                 <label class="panel-body-text">Stock:</label>
-                                {{ form.stock }}
+                                {{ iform.stock }}
                             </div>
                             <div class="form-group col-md-2">
-                                {{ form.quantity.errors }}
+                                {{ iform.quantity.errors }}
                                 <label class="panel-body-text">Quantity:</label>
-                                {{ form.quantity }}
+                                {{ iform.quantity }}
                             </div>
                             <div class="form-group col-md-3">
-                                {{ form.price.errors }}
+                                {{ iform.price.errors }}
                                 <label class="panel-body-text">Price:</label>
-                                {{ form.price }}
+                                {{ iform.price }}
                             </div>
                             <div class="form-group col-md-1">
                                 <label class="panel-body-text" style="color: #000">.</label>
@@ -74,13 +80,13 @@
             <br>
 
             <center>
-                <button type="submit" class="btn ghost-green">Add to purchases</button>
-                <a href="{% url 'purchases-list' %}" class="btn ghost-button">Cancel</a>
+                <button type="submit" class="btn ghost-green">Add to Sales</button>
+                <a href="{% url 'home' %}" class="btn ghost-button">Cancel</a>
             </center>
             
-        </form>
+        </div>
 
-    </div>
+    </form>
 
     <!-- Custom JS to add and remove item forms -->
     <script src="{% static 'js/jquery-3.2.1.slim.min.js' %}" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+
+{% block title %} Sales List {% endblock title %}
+
+
+{% block content %}
+    
+    <table class="table table-css"><div style="color: #ea2088; font-style: bold; font-size: 3rem;">Sales List</div>
+        
+        <br>
+        
+        <thead class="thead-inverse">
+            <tr>
+                <th width="10%">Bill No</th>
+                <th width="20%">Customer</th>
+                <th width="25%">Stocks Purchased</th>
+                <th width="20%">Quantity Purchased</th>
+                <th width="25%">Purchased (Date and Time)</th>
+            </tr>
+        </thead>
+      
+        <tbody>
+            {% for sale in bills %}
+            <tr>
+                <td>
+                    <h3> <a href="#">{{ sale.billno }}</a> </h3>
+                </td>
+                <td class=""> {{ sale.name }} <br> <small style="color: #909494">Ph No : {{ sale.phone }}</small> </td>
+                <td class="align-middle">{% for item in sale.get_items_list %} <a href="#">{{ item.stock.name }}</a> <br> {% endfor %}</td>
+                <td class="align-middle">{% for item in sale.get_items_list %} {{ item.quantity }} <br> {% endfor %}</td>          
+                <td class="">{{ sale.time }}</td>          
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+{% endblock content %}

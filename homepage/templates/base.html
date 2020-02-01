@@ -45,15 +45,15 @@
                 <li>
                     <a href="#purchaseSubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button">Purchases</a>
                     <ul class="collapse list-unstyled" id="purchaseSubmenu">
-                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'purchases' %}">Purchases List</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'purchases-list' %}">Purchases List</a> </li>
                         <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'select-supplier' %}">New Incoming Stock</a> </li>
                     </ul>
                 </li>
                 <li>
                     <a href="#saleSubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button">Sales</a>
                     <ul class="collapse list-unstyled" id="saleSubmenu">
-                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="#">Sales Orders</a> </li>
-                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="#">New Outgoing Stock</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'sales-list' %}">Sales Orders</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'new-sale' %}">New Outgoing Stock</a> </li>
                     </ul>
                 </li>
                 <li>
