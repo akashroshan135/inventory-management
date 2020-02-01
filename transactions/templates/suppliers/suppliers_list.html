@@ -25,7 +25,7 @@
             {% for supplier in object_list %}
             <tr>
                 <td>
-                    <h3> <a href="#">{{ supplier.name }}</a> </h3>
+                    <h3> <a href="{% url 'supplier' supplier.name %}">{{ supplier.name }}</a> </h3>
                 </td>
                 <td class=""> {{ supplier.phone }} </td>
                 <td class="align-middle"> {{ supplier.email }} </td>

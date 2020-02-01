@@ -1,23 +1,33 @@
 {% extends "base.html" %}
 
-{% load widget_tweaks %}
-
-
-{% block title %} Purchases List {% endblock title %}
-
+{% block title %}
+  {{ supplier.name }}'s profile
+{% endblock %}
 
 {% block content %}
-    
-    <table class="table table-css"><div style="color: #ea2088; font-style: bold; font-size: 3rem;">Purchases List</div>
+
+    <div class="content-section">
+        <div class="media">
+            {# <img class="rounded account-img" src="#" alt="{{ supplier.name }}"> #}
+            <div class="media-body">
+            <h2 style="color:#ea2088;" class="account-heading">{{ supplier.name }}</h2>
+            <p class="fal">
+                Phone no        : {{ supplier.phone }} <br>
+                Email Id        : {{ supplier.email }} <br>
+            </p>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-css">
         
         <br>
         
         <thead class="thead-inverse">
             <tr>
-                <th width="10%">Bill No</th>
-                <th width="20%">Supplier</th>
-                <th width="25%">Stocks Purchased</th>
-                <th width="20%">Quantity Purchased</th>
+                <th width="15%">Bill No</th>
+                <th width="35%">Stocks Purchased</th>
+                <th width="25%">Quantity Purchased</th>
                 <th width="25%">Purchased (Date and Time)</th>
             </tr>
         </thead>
@@ -28,7 +38,6 @@
                 <td>
                     <h3> <a href="#">{{ purchase.billno }}</a> </h3>
                 </td>
-                <td class=""> <a href="{% url 'supplier' purchase.supplier.name %}">{{ purchase.supplier }}</a> </td>
                 <td class="align-middle">{% for item in purchase.get_items_list %} <a href="#">{{ item.stock.name }}</a> <br> {% endfor %}</td>
                 <td class="align-middle">{% for item in purchase.get_items_list %} {{ item.quantity }} <br> {% endfor %}</td>          
                 <td class="">{{ purchase.time }}</td>          
@@ -38,4 +47,5 @@
 
     </table>
 
+</div>
 {% endblock content %}

@@ -105,3 +105,14 @@ class SupplierUpdateView(SuccessMessageMixin, UpdateView):
         context["savebtn"] = 'Save Changes'
         context["delbtn"] = 'Delete Supplier'
         return context
+
+
+class SupplierView(View):
+    def get(self, request, name):
+        supplierobj = get_object_or_404(Supplier, name=name)
+        bills = PurchaseBill.objects.filter(supplier=supplierobj)
+        context = {
+            'supplier'  : supplierobj,
+            'bills'     : bills
+        }
+        return render(request, 'suppliers/supplier.html', context)
