@@ -62,8 +62,11 @@
                                 <label class="panel-body-text">Quantity:</label>
                                 {{ iform.quantity }}
                             </div>
-                            <div class="form-group col-md-3">
-                                {{ iform.price.errors }}
+                            <div class="form-group col-md-2">
+                                <label class="panel-body-text">Price per item:</label>
+                                <input type="text" class="form-control textinput priceperitem" id="id_priceperitem" value="9" disabled>
+                            </div>
+                            <div class="form-group col-md-1">
                                 <label class="panel-body-text">Price:</label>
                                 {{ iform.price }}
                             </div>
@@ -89,7 +92,7 @@
     </form>
 
     <!-- Custom JS to add and remove item forms -->
-    <script src="{% static 'js/jquery-3.2.1.slim.min.js' %}" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script>
     <script type="text/javascript">
         
         function updateElementIndex(el, prefix, ndx) {
@@ -155,6 +158,45 @@
             deleteForm('form', $(this));
             return false;
         });
+
+
+        //TODO: put the following in ajax to make it work with django varibles
+        $(document).on('click', '.setprice', function(e){
+            e.preventDefault();
+            var item = $(this).val()
+            {% with pk=15 %}
+                console.log("did work {{ pk }} ");
+                {% for stock in stocks %} 
+                    {% if stock.pk == pk %}
+                        var perprice = "{{ stock.price }}";
+                        console.log("did work final, price" + perprice);
+                    {% endif %} 
+                {% endfor %}
+            {% endwith %}
+            //sets per price value
+            $(this).parents('.form-row').find('.priceperitem').val(perprice);
+            //gets quantity value
+            var quantity = $(this).parents('.form-row').find('.setquantity').val();
+            //calculates total
+            var tprice = quantity * perprice;
+            //sets it to field
+            $(this).parents('.form-row').find('.putprice').val(tprice);
+            return false;
+        });
+
+
+        $(document).on('click', '.setquantity', function(e){
+            e.preventDefault();
+            //gets the values
+            var quantity = $(this).val()
+            var perprice = $(this).parents('.form-row').find('.priceperitem').val();
+            //calculates the total
+            var tprice = quantity * perprice;
+            //sets it to field
+            $(this).parents('.form-row').find('.putprice').val(tprice);
+            return false;
+        });
+
 
     </script>
 

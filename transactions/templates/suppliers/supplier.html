@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 
+
+{# TODO: add charts #}
 {% block title %}
   {{ supplier.name }}'s profile
 {% endblock %}
+
 
 {% block content %}
 
     <div class="content-section">
         <div class="media">
-            {# <img class="rounded account-img" src="#" alt="{{ supplier.name }}"> #}
             <div class="media-body">
             <h2 style="color:#ea2088;" class="account-heading">{{ supplier.name }}</h2>
             <p class="fal">
@@ -48,4 +50,5 @@
     </table>
 
 </div>
+
 {% endblock content %}

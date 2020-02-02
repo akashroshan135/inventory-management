@@ -148,9 +148,11 @@ class SaleCreateView(View):                                                     
     def get(self, request):
         form = SaleForm(request.GET or None)
         formset = SaleItemFormset(request.GET or None)                          # renders an empty formset
+        stocks = Stock.objects.all()
         context = {
             'form'      : form,
             'formset'   : formset,
+            'stocks'     : stocks
         }
         return render(request, self.template_name, context)
 
@@ -176,3 +178,5 @@ class SaleCreateView(View):                                                     
             'formset'   : formset,
         }
         return render(request, self.template_name, context)
+
+#TODO: create bill view for both purchases and sales

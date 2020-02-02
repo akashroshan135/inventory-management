@@ -1,7 +1,7 @@
 from django.db import models
 from inventory.models import Stock
 
-#contains suppliers
+#contains suppliers TODO: add new fields
 class Supplier(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=150)
@@ -24,7 +24,7 @@ class PurchaseBill(models.Model):
     def get_items_list(self):
         return PurchaseItem.objects.filter(billno=self)
 
-#contains the purchase stocks made
+#contains the purchase stocks made TODO: add price per item and total price
 class PurchaseItem(models.Model):
     billno = models.ForeignKey(PurchaseBill, on_delete = models.CASCADE, related_name='purchasebillno')
     stock = models.ForeignKey(Stock, on_delete = models.CASCADE, related_name='purchaseitem')
@@ -35,7 +35,7 @@ class PurchaseItem(models.Model):
 	    return "Bill no: " + str(self.billno.billno) + ", Item = " + self.stock.name
 
 
-#contains the sale bills made
+#contains the sale bills made TODO: add new fields
 class SaleBill(models.Model):
     billno = models.AutoField(primary_key=True)
     time = models.DateTimeField(auto_now=True)
@@ -50,7 +50,7 @@ class SaleBill(models.Model):
     def get_items_list(self):
         return SaleItem.objects.filter(billno=self)
 
-#contains the sale stocks made
+#contains the sale stocks made TODO: add price per item and total price
 class SaleItem(models.Model):
     billno = models.ForeignKey(SaleBill, on_delete = models.CASCADE, related_name='salebillno')
     stock = models.ForeignKey(Stock, on_delete = models.CASCADE, related_name='saleitem')

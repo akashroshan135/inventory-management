@@ -58,9 +58,9 @@ class SaleForm(forms.ModelForm):
 class SaleItemForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['stock'].widget.attrs.update({'class': 'textinput form-control', 'required': 'true'})
-        self.fields['quantity'].widget.attrs.update({'class': 'textinput form-control', 'required': 'true'})
-        self.fields['price'].widget.attrs.update({'class': 'textinput form-control', 'required': 'true'})
+        self.fields['stock'].widget.attrs.update({'class': 'textinput form-control setprice', 'required': 'true'})
+        self.fields['quantity'].widget.attrs.update({'class': 'textinput form-control setquantity', 'required': 'true'})
+        self.fields['price'].widget.attrs.update({'class': 'textinput form-control putprice', 'required': 'true', 'disabled': 'true'})
     class Meta:
         model = SaleItem
         fields = ['stock', 'quantity', 'price']

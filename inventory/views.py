@@ -50,3 +50,5 @@ class StockDeleteView(DeleteView):                                              
     def delete(self, request, *args, **kwargs):                                         #used to show success message after object is deleted
         messages.success(self.request, self.success_message)
         return super(StockDeleteView, self).delete(request, *args, **kwargs)
+
+#TODO: add individual stock view that shows bills and charts
