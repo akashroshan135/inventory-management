@@ -24,7 +24,7 @@ from .forms import (
 from inventory.models import Stock
 
 
-
+# shows the list of bills of all purchases 
 class PurchaseView(View):
     model = PurchaseBill
     template_name = "purchases/purchases_list.html"
@@ -33,8 +33,8 @@ class PurchaseView(View):
         bills = PurchaseBill.objects.all()
         return render(request, self.template_name, {'bills': bills})
 
-
-class SelectSupplierView(View):                                                 # CBV used to select the suppiler
+# used to select the supplier
+class SelectSupplierView(View):
     form_class = SelectSupplierForm
     template_name = 'purchases/select_supplier.html'
 
@@ -50,16 +50,18 @@ class SelectSupplierView(View):                                                 
             return redirect('new-purchase', supplier.pk)
         return render(request, self.template_name, {'form': form})
 
-
-class PurchaseCreateView(View):                                                 # used to generate a bill object and save items 
+# used to generate a bill object and save items 
+class PurchaseCreateView(View):                                                 
     template_name = 'purchases/new_purchase.html'
 
     def get(self, request, pk):
         formset = PurchaseItemFormset(request.GET or None)                      # renders an empty formset
         supplierobj = get_object_or_404(Supplier, pk=pk)                        # gets the supplier object
+        stocks = Stock.objects.all()
         context = {
             'formset'   : formset,
-            'supplier'  : supplierobj
+            'supplier'  : supplierobj,
+            'stocks'    : stocks
         }                                                                       # sends the supplier and formset as context
         return render(request, self.template_name, context)
 
@@ -86,12 +88,12 @@ class PurchaseCreateView(View):                                                 
         return render(request, self.template_name, context)
 
 
-
+# shows a lists of all suppliers
 class SupplierListView(ListView):
     model = Supplier
     template_name = "suppliers/suppliers_list.html"
 
-
+# used to add a new supplier
 class SupplierCreateView(SuccessMessageMixin, CreateView):
     model = Supplier
     form_class = SupplierForm
@@ -105,7 +107,7 @@ class SupplierCreateView(SuccessMessageMixin, CreateView):
         context["savebtn"] = 'Add Supplier'
         return context     
 
-
+# used to update a suppliers info
 class SupplierUpdateView(SuccessMessageMixin, UpdateView):
     model = Supplier
     form_class = SupplierForm
@@ -120,7 +122,7 @@ class SupplierUpdateView(SuccessMessageMixin, UpdateView):
         context["delbtn"] = 'Delete Supplier'
         return context
 
-
+# used to view a supplier's profile TODO: add charts
 class SupplierView(View):
     def get(self, request, name):
         supplierobj = get_object_or_404(Supplier, name=name)
@@ -132,7 +134,7 @@ class SupplierView(View):
         return render(request, 'suppliers/supplier.html', context)
 
 
-
+# shows a list of all sales bills
 class SaleView(View):
     model = SaleBill
     template_name = "sales/sales_list.html"
@@ -141,8 +143,8 @@ class SaleView(View):
         bills = SaleBill.objects.all()
         return render(request, self.template_name, {'bills': bills})
 
-
-class SaleCreateView(View):                                                     # used to generate a bill object and save items 
+# used to generate a bill object and save items
+class SaleCreateView(View):                                                      
     template_name = 'sales/new_sale.html'
 
     def get(self, request):

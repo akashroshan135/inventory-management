@@ -22,9 +22,9 @@ class SelectSupplierForm(forms.ModelForm):
 class PurchaseItemForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['stock'].widget.attrs.update({'class': 'textinput form-control', 'required': 'true'})
-        self.fields['quantity'].widget.attrs.update({'class': 'textinput form-control', 'required': 'true'})
-        self.fields['price'].widget.attrs.update({'class': 'textinput form-control', 'required': 'true'})
+        self.fields['stock'].widget.attrs.update({'class': 'textinput form-control setprice', 'required': 'true'})
+        self.fields['quantity'].widget.attrs.update({'class': 'textinput form-control setquantity', 'required': 'true'})
+        self.fields['price'].widget.attrs.update({'class': 'textinput form-control putprice', 'required': 'true', 'readonly': 'true'})
     class Meta:
         model = PurchaseItem
         fields = ['stock', 'quantity', 'price']
@@ -60,7 +60,7 @@ class SaleItemForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['stock'].widget.attrs.update({'class': 'textinput form-control setprice', 'required': 'true'})
         self.fields['quantity'].widget.attrs.update({'class': 'textinput form-control setquantity', 'required': 'true'})
-        self.fields['price'].widget.attrs.update({'class': 'textinput form-control putprice', 'required': 'true', 'disabled': 'true'})
+        self.fields['price'].widget.attrs.update({'class': 'textinput form-control putprice', 'required': 'true', 'readonly': 'true'})
     class Meta:
         model = SaleItem
         fields = ['stock', 'quantity', 'price']

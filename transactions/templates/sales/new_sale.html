@@ -84,7 +84,7 @@
 
             <center>
                 <button type="submit" class="btn ghost-green">Add to Sales</button>
-                <a href="{% url 'home' %}" class="btn ghost-button">Cancel</a>
+                <a href="{% url 'sales-list' %}" class="btn ghost-button">Cancel</a>
             </center>
             
         </div>
@@ -160,35 +160,50 @@
         });
 
 
-        //TODO: put the following in ajax to make it work with django varibles
+
+        //gets the value of the item selected and updates the 'price per item' and 'total price' field
         $(document).on('click', '.setprice', function(e){
             e.preventDefault();
-            var item = $(this).val()
-            {% with pk=15 %}
-                console.log("did work {{ pk }} ");
-                {% for stock in stocks %} 
-                    {% if stock.pk == pk %}
-                        var perprice = "{{ stock.price }}";
-                        console.log("did work final, price" + perprice);
-                    {% endif %} 
+            var dom = $(this);          //stores html element into a variable
+            var item = $(this).val()    //stores the values in the html element
+            
+            //stores pk and price of all stocks into a js object 'stocks'
+            var stocks = [
+                {% for stock in stocks %}
+                    {% if not forloop.first %},{% endif %}
+                    {
+                        pk          : {{ stock.pk }},
+                        perprice    : {{ stock.price }}
+                    }
                 {% endfor %}
-            {% endwith %}
-            //sets per price value
-            $(this).parents('.form-row').find('.priceperitem').val(perprice);
-            //gets quantity value
-            var quantity = $(this).parents('.form-row').find('.setquantity').val();
-            //calculates total
-            var tprice = quantity * perprice;
-            //sets it to field
-            $(this).parents('.form-row').find('.putprice').val(tprice);
+            ];
+            //foreach item in the js object 'stocks'
+            stocks.forEach(function(stockSummary, i) {
+
+                var pk = stocks[i].pk;
+                var perprice = stocks[i].perprice;
+
+                if(item == pk) {
+                    //sets per price value
+                    dom.parents('.form-row').find('.priceperitem').val(perprice);
+                    //gets quantity value
+                    var quantity = dom.parents('.form-row').find('.setquantity').val();
+                    //calculates total
+                    var tprice = quantity * perprice;
+                    //sets it to field
+                    dom.parents('.form-row').find('.putprice').val(tprice);
+                    return false;
+                }
+
+            });
             return false;
         });
 
-
+        //updates the total price by multiplying 'price per item' and 'quantity' 
         $(document).on('click', '.setquantity', function(e){
             e.preventDefault();
             //gets the values
-            var quantity = $(this).val()
+            var quantity = $(this).val();
             var perprice = $(this).parents('.form-row').find('.priceperitem').val();
             //calculates the total
             var tprice = quantity * perprice;
@@ -196,7 +211,6 @@
             $(this).parents('.form-row').find('.putprice').val(tprice);
             return false;
         });
-
 
     </script>
 
