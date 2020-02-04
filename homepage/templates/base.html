@@ -31,7 +31,7 @@
             </div>
 
             <ul class="list-unstyled sidebar-components">
-                <!--<p class="sidebar-paragraph">Dummy Heading</p>-->
+                {# <p class="sidebar-paragraph">Dummy Heading</p> #}
                 <li>
                     <a class="sidebar-text sidebar-button" href="{% url 'home' %}">Home</a>
                 </li>               
@@ -57,10 +57,11 @@
                     </ul>
                 </li>
                 <li>
-                    <a class="sidebar-text sidebar-button" href="{% url 'suppliers-list' %}">Suppliers</a>
-                </li>
-                <li>
-                    <a class="sidebar-text sidebar-button" href="#">Customers</a>
+                    <a href="#supplierSubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button">Suppliers</a>
+                    <ul class="collapse list-unstyled" id="supplierSubmenu">
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'suppliers-list' %}">Suppliers List</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'new-supplier' %}">Add New Supplier</a> </li>
+                    </ul>
                 </li>
                 <li>
                     <a class="sidebar-text sidebar-button" href="{% url 'about' %}">About</a>
