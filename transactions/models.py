@@ -24,12 +24,13 @@ class PurchaseBill(models.Model):
     def get_items_list(self):
         return PurchaseItem.objects.filter(billno=self)
 
-#contains the purchase stocks made TODO: add price per item and total price
+#contains the purchase stocks made
 class PurchaseItem(models.Model):
     billno = models.ForeignKey(PurchaseBill, on_delete = models.CASCADE, related_name='purchasebillno')
     stock = models.ForeignKey(Stock, on_delete = models.CASCADE, related_name='purchaseitem')
     quantity = models.IntegerField(default=1)
-    price = models.IntegerField(default=1)
+    perprice = models.IntegerField(default=1)
+    totalprice = models.IntegerField(default=1)
 
     def __str__(self):
 	    return "Bill no: " + str(self.billno.billno) + ", Item = " + self.stock.name

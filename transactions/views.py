@@ -124,17 +124,25 @@ class PurchaseCreateView(View):
         formset = PurchaseItemFormset(request.POST)                             # recieves a post method for the formset
         supplierobj = get_object_or_404(Supplier, pk=pk)                        # gets the supplier object
         if formset.is_valid():
+            # saves bill
             billobj = PurchaseBill(supplier=supplierobj)                        # a new object of class 'PurchaseBill' is created with supplier field set to 'supplierobj'
             billobj.save()                                                      # saves object into the db
             for form in formset:                                                # for loop to save each individual form as its own object
+                # false saves the item and links bill to the item
                 billitem = form.save(commit=False)
                 billitem.billno = billobj                                       # links the bill object to the items
-                item = get_object_or_404(Stock, name=billitem.stock.name)       # gets the item
-                item.quantity += billitem.quantity                              # updates quantity
-                item.save()
+                # gets the stock item
+                stock = get_object_or_404(Stock, name=billitem.stock.name)       # gets the item
+                # store price per item and calculates the total pric
+                billitem.perprice = stock.price
+                billitem.totalprice = billitem.perprice * billitem.quantity
+                # updates quantity in stock db
+                stock.quantity += billitem.quantity                              # updates quantity
+                # saves bill item and stock
+                stock.save()
                 billitem.save()
             messages.success(request, "Purchased items have been registered successfully")
-            return redirect('purchases-list')
+            return redirect('purchase-bill', billno=billobj.billno)
         formset = PurchaseItemFormset(request.GET or None)
         context = {
             'formset'   : formset,
