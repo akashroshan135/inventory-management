@@ -9,7 +9,7 @@ from .models import (
 )
 
 
-
+# form used to select a supplier
 class SelectSupplierForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -18,7 +18,7 @@ class SelectSupplierForm(forms.ModelForm):
         model = PurchaseBill
         fields = ['supplier']
 
-
+# form used to render a single stock item form
 class PurchaseItemForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -29,9 +29,11 @@ class PurchaseItemForm(forms.ModelForm):
         model = PurchaseItem
         fields = ['stock', 'quantity', 'price']
 
+# formset used to render multiple 'PurchaseItemForm'
 PurchaseItemFormset = formset_factory(PurchaseItemForm, extra=1)
 
 
+# form used for supplier
 class SupplierForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -43,7 +45,7 @@ class SupplierForm(forms.ModelForm):
         fields = ['name', 'phone', 'email']
 
 
-
+# form used to get customer details
 class SaleForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -54,7 +56,7 @@ class SaleForm(forms.ModelForm):
         model = SaleBill
         fields = ['name', 'phone', 'email']
 
-
+# form used to render a single stock item form
 class SaleItemForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -65,4 +67,5 @@ class SaleItemForm(forms.ModelForm):
         model = SaleItem
         fields = ['stock', 'quantity', 'price']
 
+# formset used to render multiple 'SaleItemForm'
 SaleItemFormset = formset_factory(SaleItemForm, extra=1)

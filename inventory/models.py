@@ -1,6 +1,6 @@
 from django.db import models
     
-#contains the details of the stock
+#contains the details of the stock FIXME: fix fields
 class Stock(models.Model):
     id = models.AutoField(primary_key=True)
     type = (

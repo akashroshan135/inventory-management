@@ -7,7 +7,7 @@
 
 {% block content %}
 
-    <div style="color:#ea2088; font-style: bold; font-size: 3rem;">New Purchase</div>
+    <div style="color:#ea2088; font-style: bold; font-size: 3rem;">New Sale</div>
     
         <br>
 
@@ -64,7 +64,7 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <label class="panel-body-text">Price per item:</label>
-                                <input type="text" class="form-control textinput priceperitem" id="id_priceperitem" value="9" disabled>
+                                <input type="text" class="form-control textinput priceperitem" id="id_priceperitem" value="1" disabled>
                             </div>
                             <div class="form-group col-md-1">
                                 <label class="panel-body-text">Price:</label>
@@ -165,7 +165,7 @@
         $(document).on('click', '.setprice', function(e){
             e.preventDefault();
             var dom = $(this);          //stores html element into a variable
-            var item = $(this).val()    //stores the values in the html element
+            var item = $(this).val();   //stores the values in the html element
             
             //stores pk and price of all stocks into a js object 'stocks'
             var stocks = [

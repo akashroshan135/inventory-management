@@ -1,31 +1,31 @@
-<head>
+{% extends bill_base %}
+{% load static %}
+
+
+{% block title %} Sale Bill No : {{ bill.billno }}{% endblock title %}
+
+
+{% block content %}
     
-    <link rel="stylesheet" href="bill.css">
+    <div style="color:#ea2088; font-style: bold; font-size: 3rem;  border-bottom: 1px solid black;">Sale Bill No : {{ bill.billno }}</div>
 
-    <title> Purchase/Sale Bill No - </title>
+    <br><br>
 
-</head>
-
-<body>
-    
     <div id="printArea">
 
         <table class="outer-box inner-box" style="width: 800px; margin-left: auto; margin-right: auto;">
             <tbody>
                 
                 <tr style="height: 1px;">
-                    <td style="height: 1px;"> <p style="text-align: center;">TAX INVOICE</p> </td>
+                    <td> <p style="text-align: center;">TAX INVOICE</p> </td>
                 </tr>
                 
-                <tr style="text-align: center; height: 76px;">
-                    <td style="height: 76px;">
-                        <p> <br>
-                            <span style="font-size: 350%;">Company</span> <br>
-                            <span style="font-size: 120%; font-weight: bold; text-decoration: underline;">DEALERS IN : Products</span> <br>
-                            <span style="text-decoration: underline; font-weight: bold;">REGD ADDRESS :</span> Address Line 1<br>Address line 2<br>
-                            <span style="text-decoration: underline; font-weight: bold;">EMAIL : email</span> <br><br>
-                        </p>
-                        
+                <tr style="text-align: center;">
+                    <td >
+                        <span style="font-size: 350%;">Company</span> <br>
+                        <span style="font-size: 120%; font-weight: bold; text-decoration: underline;">DEALERS IN : Products</span> <br>
+                        <span style="text-decoration: underline; font-weight: bold;">REGD ADDRESS :</span> Address Line 1<br>Address line 2<br>
+                        <span style="text-decoration: underline; font-weight: bold;">EMAIL : email</span> <br><br>
                     </td>
                 </tr>
                 
@@ -39,12 +39,12 @@
                             <tr>
                                 <td class="inner-box" style="width: 50%; font-weight: bold;">&nbsp;NAME OF CONSIGNEE / BUYER</td>
                                 <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;INVOICE NO</td>
-                                <td class="inner-box" style="width: 25%;">&nbsp;</td>
+                                <td class="inner-box" style="width: 25%;">&nbsp;{{ bill.billno }}</td>
                             </tr>
                             <tr>
                                 <td class="inner-box" style="width: 50%;" rowspan="4">&nbsp;</td>
                                 <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;DATE</td>
-                                <td class="inner-box" style="width: 25%;">&nbsp;</td>
+                                <td class="inner-box" style="width: 25%;">&nbsp;{{ bill.time.date }}</td>
                             </tr>
                             <tr>
                                 <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;EWAY NO</td>
@@ -64,7 +64,7 @@
                                 <td class="inner-box" style="width: 25%;" >&nbsp;</td>
                             </tr>
                         </tbody>
-                    </table style="width: auto; margin-left: auto; margin-right: auto;">
+                    </table>
                     </td>
                 </tr>
                 
@@ -81,15 +81,17 @@
                                 <td class="inner-box" style="width: 12%; font-weight: bold; text-align: center;">AMOUNT INRS</td>
                                 <td class="inner-box" style="width: 05%; font-weight: bold; text-align: center;">PS</td>
                             </tr>
-                            <tr style="height: 200px;">
-                                <td class="inner-box" style="width: 5%;">&nbsp;</td>
-                                <td class="inner-box" style="width: 30%;">&nbsp;</td>
-                                <td class="inner-box" style="width: 12%;">&nbsp;</td>
-                                <td class="inner-box" style="width: 12%;">&nbsp;</td>
-                                <td class="inner-box" style="width: 12%;">&nbsp;</td>
-                                <td class="inner-box" style="width: 12%;">&nbsp;</td>
-                                <td class="inner-box" style="width: 5%;">&nbsp;</td>
-                            </tr>
+                            {% for item in items %}
+                                <tr style="height: auto;">
+                                    <td class="inner-box" style="width: 5%;">&nbsp; {{ forloop.counter }}</td>
+                                    <td class="inner-box" style="width: 30%;">&nbsp; {{ item.stock.name }}</td>
+                                    <td class="inner-box" style="width: 12%;">&nbsp;</td>
+                                    <td class="inner-box" style="width: 12%;">&nbsp; {{ item.quantity }}</td>
+                                    <td class="inner-box" style="width: 12%;">&nbsp;</td>
+                                    <td class="inner-box" style="width: 12%;">&nbsp;</td>
+                                    <td class="inner-box" style="width: 5%;">&nbsp;</td>
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table class="outer-box">
                     </td>
@@ -158,8 +160,8 @@
     <br><br>
 
     <div class="wrapper">
-        <button class="center" onclick="printpage('printArea')">Print</button>
-        <a href="#"> <button class="center">Go back</button> </a>
+        <button class="center ghost-green-bill" onclick="printpage('printArea')">Print</button>
+        <a href="{{ request.META.HTTP_REFERER }}"> <button class="center ghost-blue-bill">Go back</button> </a>
     </div>
 
     <script>
@@ -172,4 +174,4 @@
         }       
         </script>
 
-</body>
+{% endblock %}

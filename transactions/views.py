@@ -24,6 +24,59 @@ from .forms import (
 from inventory.models import Stock
 
 
+
+
+# shows a lists of all suppliers
+class SupplierListView(ListView):
+    model = Supplier
+    template_name = "suppliers/suppliers_list.html"
+
+
+# used to add a new supplier
+class SupplierCreateView(SuccessMessageMixin, CreateView):
+    model = Supplier
+    form_class = SupplierForm
+    success_url = '/transactions/suppliers'
+    success_message = "Supplier has been created successfully"
+    template_name = "suppliers/edit_supplier.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'New Supplier'
+        context["savebtn"] = 'Add Supplier'
+        return context     
+
+
+# used to update a suppliers info
+class SupplierUpdateView(SuccessMessageMixin, UpdateView):
+    model = Supplier
+    form_class = SupplierForm
+    success_url = '/transactions/suppliers'
+    success_message = "Supplier details has been updated successfully"
+    template_name = "suppliers/edit_supplier.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'Edit Supplier'
+        context["savebtn"] = 'Save Changes'
+        context["delbtn"] = 'Delete Supplier'
+        return context
+
+
+# used to view a supplier's profile TODO: add charts
+class SupplierView(View):
+    def get(self, request, name):
+        supplierobj = get_object_or_404(Supplier, name=name)
+        bills = PurchaseBill.objects.filter(supplier=supplierobj)
+        context = {
+            'supplier'  : supplierobj,
+            'bills'     : bills
+        }
+        return render(request, 'suppliers/supplier.html', context)
+
+
+
+
 # shows the list of bills of all purchases 
 class PurchaseView(View):
     model = PurchaseBill
@@ -32,6 +85,7 @@ class PurchaseView(View):
     def get(self, request, *args, **kwargs):
         bills = PurchaseBill.objects.all()
         return render(request, self.template_name, {'bills': bills})
+
 
 # used to select the supplier
 class SelectSupplierView(View):
@@ -50,7 +104,8 @@ class SelectSupplierView(View):
             return redirect('new-purchase', supplier.pk)
         return render(request, self.template_name, {'form': form})
 
-# used to generate a bill object and save items 
+
+# used to generate a bill object and save items FIXME: obtain price from db
 class PurchaseCreateView(View):                                                 
     template_name = 'purchases/new_purchase.html'
 
@@ -88,50 +143,6 @@ class PurchaseCreateView(View):
         return render(request, self.template_name, context)
 
 
-# shows a lists of all suppliers
-class SupplierListView(ListView):
-    model = Supplier
-    template_name = "suppliers/suppliers_list.html"
-
-# used to add a new supplier
-class SupplierCreateView(SuccessMessageMixin, CreateView):
-    model = Supplier
-    form_class = SupplierForm
-    success_url = '/transactions/suppliers'
-    success_message = "Supplier has been created successfully"
-    template_name = "suppliers/edit_supplier.html"
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = 'New Supplier'
-        context["savebtn"] = 'Add Supplier'
-        return context     
-
-# used to update a suppliers info
-class SupplierUpdateView(SuccessMessageMixin, UpdateView):
-    model = Supplier
-    form_class = SupplierForm
-    success_url = '/transactions/suppliers'
-    success_message = "Supplier details has been updated successfully"
-    template_name = "suppliers/edit_supplier.html"
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = 'Edit Supplier'
-        context["savebtn"] = 'Save Changes'
-        context["delbtn"] = 'Delete Supplier'
-        return context
-
-# used to view a supplier's profile TODO: add charts
-class SupplierView(View):
-    def get(self, request, name):
-        supplierobj = get_object_or_404(Supplier, name=name)
-        bills = PurchaseBill.objects.filter(supplier=supplierobj)
-        context = {
-            'supplier'  : supplierobj,
-            'bills'     : bills
-        }
-        return render(request, 'suppliers/supplier.html', context)
 
 
 # shows a list of all sales bills
@@ -143,7 +154,8 @@ class SaleView(View):
         bills = SaleBill.objects.all()
         return render(request, self.template_name, {'bills': bills})
 
-# used to generate a bill object and save items
+
+# used to generate a bill object and save items FIXME: obtain price from db
 class SaleCreateView(View):                                                      
     template_name = 'sales/new_sale.html'
 
@@ -181,4 +193,34 @@ class SaleCreateView(View):
         }
         return render(request, self.template_name, context)
 
-#TODO: create bill view for both purchases and sales
+
+
+
+# used to display the purchase bill object TODO: calculate tax and other details
+class PurchaseBillView(View):
+    model = PurchaseBill
+    template_name = "bill/purchase_bill.html"
+    bill_base = "bill/bill_base.html"
+
+    def get(self, request, billno):
+        context = {
+            'bill'      : PurchaseBill.objects.get(billno=billno),
+            'items'     : PurchaseItem.objects.filter(billno=billno),
+            'bill_base' : self.bill_base,
+        }
+        return render(request, self.template_name, context)
+
+
+# used to display the sale bill object TODO: calculate tax and other details
+class SaleBillView(View):
+    model = PurchaseBill
+    template_name = "bill/sale_bill.html"
+    bill_base = "bill/bill_base.html"
+
+    def get(self, request, billno):
+        context = {
+            'bill'      : SaleBill.objects.get(billno=billno),
+            'items'     : SaleItem.objects.filter(billno=billno),
+            'bill_base' : self.bill_base,
+        }
+        return render(request, self.template_name, context)

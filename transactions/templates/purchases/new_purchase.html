@@ -58,7 +58,7 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <label class="panel-body-text">Price per item:</label>
-                                <input type="text" class="form-control textinput priceperitem" id="id_priceperitem" value="9" disabled>
+                                <input type="text" class="form-control textinput priceperitem" id="id_priceperitem" value="1" disabled>
                             </div>
                             <div class="form-group col-md-1">
                                 {{ form.price.errors }}
@@ -79,7 +79,7 @@
 
             <center>
                 <button type="submit" class="btn ghost-green">Add to purchases</button>
-                <a href="{% url 'purchases-list' %}" class="btn ghost-button">Cancel</a>
+                <a href="{{ request.META.HTTP_REFERER }}" class="btn ghost-button">Cancel</a>
             </center>
             
         </form>
@@ -87,7 +87,7 @@
     </div>
 
     <!-- Custom JS to add and remove item forms -->
-    <script src="{% static 'js/jquery-3.2.1.slim.min.js' %}" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script>
     <script type="text/javascript">
         
         function updateElementIndex(el, prefix, ndx) {
@@ -160,7 +160,8 @@
         $(document).on('click', '.setprice', function(e){
             e.preventDefault();
             var dom = $(this);          //stores html element into a variable
-            var item = $(this).val()    //stores the values in the html element
+            var item = $(this).val();   //stores the values in the html element
+            
             //stores pk and price of all stocks into a js object 'stocks'
             var stocks = [
                 {% for stock in stocks %}

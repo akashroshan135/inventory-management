@@ -26,7 +26,7 @@
             {% for sale in bills %}
             <tr>
                 <td>
-                    <h3> <a href="#">{{ sale.billno }}</a> </h3>
+                    <h3> <a href="{% url 'sale-bill' sale.billno %}">{{ sale.billno }}</a> </h3>
                 </td>
                 <td class=""> {{ sale.name }} <br> <small style="color: #909494">Ph No : {{ sale.phone }}</small> </td>
                 <td class="align-middle">{% for item in sale.get_items_list %} <a href="#">{{ item.stock.name }}</a> <br> {% endfor %}</td>
