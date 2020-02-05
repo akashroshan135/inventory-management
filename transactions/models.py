@@ -50,12 +50,13 @@ class SaleBill(models.Model):
     def get_items_list(self):
         return SaleItem.objects.filter(billno=self)
 
-#contains the sale stocks made TODO: add price per item and total price
+#contains the sale stocks made
 class SaleItem(models.Model):
     billno = models.ForeignKey(SaleBill, on_delete = models.CASCADE, related_name='salebillno')
     stock = models.ForeignKey(Stock, on_delete = models.CASCADE, related_name='saleitem')
     quantity = models.IntegerField(default=1)
-    price = models.IntegerField(default=1)
+    perprice = models.IntegerField(default=1)
+    totalprice = models.IntegerField(default=1)
 
     def __str__(self):
 	    return "Bill no: " + str(self.billno.billno) + ", Item = " + self.stock.name

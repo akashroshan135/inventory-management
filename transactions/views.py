@@ -155,7 +155,7 @@ class SaleView(View):
         return render(request, self.template_name, {'bills': bills})
 
 
-# used to generate a bill object and save items FIXME: obtain price from db
+# used to generate a bill object and save items
 class SaleCreateView(View):                                                      
     template_name = 'sales/new_sale.html'
 
@@ -172,19 +172,27 @@ class SaleCreateView(View):
 
     def post(self, request):
         form = SaleForm(request.POST)
-        formset = SaleItemFormset(request.POST)                             # recieves a post method for the formset
+        formset = SaleItemFormset(request.POST)                                 # recieves a post method for the formset
         if form.is_valid() and formset.is_valid():
+            # saves bill
             billobj = form.save(commit=False)
             billobj.save()     
             for form in formset:                                                # for loop to save each individual form as its own object
+                # false saves the item and links bill to the item
                 billitem = form.save(commit=False)
                 billitem.billno = billobj                                       # links the bill object to the items
-                item = get_object_or_404(Stock, name=billitem.stock.name)       # gets the item
-                item.quantity -= billitem.quantity                              # updates quantity
-                item.save()
+                # gets the stock item
+                stock = get_object_or_404(Stock, name=billitem.stock.name)      
+                # store price per item and calculates the total price
+                billitem.perprice = stock.price
+                billitem.totalprice = billitem.perprice * billitem.quantity
+                # updates quantity in stock db
+                stock.quantity -= billitem.quantity   
+                # saves bill item and stock
+                stock.save()
                 billitem.save()
             messages.success(request, "Sold items have been registered successfully")
-            return redirect('sales-list')
+            return redirect('sale-bill', billno=billobj.billno)
         form = SaleForm(request.GET or None)
         formset = SaleItemFormset(request.GET or None)
         context = {

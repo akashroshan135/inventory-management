@@ -7,11 +7,15 @@
 
 {% block content %}
     
-    <div style="color:#ea2088; font-style: bold; font-size: 3rem;  border-bottom: 1px solid black;">Sale Bill No : {{ bill.billno }}</div>
+    <div style="color:#ea2088; font-style: bold; font-size: 3rem;  border-bottom: 1px solid white;">Sale Bill No : {{ bill.billno }}</div>
 
     <br><br>
 
-    <div id="printArea">
+    <div class="bg">
+    
+    <br><br>
+
+    <div id="printArea" class="bg">
 
         <table class="outer-box inner-box" style="width: 800px; margin-left: auto; margin-right: auto;">
             <tbody>
@@ -159,9 +163,13 @@
 
     <br><br>
 
+    </div>
+
+    <br><br>
+
     <div class="wrapper">
-        <button class="center ghost-green-bill" onclick="printpage('printArea')">Print</button>
-        <a href="{{ request.META.HTTP_REFERER }}"> <button class="center ghost-blue-bill">Go back</button> </a>
+        <button class="center ghost-green" onclick="printpage('printArea')">Print</button>
+        <a href="{% url 'sales-list' %}"> <button class="center ghost-blue">Go back</button> </a>
     </div>
 
     <script>

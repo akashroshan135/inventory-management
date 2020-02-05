@@ -62,10 +62,9 @@ class SaleItemForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['stock'].widget.attrs.update({'class': 'textinput form-control setprice', 'required': 'true'})
         self.fields['quantity'].widget.attrs.update({'class': 'textinput form-control setquantity', 'required': 'true'})
-        self.fields['price'].widget.attrs.update({'class': 'textinput form-control putprice', 'required': 'true', 'readonly': 'true'})
     class Meta:
         model = SaleItem
-        fields = ['stock', 'quantity', 'price']
+        fields = ['stock', 'quantity']
 
 # formset used to render multiple 'SaleItemForm'
 SaleItemFormset = formset_factory(SaleItemForm, extra=1)
