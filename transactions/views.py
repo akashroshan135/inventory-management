@@ -105,7 +105,7 @@ class SelectSupplierView(View):
         return render(request, self.template_name, {'form': form})
 
 
-# used to generate a bill object and save items FIXME: obtain price from db
+# used to generate a bill object and save items
 class PurchaseCreateView(View):                                                 
     template_name = 'purchases/new_purchase.html'
 
@@ -133,8 +133,7 @@ class PurchaseCreateView(View):
                 billitem.billno = billobj                                       # links the bill object to the items
                 # gets the stock item
                 stock = get_object_or_404(Stock, name=billitem.stock.name)       # gets the item
-                # store price per item and calculates the total pric
-                billitem.perprice = stock.price
+                # calculates the total price
                 billitem.totalprice = billitem.perprice * billitem.quantity
                 # updates quantity in stock db
                 stock.quantity += billitem.quantity                              # updates quantity
@@ -191,8 +190,7 @@ class SaleCreateView(View):
                 billitem.billno = billobj                                       # links the bill object to the items
                 # gets the stock item
                 stock = get_object_or_404(Stock, name=billitem.stock.name)      
-                # store price per item and calculates the total price
-                billitem.perprice = stock.price
+                # calculates the total price
                 billitem.totalprice = billitem.perprice * billitem.quantity
                 # updates quantity in stock db
                 stock.quantity -= billitem.quantity   

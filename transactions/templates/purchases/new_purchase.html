@@ -52,24 +52,27 @@
                                 {{ form.stock }}
                             </div>
                             <div class="form-group col-md-2">
+                                <label class="panel-body-text">Price per item:</label>
+                                {{ form.perprice }}
+                            </div>
+                            <div class="form-group col-md-2">
                                 {{ form.quantity.errors }}
                                 <label class="panel-body-text">Quantity:</label>
                                 {{ form.quantity }}
                             </div>
-                            <div class="form-group col-md-2">
-                                <label class="panel-body-text">Price per item:</label>
-                                <input type="text" class="form-control textinput priceperitem" id="id_priceperitem" value="1" disabled>
-                            </div>
                             <div class="form-group col-md-1">
                                 <label class="panel-body-text">Price:</label>
-                                <input type="text" class="textinput form-control putprice" value="1" disabled required>
+                                <input type="text" class="textinput form-control totalprice" value="1" disabled required>
                             </div>
                             <div class="form-group col-md-1">
                                 <label class="panel-body-text" style="color: #000">.</label>
-                                <button class="form-control btn btn-success add-form-row">+</button>
+                                <button class="form-control btn btn-danger remove-form-row">-</button>
                             </div>
                         </div>
                     {% endfor %}
+                        <div style="text-align: right;">                    
+                            <a href="#" class="add-form-row">+ Add More</a>
+                        </div>
                     </div>
                 </div>
 
@@ -97,9 +100,12 @@
             if (el.name) el.name = el.name.replace(id_regex, replacement);
         }
         
+        //stores the total no of item forms
+        var total = 1;
+
         function cloneMore(selector, prefix) {
             var newElement = $(selector).clone(true);
-            var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+            //var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
             newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function() {
                 var name = $(this).attr('name')
                 if(name) {
@@ -118,16 +124,11 @@
             total++;
             $('#id_' + prefix + '-TOTAL_FORMS').val(total);
             $(selector).after(newElement);
-            var conditionRow = $('.form-row:not(:last)');
-            conditionRow.find('.btn.add-form-row')
-            .removeClass('btn-success').addClass('btn-danger')
-            .removeClass('add-form-row').addClass('remove-form-row')
-            .html('-');
             return false;
         }
         
         function deleteForm(prefix, btn) {
-            var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+            //var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
             if (total > 1){
                 btn.closest('.form-row').remove();
                 var forms = $('.form-row');
@@ -137,6 +138,9 @@
                         updateElementIndex(this, prefix, i);
                     });
                 }
+                total--;
+            } else {
+                alert("Field cannot be deleted");
             }
             return false;
         }
@@ -154,55 +158,50 @@
         });
 
 
-
-        //gets the value of the item selected and updates the 'price per item' and 'total price' field
-        $(document).on('click', '.setprice', function(e){
-            e.preventDefault();
-            var dom = $(this);          //stores html element into a variable
-            var item = $(this).val();   //stores the values in the html element
-            
-            //stores pk and price of all stocks into a js object 'stocks'
-            var stocks = [
-                {% for stock in stocks %}
-                    {% if not forloop.first %},{% endif %}
-                    {
-                        pk          : {{ stock.pk }},
-                        perprice    : {{ stock.price }}
-                    }
-                {% endfor %}
-            ];
-            //foreach item in the js object 'stocks'
-            stocks.forEach(function(stockSummary, i) {
-
-                var pk = stocks[i].pk;
-                var perprice = stocks[i].perprice;
-
-                if(item == pk) {
-                    //sets per price value
-                    dom.parents('.form-row').find('.priceperitem').val(perprice);
-                    //gets quantity value
-                    var quantity = dom.parents('.form-row').find('.setquantity').val();
-                    //calculates total
-                    var tprice = quantity * perprice;
-                    //sets it to field
-                    dom.parents('.form-row').find('.putprice').val(tprice);
-                    return false;
+        //stores pk and quantity of all stocks into a js object 'stocks'
+        var stocks = [
+            {% for stock in stocks %}
+                {% if not forloop.first %},{% endif %}
+                {
+                    pk          : {{ stock.pk }},
+                    quantity    : {{ stock.quantity }}
                 }
-
-            });
-            return false;
-        });
-
+            {% endfor %}
+        ];
+        
         //updates the total price by multiplying 'price per item' and 'quantity' 
-        $(document).on('click', '.setquantity', function(e){
+        $(document).on('change', '.setprice', function(e){
             e.preventDefault();
             //gets the values
-            var quantity = $(this).val();
-            var perprice = $(this).parents('.form-row').find('.priceperitem').val();
+            var element = $(this);
+            var stock = element.parents('.form-row').find('.stock').val();
+            var quantity = element.parents('.form-row').find('.quantity').val();
+            var perprice = element.parents('.form-row').find('.price').val();
+            //checks if stocks are available
+            stocks.forEach(function(stockSummary, i) {
+                var pk = stocks[i].pk;
+                var squantity = stocks[i].quantity;
+                if(stock == pk) {
+                    //checks if ordered stock is more than available stock
+                    if(quantity > squantity){
+                        quantity = quantity - 1;
+                        if(quantity <= 1){
+                            //no stocks are available. Attempts to delete field
+                            alert("Stocks are currently unavailable. Field will be removed");
+                            //Sets quantity to 0 as failsafe for when the total no of item forms are 1
+                            element.parents('.form-row').find('.quantity').val(0);
+                            deleteForm('form', element);
+                        } else {
+                            element.parents('.form-row').find('.quantity').val(squantity-1);
+                            alert("Exceeded current stock available");
+                        }
+                    }
+                }
+            });     
             //calculates the total
             var tprice = quantity * perprice;
             //sets it to field
-            $(this).parents('.form-row').find('.putprice').val(tprice);
+            element.parents('.form-row').find('.totalprice').val(tprice);
             return false;
         });
 
