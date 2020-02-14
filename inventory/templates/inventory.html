@@ -21,13 +21,12 @@
 
         <br><br>
         
-        {# FIXME: adjust column sizes#}
         <thead class="thead-inverse">
             <tr>
-                <th width="55%">Stock Name</th>
+                <th width="40%">Stock Name</th>
                 <th width="15%">Current Stock</th>
                 <th width="15%">Current Price</th>
-                <th width="15%">Options</th>
+                <th width="30%">Options</th>
             </tr>
         </thead>
       
@@ -42,6 +41,7 @@
                 <td class="align-middle">
                     <center>
                         <a href="{% url 'edit-stock' stock.pk %}" class="btn ghost-button">Edit Details</a>
+                        <a href="{% url 'delete-stock' stock.pk %}" class="btn ghost-red"> Delete Stock </a>
                     </center>
                 </td>          
             </tr>

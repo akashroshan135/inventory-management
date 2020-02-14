@@ -21,7 +21,7 @@
             <tbody>
                 
                 <tr style="height: 1px;">
-                    <td> <p style="text-align: center;">TAX INVOICE</p> </td>
+                    <td> <p style="text-align: center;">TAX INVOICE - PURCHASE</p> </td>
                 </tr>
                 
                 <tr style="text-align: center;">
@@ -91,13 +91,13 @@
                                     <td class="inner-box" style="width: 30%;">&nbsp; {{ item.stock.name }}</td>
                                     <td class="inner-box" style="width: 12%;">&nbsp;</td>
                                     <td class="inner-box" style="width: 12%;">&nbsp; {{ item.quantity }}</td>
-                                    <td class="inner-box" style="width: 12%;">&nbsp;</td>
-                                    <td class="inner-box" style="width: 12%;">&nbsp;</td>
-                                    <td class="inner-box" style="width: 5%;">&nbsp;</td>
+                                    <td class="inner-box" style="width: 12%;">&nbsp; {{ item.perprice }}</td>
+                                    <td class="inner-box" style="width: 12%;">&nbsp;{{ item.totalprice }}</td>
+                                    <td class="inner-box" style="width: 5%;">&nbsp;0</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
-                    </table class="outer-box">
+                    </table>
                     </td>
                 </tr>
                 

@@ -38,7 +38,7 @@
             {% for purchase in bills %}
             <tr>
                 <td>
-                    <h3> <a href="#">{{ purchase.billno }}</a> </h3>
+                    <h3> <a href="{% url 'purchase-bill' purchase.billno %}">{{ purchase.billno }}</a> </h3>
                 </td>
                 <td class="align-middle">{% for item in purchase.get_items_list %} <a href="#">{{ item.stock.name }}</a> <br> {% endfor %}</td>
                 <td class="align-middle">{% for item in purchase.get_items_list %} {{ item.quantity }} <br> {% endfor %}</td>          
