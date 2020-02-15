@@ -18,35 +18,20 @@
             <label for="{{ form.name.id_for_label }}">Name:</label>
             {{ form.name }}
         </div>
-
-        <div class="form-group">
-            {{ form.stock_type.errors }}
-            <label for="{{ form.stock_type.id_for_label }}">Stock Type:</label>
-            {{ form.stock_type }}
-        </div>
-
         <div class="form-group">
             {{ form.description.errors }}
             <label for="{{ form.description.id_for_label }}">Description:</label>
             {{ form.description }}
         </div>
-
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                {{ form.quantity.errors }}
-                <label for="{{ form.quantity.id_for_label }}">Quantity:</label>
-                {{ form.quantity }}
-            </div>
-            <div class="form-group col-md-6">
-                {{ form.price.errors }}
-                <label for="{{ form.price.id_for_label }}">Price:</label>
-                {{ form.price }}
-            </div>
+        <div class="form-group ">
+            {{ form.quantity.errors }}
+            <label for="{{ form.quantity.id_for_label }}">Quantity:</label>
+            {{ form.quantity }}
         </div>
 
         <br>
 
-        <center>
+        <div class="align-middle">
             <button type="submit" class="btn ghost-green">{{ savebtn }}</button>
             {% if title == "New Stock" %}
                 <button type="reset" class="btn ghost-blue" >Reset</button>
@@ -55,7 +40,7 @@
                 <a href="{% url 'delete-stock' object.pk %}" class="btn ghost-red"> Delete Stock </a>
             {% endif %}
             <a href="{% url 'inventory' %}" class="btn ghost-button">Cancel</a>
-        </center>
+        </div>
         
     </form>
 

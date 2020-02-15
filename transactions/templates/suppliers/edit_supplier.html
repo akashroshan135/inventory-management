@@ -34,7 +34,7 @@
 
         <br>
 
-        <center>
+        <div class="align-middle">
             <button type="submit" class="btn ghost-green">{{ savebtn }}</button>
             {% if title == "New Supplier" %}
                 <button type="reset" class="btn ghost-blue" >Reset</button>
@@ -43,7 +43,7 @@
                 <a href="#" class="btn ghost-red"> Delete Supplier </a>
             {% endif %}
             <a href="{% url 'suppliers-list' %}" class="btn ghost-button">Cancel</a>
-        </center>
+        </div>
         
     </form>
 

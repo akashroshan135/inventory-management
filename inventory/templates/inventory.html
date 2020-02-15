@@ -23,31 +23,39 @@
         
         <thead class="thead-inverse">
             <tr>
-                <th width="40%">Stock Name</th>
-                <th width="15%">Current Stock</th>
-                <th width="15%">Current Price</th>
+                <th width="50%">Stock Name</th>
+                <th width="20%">Current Stock</th>
                 <th width="30%">Options</th>
             </tr>
         </thead>
-      
-        <tbody>
+                  
+{% if filter.qs %}
+
+        <tbody>         
             {% for stock in filter.qs %}
-            <tr>
-                <td>
-                    <h4> <a href="#">{{ stock.name }}</a> </h4>
-                </td>
-                <td class="align-middle">{{ stock.quantity }}</td>
-                <td class="align-middle">{{ stock.price }}</td>
-                <td class="align-middle">
-                    <center>
+                <tr>
+                    <td>
+                        <h4> <a href="#">{{ stock.name }}</a> </h4>
+                    </td>
+                    <td>{{ stock.quantity }}</td>
+                    <td class="align-middle">
                         <a href="{% url 'edit-stock' stock.pk %}" class="btn ghost-button">Edit Details</a>
                         <a href="{% url 'delete-stock' stock.pk %}" class="btn ghost-red"> Delete Stock </a>
-                    </center>
-                </td>          
-            </tr>
-            {% endfor %}
+                    </td>          
+                </tr>
+            {% endfor %}                   
         </tbody>
 
+    </table>  
+
+{% else %}
+
+        <tbody></tbody>   
     </table>
+
+    <br><br><br><br><br><br><br><br>
+    <div style="color: #ea2088; font-style: bold; font-size: 1.5rem; text-align: center;">WOW, SUCH EMPTY</div>
+
+{% endif %}
 
 {% endblock content %}

@@ -21,8 +21,10 @@
                 <th width="25%">Purchased (Date and Time)</th>
             </tr>
         </thead>
-      
-        <tbody>
+
+{% if bills %}
+
+        <tbody>         
             {% for purchase in bills %}
             <tr>
                 <td>
@@ -37,5 +39,15 @@
         </tbody>
 
     </table>
+
+{% else %}
+
+        <tbody></tbody>   
+    </table>
+
+    <br><br><br><br><br><br><br><br>
+    <div style="color: #ea2088; font-style: bold; font-size: 1.5rem; text-align: center;">WOW, SUCH EMPTY</div>
+
+{% endif %}
 
 {% endblock content %}
