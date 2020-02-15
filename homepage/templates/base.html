@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">    
     <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">    
     
-    <title>Company - {% block title %}Title Missing{% endblock title %}</title>
+    <title>Software - {% block title %}Title Missing{% endblock title %}</title>
 
 </head>
 
@@ -27,7 +27,7 @@
         <nav id="sidebar">
             
             <div class="sidebar-header">
-                <a class="navbar-brand titlefont mr-4" href="{% url 'home' %}"><h3>Company</h3></a>
+                <a class="navbar-brand titlefont mr-4" href="{% url 'home' %}"><h3>Software</h3></a>
             </div>
 
             <ul class="list-unstyled sidebar-components">
@@ -70,15 +70,15 @@
                 <li class="bottomleft">
                     {% if user.is_authenticated %}
                         <a href="#UserSubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button">{{ request.user.username }}</a>
+                        <ul class="collapse list-unstyled" id="UserSubmenu">
+                            {% if request.user.is_superuser %}
+                                <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'admin:index' %}">Admin Page</a> </li>
+                            {% endif %}
+                                <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'logout' %}">Logout</a> </li>
+                        </ul>
                     {% else %}
-                        <a href="#UserSubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button">Not Logged in</a>
+                        <a href="{% url 'login' %}" class="sidebar-text sidebar-button">Not Logged in</a>
                     {% endif %}
-                    <ul class="collapse list-unstyled" id="UserSubmenu">
-                        {% if request.user.is_superuser %}
-                            <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'admin:index' %}">Admin Page</a> </li>
-                        {% endif %}
-                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="#">Logout</a> </li>
-                    </ul>
                 </li>
 
             </ul>

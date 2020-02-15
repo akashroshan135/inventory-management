@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'widget_tweaks',                            # uses 'django-widget-tweaks' app
+    'crispy_forms',                             # uses 'django-crispy-forms' app
 
     'homepage.apps.HomepageConfig',
     'inventory.apps.InventoryConfig',
@@ -125,3 +126,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'                     # bootstrap template crispy-form uses

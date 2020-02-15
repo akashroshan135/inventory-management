@@ -8,7 +8,7 @@ urlpatterns = [
     path('', FilterView.as_view(filterset_class=StockFilter, 
         template_name='inventory.html'), name='inventory'),
         
-    path('new', views.StockCreateView.as_view(), name = 'new-stock'),
-    path('stock/<pk>/edit', views.StockUpdateView.as_view(), name = 'edit-stock'),
-    path('stock/<pk>/delete', views.StockDeleteView.as_view(), name = 'delete-stock'),
+    path('new', views.StockCreateView.as_view(), name='new-stock'),
+    path('stock/<pk>/edit', views.StockUpdateView.as_view(), name='edit-stock'),
+    path('stock/<pk>/delete', views.StockDeleteView.as_view(), name='delete-stock'),
 ]
