@@ -112,11 +112,9 @@ class PurchaseCreateView(View):
     def get(self, request, pk):
         formset = PurchaseItemFormset(request.GET or None)                      # renders an empty formset
         supplierobj = get_object_or_404(Supplier, pk=pk)                        # gets the supplier object
-        stocks = Stock.objects.all()
         context = {
             'formset'   : formset,
             'supplier'  : supplierobj,
-            'stocks'    : stocks
         }                                                                       # sends the supplier and formset as context
         return render(request, self.template_name, context)
 
@@ -227,7 +225,7 @@ class PurchaseBillView(View):
 
 # used to display the sale bill object TODO: calculate tax and other details
 class SaleBillView(View):
-    model = PurchaseBill
+    model = SaleBill
     template_name = "bill/sale_bill.html"
     bill_base = "bill/bill_base.html"
 

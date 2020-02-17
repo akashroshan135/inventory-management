@@ -6,7 +6,7 @@ class Supplier(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=150)
     phone = models.CharField(max_length=12, unique=True)
-    email = models.EmailField(max_length=254)
+    email = models.EmailField(max_length=254, unique=True)
 
     def __str__(self):
 	    return self.name
