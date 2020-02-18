@@ -1,12 +1,67 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 
 {% block title %} Home {% endblock title %}
 
 
 {% block content %}
 
-{# TODO: Put some actual stuff on this page#}
-<center> <span style="color: white;">test</span> </center>
+    <div style="color:#ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid #fff">Welcome, {{ request.user.username }}</div>
+
+    <br>
+
+    <div id="container" style="background-color: white; position: relative; height:45vh;" class="align-middle">
+        <canvas id="bar-graph"></canvas>
+    </div>
+
+    <!-- Loading Chart JS -->
+    <script src="{% static 'js/Chart.min.js' %}"></script>  
+    <script>
+        Chart.defaults.global.defaultFontColor = '#000';
+        
+        //configuration for the bar graph
+        var barConfig = {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    backgroundColor: 'blue',
+                    label: 'Stock in Inventory',
+                    data: {{ data|safe }},
+                }],
+                labels: {{ labels|safe }}
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            },
+        };
+
+        //configuration for the bar graph
+        var barConfig = {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    backgroundColor: 'blue',
+                    label: 'Stock in Inventory',
+                    data: {{ data|safe }},
+                }],
+                labels: {{ labels|safe }}
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            },
+        };
+
+
+        //runs all charts on loading the webpage
+        window.onload = function() {
+            var ctx = document.getElementById('bar-graph').getContext('2d');
+            window.BarStock = new Chart(ctx, barConfig);
+        };
+
+    </script>
 
 {% endblock content %}
