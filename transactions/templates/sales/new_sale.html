@@ -199,6 +199,7 @@
                             deleteForm('form', element);
                         } else {
                             element.parents('.form-row').find('.quantity').val(squantity-1);
+                            quantity = squantity - 1;
                             alert("Exceeded current stock available");
                         }
                     }

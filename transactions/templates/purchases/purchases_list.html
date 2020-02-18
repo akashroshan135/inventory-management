@@ -2,7 +2,7 @@
 
 {% load widget_tweaks %}
 
-{# TODO: add filters and display more detail #}
+
 {% block title %} Purchases List {% endblock title %}
 
 
@@ -12,13 +12,15 @@
         
         <br>
         
-        <thead class="thead-inverse">
+        <thead class="thead-inverse align-middle">
             <tr>
                 <th width="10%">Bill No</th>
-                <th width="20%">Supplier</th>
-                <th width="25%">Stocks Purchased</th>
-                <th width="20%">Quantity Purchased</th>
-                <th width="25%">Purchased (Date and Time)</th>
+                <th width="15%">Customer</th>
+                <th width="15%">Stocks Purchased</th>
+                <th width="15%">Quantity Purchased</th>
+                <th width="15%">Total Purchased Price</th>
+                <th width="15%">Purchased Date</th>
+                <th width="15%">Options</th>
             </tr>
         </thead>
 
@@ -27,13 +29,13 @@
         <tbody>         
             {% for purchase in bills %}
             <tr>
-                <td>
-                    <h3> <a href="{% url 'purchase-bill' purchase.billno %}">{{ purchase.billno }}</a> </h3>
-                </td>
+                <td class="align-middle"> <h3>{{ purchase.billno }}</h3> </td>
                 <td class=""> <a href="{% url 'supplier' purchase.supplier.name %}">{{ purchase.supplier }}</a> <br> <small style="color: #909494">Ph No : {{ purchase.supplier.phone }}</small> </td>
-                <td class="align-middle">{% for item in purchase.get_items_list %} <a href="#">{{ item.stock.name }}</a> <br> {% endfor %}</td>
-                <td class="align-middle">{% for item in purchase.get_items_list %} {{ item.quantity }} <br> {% endfor %}</td>          
-                <td class="">{{ purchase.time }}</td>          
+                <td class="align-middle">{% for item in purchase.get_items_list %} {{ item.stock.name }} <br> {% endfor %}</td>
+                <td class="align-middle">{% for item in purchase.get_items_list %} {{ item.quantity }} <br> {% endfor %}</td>     
+                <td class="align-middle">{{ purchase.get_total_price }}</td>
+                <td class="align-middle">{{ purchase.time.date }}</td>
+                <td class="align-middle"> <a href="{% url 'purchase-bill' purchase.billno %}" class="btn ghost-pink">View Bill</a> </td>
             </tr>
             {% endfor %}
         </tbody>

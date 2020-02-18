@@ -83,7 +83,7 @@ class PurchaseView(View):
     template_name = "purchases/purchases_list.html"
 
     def get(self, request, *args, **kwargs):
-        bills = PurchaseBill.objects.all()
+        bills = PurchaseBill.objects.order_by('-time')
         return render(request, self.template_name, {'bills': bills})
 
 
@@ -148,16 +148,6 @@ class PurchaseCreateView(View):
         return render(request, self.template_name, context)
 
 
-
-
-# shows a list of all sales bills
-class SaleView(View):
-    model = SaleBill
-    template_name = "sales/sales_list.html"
-
-    def get(self, request, *args, **kwargs):
-        bills = SaleBill.objects.all()
-        return render(request, self.template_name, {'bills': bills})
 
 
 # used to generate a bill object and save items

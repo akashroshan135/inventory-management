@@ -33,7 +33,7 @@
         <div class="row">
 
             <div class="col-md-6">
-            <div style="color:#ea2088; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #fff">Most Recent Sales</div><br>
+                <div style="color:#ea2088; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #fff">Most Recent Sales</div><br>
                 {% for item in sales %}
                     {% if not forloop.first %}
                         <br><div style="border-bottom: 0.5px solid #fff"></div><br>
@@ -64,8 +64,6 @@
                         <div class="col-md-2"> {{ item.get_total_price }} <br> <br> <a href="{% url 'purchase-bill' item.billno %}">View Bill</a> </div>
                     </div>
                 {% endfor %}
-            </div>
-
             </div>
 
         </div>
