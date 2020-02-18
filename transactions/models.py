@@ -24,6 +24,13 @@ class PurchaseBill(models.Model):
     def get_items_list(self):
         return PurchaseItem.objects.filter(billno=self)
 
+    def get_total_price(self):
+        purchaseitems = PurchaseItem.objects.filter(billno=self)
+        total = 0
+        for item in purchaseitems:
+            total += item.totalprice
+        return total
+
 #contains the purchase stocks made
 class PurchaseItem(models.Model):
     billno = models.ForeignKey(PurchaseBill, on_delete = models.CASCADE, related_name='purchasebillno')
@@ -50,6 +57,13 @@ class SaleBill(models.Model):
 
     def get_items_list(self):
         return SaleItem.objects.filter(billno=self)
+        
+    def get_total_price(self):
+        saleitems = SaleItem.objects.filter(billno=self)
+        total = 0
+        for item in saleitems:
+            total += item.totalprice
+        return total
 
 #contains the sale stocks made
 class SaleItem(models.Model):
