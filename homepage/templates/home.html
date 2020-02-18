@@ -12,38 +12,76 @@
 
     <br>
 
-    <div id="container" style="background-color: white; position: relative; height:45vh;" class="align-middle">
+    <div id="container" style="position: relative; height:45vh; border: 2mm ridge #4F102B; border-radius: 30px;" class="align-middle table-bordered">
         <canvas id="bar-graph"></canvas>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{% url 'select-supplier' %}" class="btn ghost-blue btn-lg btn-block btn-huge">New Incoming Stock</a>
+        </div>
+        <div class="col-md-6">
+            <a href="{% url 'new-sale' %}" class="btn ghost-blue btn-lg btn-block btn-huge">New Outgoing Stock</a>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="content-section">
+        <div class="row">
+
+            <div class="col-md-6">
+            <div style="color:#ea2088; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #fff">Most Recent Sales</div><br>
+                {% for item in sales %}
+                    {% if not forloop.first %}
+                        <br><div style="border-bottom: 0.5px solid #fff"></div><br>
+                    {% endif %}
+                    <div class="row">               
+                        <div class="col-md-9"> 
+                            Bill No: {{ item.billno }} <br> 
+                            Purchased by {{ item.name }} <br>
+                            <small>{{ item.time.date }}</small>
+                        </div>
+                        <div class="col-md-2"> {{ item.get_total_price }} <br> <br> <a href="{% url 'sale-bill' item.billno %}">View Bill</a> </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-6">
+                <div style="color:#ea2088; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #fff">Most Recent Purchases</div><br>
+                {% for item in purchases %}
+                    {% if not forloop.first %}
+                        <br><div style="border-bottom: 0.5px solid #fff"></div><br>
+                    {% endif %}
+                    <div class="row">               
+                        <div class="col-md-9"> 
+                            Bill No: {{ item.billno }} <br> 
+                            Purchased by {{ item.supplier.name }} <br>
+                            <small>{{ item.time.date }}</small>
+                        </div>
+                        <div class="col-md-2"> {{ item.get_total_price }} <br> <br> <a href="{% url 'purchase-bill' item.billno %}">View Bill</a> </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            </div>
+
+        </div>
     </div>
 
     <!-- Loading Chart JS -->
     <script src="{% static 'js/Chart.min.js' %}"></script>  
     <script>
-        Chart.defaults.global.defaultFontColor = '#000';
-        
-        //configuration for the bar graph
-        var barConfig = {
-            type: 'bar',
-            data: {
-                datasets: [{
-                    backgroundColor: 'blue',
-                    label: 'Stock in Inventory',
-                    data: {{ data|safe }},
-                }],
-                labels: {{ labels|safe }}
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-            },
-        };
+        Chart.defaults.global.defaultFontColor = '#fff';
 
         //configuration for the bar graph
         var barConfig = {
             type: 'bar',
             data: {
                 datasets: [{
-                    backgroundColor: 'blue',
+                    backgroundColor: '#ea2088',
                     label: 'Stock in Inventory',
                     data: {{ data|safe }},
                 }],

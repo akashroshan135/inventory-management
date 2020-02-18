@@ -13,9 +13,13 @@ class HomeView(View):
         for item in stockqueryset:
             labels.append(item.name)
             data.append(item.quantity)
+        sales = SaleBill.objects.order_by('-time')[:3]
+        purchases = PurchaseBill.objects.order_by('-time')[:3]
         context = {
             'labels'    : labels,
             'data'      : data,
+            'sales'     : sales,
+            'purchases' : purchases
         }
         return render(request, 'home.html', context)
 
