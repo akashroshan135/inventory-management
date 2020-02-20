@@ -42,6 +42,25 @@ class PurchaseItem(models.Model):
     def __str__(self):
 	    return "Bill no: " + str(self.billno.billno) + ", Item = " + self.stock.name
 
+#contains the other details in the purchases bill
+class PurchaseBillDetails(models.Model):
+    billno = models.ForeignKey(PurchaseBill, on_delete = models.CASCADE, related_name='purchasedetailsbillno')
+    
+    eway = models.CharField(max_length=50, blank=True, null=True)    
+    veh = models.CharField(max_length=50, blank=True, null=True)
+    destination = models.CharField(max_length=50, blank=True, null=True)
+    po = models.CharField(max_length=50, blank=True, null=True)
+    
+    cgst = models.CharField(max_length=50, blank=True, null=True)
+    sgst = models.CharField(max_length=50, blank=True, null=True)
+    igst = models.CharField(max_length=50, blank=True, null=True)
+    cess = models.CharField(max_length=50, blank=True, null=True)
+    tcs = models.CharField(max_length=50, blank=True, null=True)
+    total = models.CharField(max_length=50, blank=True, null=True)
+
+    def __str__(self):
+	    return "Bill no: " + str(self.billno.billno)
+
 
 #contains the sale bills made TODO: add new fields
 class SaleBill(models.Model):

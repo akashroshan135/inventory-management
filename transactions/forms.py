@@ -2,7 +2,8 @@ from django import forms
 from django.forms import formset_factory
 from .models import (
     PurchaseBill, 
-    PurchaseItem, 
+    PurchaseItem,
+    PurchaseBillDetails, 
     Supplier, 
     SaleBill, 
     SaleItem,
@@ -32,6 +33,12 @@ class PurchaseItemForm(forms.ModelForm):
 
 # formset used to render multiple 'PurchaseItemForm'
 PurchaseItemFormset = formset_factory(PurchaseItemForm, extra=1)
+
+# form used to accept the other details for purchase bill
+class PurchaseDetailsForm(forms.ModelForm):
+    class Meta:
+        model = PurchaseBillDetails
+        fields = ['eway','veh', 'destination', 'po', 'cgst', 'sgst', 'igst', 'cess', 'tcs', 'total']
 
 
 # form used for supplier
@@ -71,6 +78,7 @@ class SaleItemForm(forms.ModelForm):
 # formset used to render multiple 'SaleItemForm'
 SaleItemFormset = formset_factory(SaleItemForm, extra=1)
 
+# form used to accept the other details for sales bill
 class SaleDetailsForm(forms.ModelForm):
     class Meta:
         model = SaleBillDetails

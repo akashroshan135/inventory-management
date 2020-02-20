@@ -10,14 +10,16 @@ from django.contrib import messages
 from .models import (
     PurchaseBill, 
     Supplier, 
-    PurchaseItem, 
+    PurchaseItem,
+    PurchaseBillDetails,
     SaleBill,  
     SaleItem,
     SaleBillDetails
 )
 from .forms import (
     SelectSupplierForm, 
-    PurchaseItemFormset, 
+    PurchaseItemFormset,
+    PurchaseDetailsForm, 
     SupplierForm, 
     SaleForm,
     SaleItemFormset,
@@ -127,6 +129,9 @@ class PurchaseCreateView(View):
             # saves bill
             billobj = PurchaseBill(supplier=supplierobj)                        # a new object of class 'PurchaseBill' is created with supplier field set to 'supplierobj'
             billobj.save()                                                      # saves object into the db
+            # create bill details object
+            billdetailsobj = PurchaseBillDetails(billno=billobj)
+            billdetailsobj.save()
             for form in formset:                                                # for loop to save each individual form as its own object
                 # false saves the item and links bill to the item
                 billitem = form.save(commit=False)
@@ -174,6 +179,9 @@ class SaleCreateView(View):
             # saves bill
             billobj = form.save(commit=False)
             billobj.save()     
+            # create bill details object
+            billdetailsobj = SaleBillDetails(billno=billobj)
+            billdetailsobj.save()
             for form in formset:                                                # for loop to save each individual form as its own object
                 # false saves the item and links bill to the item
                 billitem = form.save(commit=False)
@@ -184,9 +192,6 @@ class SaleCreateView(View):
                 billitem.totalprice = billitem.perprice * billitem.quantity
                 # updates quantity in stock db
                 stock.quantity -= billitem.quantity   
-                # create bill details object
-                billdetailobj = SaleBillDetails(billno=billobj)
-                billdetailobj.save()
                 # saves bill item and stock
                 stock.save()
                 billitem.save()
@@ -211,9 +216,35 @@ class PurchaseBillView(View):
 
     def get(self, request, billno):
         context = {
-            'bill'      : PurchaseBill.objects.get(billno=billno),
-            'items'     : PurchaseItem.objects.filter(billno=billno),
-            'bill_base' : self.bill_base,
+            'bill'          : PurchaseBill.objects.get(billno=billno),
+            'items'         : PurchaseItem.objects.filter(billno=billno),
+            'billdetails'   : PurchaseBillDetails.objects.get(billno=billno),
+            'bill_base'     : self.bill_base,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, billno):
+        form = PurchaseDetailsForm(request.POST)
+        if form.is_valid():
+            billdetailsobj = PurchaseBillDetails.objects.get(billno=billno)
+            
+            billdetailsobj.eway = request.POST.get("eway")    
+            billdetailsobj.veh = request.POST.get("veh")
+            billdetailsobj.destination = request.POST.get("destination")
+            billdetailsobj.po = request.POST.get("po")
+            billdetailsobj.cgst = request.POST.get("cgst")
+            billdetailsobj.sgst = request.POST.get("sgst")
+            billdetailsobj.igst = request.POST.get("igst")
+            billdetailsobj.cess = request.POST.get("cess")
+            billdetailsobj.tcs = request.POST.get("tcs")
+            billdetailsobj.total = request.POST.get("total")
+
+            billdetailsobj.save()
+        context = {
+            'bill'          : PurchaseBill.objects.get(billno=billno),
+            'items'         : PurchaseItem.objects.filter(billno=billno),
+            'billdetails'   : PurchaseBillDetails.objects.get(billno=billno),
+            'bill_base'     : self.bill_base,
         }
         return render(request, self.template_name, context)
 
@@ -250,11 +281,10 @@ class SaleBillView(View):
             billdetailsobj.total = request.POST.get("total")
 
             billdetailsobj.save()
-            context = {
-                'bill'          : SaleBill.objects.get(billno=billno),
-                'items'         : SaleItem.objects.filter(billno=billno),
-                'billdetails'   : billdetailsobj,
-                'bill_base'     : self.bill_base,
-            }
-            return render(request, self.template_name, context)
-        self.get(billno)
+        context = {
+            'bill'          : SaleBill.objects.get(billno=billno),
+            'items'         : SaleItem.objects.filter(billno=billno),
+            'billdetails'   : SaleBillDetails.objects.get(billno=billno),
+            'bill_base'     : self.bill_base,
+        }
+        return render(request, self.template_name, context)

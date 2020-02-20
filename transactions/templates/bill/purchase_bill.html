@@ -10,167 +10,173 @@
     <div style="color:#ea2088; font-style: bold; font-size: 3rem;  border-bottom: 1px solid white;">Purchase Bill No : {{ bill.billno }}</div>
 
     <br><br>
-
-    <div class="bg">
     
-    <br><br>
+    <form method="post">
+    {% csrf_token %}
 
-    <div id="printArea" class="bg">
+        <div class="bg">
+        
+            <br><br>
 
-        <table class="outer-box inner-box" style="width: 800px; margin-left: auto; margin-right: auto;">
-            <tbody>
-                
-                <tr style="height: 1px;">
-                    <td> <p style="text-align: center;">TAX INVOICE - PURCHASE</p> </td>
-                </tr>
-                
-                <tr style="text-align: center;">
-                    <td >
-                        <span style="font-size: 350%;">Company</span> <br>
-                        <span style="font-size: 120%; font-weight: bold; text-decoration: underline;">DEALERS IN : Products</span> <br>
-                        <span style="text-decoration: underline; font-weight: bold;">REGD ADDRESS :</span> Address Line 1<br>Address line 2<br>
-                        <span style="text-decoration: underline; font-weight: bold;">EMAIL : email</span> <br><br>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td>
-                    <table class="outer-box" style="width: 800px; margin-left: auto; margin-right: auto;">
-                        <tbody>
-                            <tr>
-                                <td class="inner-box" style="text-align: center; font-weight: bold;" colspan="3">GSTIN NO - 123456789ABCDEF</td>
-                            </tr>
-                            <tr>
-                                <td class="inner-box" style="width: 50%; font-weight: bold;">&nbsp;NAME OF CONSIGNEE / BUYER</td>
-                                <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;INVOICE NO</td>
-                                <td class="inner-box" style="width: 25%;">&nbsp;{{ bill.billno }}</td>
-                            </tr>
-                            <tr>
-                                <td class="inner-box" style="width: 50%;" rowspan="4">&nbsp;</td>
-                                <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;DATE</td>
-                                <td class="inner-box" style="width: 25%;">&nbsp;{{ bill.time.date }}</td>
-                            </tr>
-                            <tr>
-                                <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;EWAY NO</td>
-                                <td class="inner-box" style="width: 25%;">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;VEH NO</td>
-                                <td class="inner-box" style="width: 25%;">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;DESTINATION</td>
-                                <td class="inner-box" style="width: 25%;">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="inner-box" style="font-weight: bold;">&nbsp;GSTIN NO : </td>
-                                <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;PO NO &amp; DATE</td>
-                                <td class="inner-box" style="width: 25%;" >&nbsp;</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td>
-                    <table class="outer-box" style="width: auto; margin-left: auto; margin-right: auto;">
-                        <tbody>
-                            <tr>
-                                <td class="inner-box" style="width: 05%; font-weight: bold; text-align: center;">&nbsp;SL NO</td>
-                                <td class="inner-box" style="width: 30%; font-weight: bold; text-align: center;">DESCRIPTION OF THE GOODS</td>
-                                <td class="inner-box" style="width: 12%; font-weight: bold; text-align: center;">&nbsp;HSN/SAC</td>
-                                <td class="inner-box" style="width: 12%; font-weight: bold; text-align: center;">QTY MTS</td>
-                                <td class="inner-box" style="width: 12%; font-weight: bold; text-align: center;">RATE PMT</td>
-                                <td class="inner-box" style="width: 12%; font-weight: bold; text-align: center;">AMOUNT INRS</td>
-                                <td class="inner-box" style="width: 05%; font-weight: bold; text-align: center;">PS</td>
-                            </tr>
-                            {% for item in items %}
-                                <tr style="height: auto;">
-                                    <td class="inner-box" style="width: 5%;">&nbsp; {{ forloop.counter }}</td>
-                                    <td class="inner-box" style="width: 30%;">&nbsp; {{ item.stock.name }}</td>
-                                    <td class="inner-box" style="width: 12%;">&nbsp;</td>
-                                    <td class="inner-box" style="width: 12%;">&nbsp; {{ item.quantity }}</td>
-                                    <td class="inner-box" style="width: 12%;">&nbsp; {{ item.perprice }}</td>
-                                    <td class="inner-box" style="width: 12%;">&nbsp;{{ item.totalprice }}</td>
-                                    <td class="inner-box" style="width: 5%;">&nbsp;0</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td>
-                    <table class="outer-box inner-box" style="width: 800px; margin-left: auto; margin-right: auto;">
-                        <tbody>
-                            <tr>
-                                <td class="inner-box" style="width: 35%; text-align: center;" rowspan="6">
-                                    <p> <span style="font-weight: bold;">BANK DETAILS <br> company</span> <br>
-                                        bank name <br> AC NO-000 000 000 000 000 <br> IFSC CODE - ABCD 000 0000 <br> BRANCH <br> PH NO - 0123456789</p>
-                                </td>
-                                <td class="inner-box" style="width: 30%; font-weight: bold;">&nbsp;CGST @ 2.5%</td>
-                                <td class="inner-box" style="width: 30%;">&nbsp;</td>
-                                <td class="inner-box" style="width: 5%;">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="inner-box" style="font-weight: bold;">&nbsp;SGST @ 2.5%</td>
-                                <td class="inner-box">&nbsp;</td>
-                                <td class="inner-box">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="inner-box" style="font-weight: bold;">&nbsp;IGST @ 5% </td>
-                                <td class="inner-box">&nbsp;</td>
-                                <td class="inner-box">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="inner-box" style="font-weight: bold;">&nbsp;CESS @ 400/PMT </td>
-                                <td class="inner-box">&nbsp;</td>
-                                <td class="inner-box">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="inner-box" style="font-weight: bold;">&nbsp;TCS @ 1%</td>
-                                <td class="inner-box">&nbsp;</td>
-                                <td class="inner-box">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="inner-box" style="font-weight: bold;">&nbsp;TOTAL</td>
-                                <td class="inner-box">&nbsp;</td>
-                                <td class="inner-box">&nbsp;</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    </td>
-                </tr>
+            <div id="printArea" class="bg">
 
-                <tr>
-                    <td style="text-align: right;">
-                        <span style="font-weight: bold;">FOR COMPANY <br><br><br><br> Signature</span>
-                    </td>
-                </tr>
+                <table class="outer-box inner-box" style="width: 800px; margin-left: auto; margin-right: auto;">
+                    <tbody>
+                        
+                        <tr style="height: 1px;">
+                            <td> <p style="text-align: center;">TAX INVOICE - PURCHASE</p> </td>
+                        </tr>
+                        
+                        <tr style="text-align: center;">
+                            <td >
+                                <span style="font-size: 350%;">Company</span> <br>
+                                <span style="font-size: 120%; font-weight: bold; text-decoration: underline;">DEALERS IN : Products</span> <br>
+                                <span style="text-decoration: underline; font-weight: bold;">REGD ADDRESS :</span> Address Line 1<br>Address line 2<br>
+                                <span style="text-decoration: underline; font-weight: bold;">EMAIL : email</span> <br><br>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                            <table class="outer-box" style="width: 800px; margin-left: auto; margin-right: auto;">
+                                <tbody>
+                                    <tr>
+                                        <td class="inner-box" style="text-align: center; font-weight: bold;" colspan="3">GSTIN NO - 123456789ABCDEF</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="width: 50%; font-weight: bold;">&nbsp;NAME OF CONSIGNEE / BUYER</td>
+                                        <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;INVOICE NO</td>
+                                        <td class="inner-box" style="width: 25%;">&nbsp;{{ bill.billno }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="width: 50%;" rowspan="4">&nbsp;</td>
+                                        <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;DATE</td>
+                                        <td class="inner-box" style="width: 25%;">&nbsp;{{ bill.time.date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;EWAY NO</td>
+                                        <td class="inner-box" style="width: 25%;"> <input type="text" name="eway" class="align-middle" style="border: 0; overflow: hidden;" value="{% if billdetails.eway  %}{{ billdetails.eway }}{% endif %}"> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;VEH NO</td>
+                                        <td class="inner-box" style="width: 25%;"> <input type="text" name="veh" class="align-middle" style="border: 0; overflow: hidden;" value="{% if billdetails.veh  %}{{ billdetails.veh }}{% endif %}"> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;DESTINATION</td>
+                                        <td class="inner-box" style="width: 25%;"> <input type="text" name="destination" class="align-middle" style="border: 0; overflow: hidden;" value="{% if billdetails.destination  %}{{ billdetails.destination }}{% endif %}"> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="font-weight: bold;">&nbsp;GSTIN NO : </td>
+                                        <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;PO NO &amp; DATE</td>
+                                        <td class="inner-box" style="width: 25%;"> <input type="text" name="po" class="align-middle" style="border: 0; overflow: hidden;" value="{% if billdetails.po  %}{{ billdetails.po }}{% endif %}"> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                            <table class="outer-box" style="width: auto; margin-left: auto; margin-right: auto;">
+                                <tbody>
+                                    <tr>
+                                        <td class="inner-box" style="width: 05%; font-weight: bold; text-align: center;">&nbsp;SL NO</td>
+                                        <td class="inner-box" style="width: 30%; font-weight: bold; text-align: center;">DESCRIPTION OF THE GOODS</td>
+                                        <td class="inner-box" style="width: 12%; font-weight: bold; text-align: center;">&nbsp;HSN/SAC</td>
+                                        <td class="inner-box" style="width: 12%; font-weight: bold; text-align: center;">QTY MTS</td>
+                                        <td class="inner-box" style="width: 12%; font-weight: bold; text-align: center;">RATE PMT</td>
+                                        <td class="inner-box" style="width: 12%; font-weight: bold; text-align: center;">AMOUNT INRS</td>
+                                        <td class="inner-box" style="width: 05%; font-weight: bold; text-align: center;">PS</td>
+                                    </tr>
+                                    {% for item in items %}
+                                        <tr style="height: auto;">
+                                            <td class="inner-box" style="width: 5%;">&nbsp; {{ forloop.counter }}</td>
+                                            <td class="inner-box" style="width: 30%;">&nbsp; {{ item.stock.name }}</td>
+                                            <td class="inner-box" style="width: 12%;">&nbsp;</td>
+                                            <td class="inner-box" style="width: 12%;">&nbsp; {{ item.quantity }}</td>
+                                            <td class="inner-box" style="width: 12%;">&nbsp; {{ item.perprice }}</td>
+                                            <td class="inner-box" style="width: 12%;">&nbsp;{{ item.totalprice }}</td>
+                                            <td class="inner-box" style="width: 5%;">&nbsp;0</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                            <table class="outer-box inner-box" style="width: 800px; margin-left: auto; margin-right: auto;">
+                                <tbody>
+                                    <tr>
+                                        <td class="inner-box" style="width: 35%; text-align: center;" rowspan="6">
+                                            <p> <span style="font-weight: bold;">BANK DETAILS <br> company</span> <br>
+                                                bank name <br> AC NO-000 000 000 000 000 <br> IFSC CODE - ABCD 000 0000 <br> BRANCH <br> PH NO - 0123456789</p>
+                                        </td>
+                                        <td class="inner-box" style="width: 30%; font-weight: bold;">&nbsp;CGST @ 2.5%</td>
+                                        <td class="inner-box" style="width: 30%;">&nbsp; <input type="text" name="cgst" class="align-middle" style="border: 0; overflow: hidden;" value="{% if billdetails.cgst  %}{{ billdetails.cgst }}{% endif %}"></td>
+                                        <td class="inner-box" style="width: 5%;">&nbsp;0</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="font-weight: bold;">&nbsp;SGST @ 2.5%</td>
+                                        <td class="inner-box">&nbsp; <input type="text" name="sgst" class="align-middle" style="border: 0; overflow: hidden;" value="{% if billdetails.sgst  %}{{ billdetails.sgst }}{% endif %}"></td>
+                                        <td class="inner-box">&nbsp;0</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="font-weight: bold;">&nbsp;IGST @ 5% </td>
+                                        <td class="inner-box">&nbsp; <input type="text" name="igst" class="align-middle" style="border: 0; overflow: hidden;" value="{% if billdetails.igst  %}{{ billdetails.igst }}{% endif %}"></td>
+                                        <td class="inner-box">&nbsp;0</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="font-weight: bold;">&nbsp;CESS @ 400/PMT </td>
+                                        <td class="inner-box">&nbsp; <input type="text" name="cess" class="align-middle" style="border: 0; overflow: hidden;" value="{% if billdetails.cess  %}{{ billdetails.cess }}{% endif %}"></td>
+                                        <td class="inner-box">&nbsp;0</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="font-weight: bold;">&nbsp;TCS @ 1%</td>
+                                        <td class="inner-box">&nbsp; <input type="text" name="tcs" class="align-middle" style="border: 0; overflow: hidden;" value="{% if billdetails.tcs  %}{{ billdetails.tcs }}{% endif %}"></td>
+                                        <td class="inner-box">&nbsp;0</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="font-weight: bold;">&nbsp;TOTAL</td>
+                                        <td class="inner-box">&nbsp; <input type="text" name="total" class="align-middle" style="border: 0; overflow: hidden;" value="{% if billdetails.total  %}{{ billdetails.total }}{% endif %}"> </td>
+                                        <td class="inner-box">&nbsp;0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </td>
+                        </tr>
 
-                <tr>
-                    <td style="text-align: center;">
-                        FINAL TEXT
-                    </td>
-                </tr>
+                        <tr>
+                            <td style="text-align: right;">
+                                <span style="font-weight: bold;">FOR COMPANY <br><br><br><br> Signature</span>
+                            </td>
+                        </tr>
 
-            </tbody>
-        </table>
+                        <tr>
+                            <td style="text-align: center;">
+                                FINAL TEXT
+                            </td>
+                        </tr>
 
-    </div>
+                    </tbody>
+                </table>
 
-    <br><br>
+            </div>
 
-    </div>
+            <br><br>
 
-    <br><br>
+        </div>
 
-    <div class="wrapper">
-        <button class="center ghost-green" onclick="printpage('printArea')">Print</button>
-        <a href="{% url 'purchases-list' %}"> <button class="center ghost-blue">Go back</button> </a>
-    </div>
+        <br><br>
+
+        <div class="wrapper">
+            <button class="center ghost-green" type="submit">Save Draft</button>
+            <button class="center ghost-blue" onclick="printpage('printArea')">Print</button>
+            <a href="{% url 'purchases-list' %}" class=" btn center ghost-button">Go back</a>
+        </div>
+
+    </form>
 
     <script>
         function printpage(divName) {
