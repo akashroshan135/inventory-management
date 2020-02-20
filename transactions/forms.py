@@ -5,7 +5,8 @@ from .models import (
     PurchaseItem, 
     Supplier, 
     SaleBill, 
-    SaleItem
+    SaleItem,
+    SaleBillDetails
 )
 
 
@@ -69,3 +70,8 @@ class SaleItemForm(forms.ModelForm):
 
 # formset used to render multiple 'SaleItemForm'
 SaleItemFormset = formset_factory(SaleItemForm, extra=1)
+
+class SaleDetailsForm(forms.ModelForm):
+    class Meta:
+        model = SaleBillDetails
+        fields = ['eway','veh', 'destination', 'po', 'cgst', 'sgst', 'igst', 'cess', 'tcs', 'total']

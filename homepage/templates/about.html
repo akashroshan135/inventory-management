@@ -7,7 +7,8 @@
 {% block content %}
     
     {% if not user.is_authenticated  %}
-        <a href="{% url 'home' %}" class="btn ghost-blue">Go Back</a>
+        <br>
+        <a href="{% url 'home' %}" class="btn ghost-button">Go Back</a>
     {% endif %}    
     
     <div class="align-middle" style="color: #ea2088; font-style: bold; font-size: 3rem;">Software</div>

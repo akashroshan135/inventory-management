@@ -12,14 +12,16 @@ from .models import (
     Supplier, 
     PurchaseItem, 
     SaleBill,  
-    SaleItem
+    SaleItem,
+    SaleBillDetails
 )
 from .forms import (
     SelectSupplierForm, 
     PurchaseItemFormset, 
     SupplierForm, 
     SaleForm,
-    SaleItemFormset
+    SaleItemFormset,
+    SaleDetailsForm
 )
 from inventory.models import Stock
 
@@ -63,7 +65,7 @@ class SupplierUpdateView(SuccessMessageMixin, UpdateView):
         return context
 
 
-# used to view a supplier's profile TODO: add charts
+# used to view a supplier's profile
 class SupplierView(View):
     def get(self, request, name):
         supplierobj = get_object_or_404(Supplier, name=name)
@@ -182,6 +184,9 @@ class SaleCreateView(View):
                 billitem.totalprice = billitem.perprice * billitem.quantity
                 # updates quantity in stock db
                 stock.quantity -= billitem.quantity   
+                # create bill details object
+                billdetailobj = SaleBillDetails(billno=billobj)
+                billdetailobj.save()
                 # saves bill item and stock
                 stock.save()
                 billitem.save()
@@ -198,7 +203,7 @@ class SaleCreateView(View):
 
 
 
-# used to display the purchase bill object TODO: calculate tax and other details
+# used to display the purchase bill object
 class PurchaseBillView(View):
     model = PurchaseBill
     template_name = "bill/purchase_bill.html"
@@ -213,16 +218,43 @@ class PurchaseBillView(View):
         return render(request, self.template_name, context)
 
 
-# used to display the sale bill object TODO: calculate tax and other details
+# used to display the sale bill object
 class SaleBillView(View):
     model = SaleBill
     template_name = "bill/sale_bill.html"
     bill_base = "bill/bill_base.html"
-
+    
     def get(self, request, billno):
         context = {
-            'bill'      : SaleBill.objects.get(billno=billno),
-            'items'     : SaleItem.objects.filter(billno=billno),
-            'bill_base' : self.bill_base,
+            'bill'          : SaleBill.objects.get(billno=billno),
+            'items'         : SaleItem.objects.filter(billno=billno),
+            'billdetails'   : SaleBillDetails.objects.get(billno=billno),
+            'bill_base'     : self.bill_base,
         }
         return render(request, self.template_name, context)
+
+    def post(self, request, billno):
+        form = SaleDetailsForm(request.POST)
+        if form.is_valid():
+            billdetailsobj = SaleBillDetails.objects.get(billno=billno)
+            
+            billdetailsobj.eway = request.POST.get("eway")    
+            billdetailsobj.veh = request.POST.get("veh")
+            billdetailsobj.destination = request.POST.get("destination")
+            billdetailsobj.po = request.POST.get("po")
+            billdetailsobj.cgst = request.POST.get("cgst")
+            billdetailsobj.sgst = request.POST.get("sgst")
+            billdetailsobj.igst = request.POST.get("igst")
+            billdetailsobj.cess = request.POST.get("cess")
+            billdetailsobj.tcs = request.POST.get("tcs")
+            billdetailsobj.total = request.POST.get("total")
+
+            billdetailsobj.save()
+            context = {
+                'bill'          : SaleBill.objects.get(billno=billno),
+                'items'         : SaleItem.objects.filter(billno=billno),
+                'billdetails'   : billdetailsobj,
+                'bill_base'     : self.bill_base,
+            }
+            return render(request, self.template_name, context)
+        self.get(billno)
