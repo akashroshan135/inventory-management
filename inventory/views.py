@@ -8,6 +8,14 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from .models import Stock
 from .forms import StockForm
+from django_filters.views import FilterView
+from .filters import StockFilter
+
+
+class StockListView(FilterView):
+    filterset_class = StockFilter
+    template_name = 'inventory.html'
+    paginate_by = 10
 
 
 class StockCreateView(SuccessMessageMixin, CreateView):                                 # createview class to add new stock, mixin used to display message

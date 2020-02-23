@@ -11,13 +11,13 @@
         {% csrf_token %}
         
         <fieldset class="form-group">
-            <div style="color:#ea2088; font-style: bold; font-size: 3rem;">Delete Stock</div>
+            <div style="color:#ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">Delete Stock</div> <br>
             <h2>Are you sure you want to delete the stock item "{{ object.name }}"?</h2>
         </fieldset>
 
         <div class="form-group">  
             <button type="submit" class="btn ghost-red">Yes, Delete</button>
-            <a href="{% url 'inventory' %}" class="btn ghost-blue">Cancel</a>
+            <a href="{% url 'inventory' %}" class="btn ghost-button">Cancel</a>
         </div>
         
     </form>
