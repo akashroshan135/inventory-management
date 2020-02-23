@@ -8,6 +8,7 @@ from django.views.generic import (
 )
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import (
     PurchaseBill, 
     Supplier, 
@@ -35,6 +36,7 @@ from inventory.models import Stock
 class SupplierListView(ListView):
     model = Supplier
     template_name = "suppliers/suppliers_list.html"
+    paginate_by = 10
 
 
 # used to add a new supplier
@@ -64,7 +66,7 @@ class SupplierUpdateView(SuccessMessageMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context["title"] = 'Edit Supplier'
         context["savebtn"] = 'Save Changes'
-        context["delbtn"] = 'Delete Supplier'
+        #context["delbtn"] = 'Delete Supplier'
         return context
 
 
@@ -72,7 +74,15 @@ class SupplierUpdateView(SuccessMessageMixin, UpdateView):
 class SupplierView(View):
     def get(self, request, name):
         supplierobj = get_object_or_404(Supplier, name=name)
-        bills = PurchaseBill.objects.filter(supplier=supplierobj)
+        bill_list = PurchaseBill.objects.filter(supplier=supplierobj)
+        page = request.GET.get('page', 1)
+        paginator = Paginator(bill_list, 10)
+        try:
+            bills = paginator.page(page)
+        except PageNotAnInteger:
+            bills = paginator.page(1)
+        except EmptyPage:
+            bills = paginator.page(paginator.num_pages)
         context = {
             'supplier'  : supplierobj,
             'bills'     : bills
@@ -88,6 +98,7 @@ class PurchaseView(ListView):
     template_name = "purchases/purchases_list.html"
     context_object_name = 'bills'
     ordering = ['-time']
+    paginate_by = 10
 
 
 # used to select the supplier
@@ -179,6 +190,7 @@ class SaleView(ListView):
     template_name = "sales/sales_list.html"
     context_object_name = 'bills'
     ordering = ['-time']
+    paginate_by = 10
 
 
 # used to generate a bill object and save items

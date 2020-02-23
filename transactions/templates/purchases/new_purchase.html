@@ -80,8 +80,9 @@
             <br>
 
             <div class="align-middle">
-                <button type="submit" class="btn ghost-green">Add to purchases</button>
-                <a href="{{ request.META.HTTP_REFERER }}" class="btn ghost-button">Cancel</a>
+                <button type="submit" class="btn ghost-green">Add to Purchases</button>
+                <a href="{% url 'select-supplier' %}" class="btn ghost-button">Go Back</a>
+                <a href="{% url 'purchases-list' %}" class="btn ghost-button">Cancel</a>
             </div>
             
         </form>
