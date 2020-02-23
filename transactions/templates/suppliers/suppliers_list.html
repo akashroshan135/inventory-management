@@ -17,12 +17,12 @@
 
     <table class="table table-css">
         
-        <thead class="thead-inverse">
+        <thead class="thead-inverse align-middle">
             <tr>
-                <th width="30%">Name</th>
+                <th width="25%">Name</th>
                 <th width="20%">Phone No</th>
                 <th width="25%">Email Address</th>
-                <th width="25%">Actions</th>
+                <th width="30%">Actions</th>
             </tr>
         </thead>
 
@@ -39,6 +39,7 @@
                 <td class="align-middle">
                     <div class="align-middle">
                         <a href="{% url 'edit-supplier' supplier.pk %}" class="btn ghost-button">Edit Details</a>
+                        {# <a href="#" class="btn ghost-red">Delete Supplier</a> #}
                     </div>
                 </td>              
             </tr>

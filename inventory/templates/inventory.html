@@ -47,7 +47,7 @@
                     <td class="align-middle">{{ stock.quantity }}</td>
                     <td class="align-middle">
                         <a href="{% url 'edit-stock' stock.pk %}" class="btn ghost-button">Edit Details</a>
-                        <a href="{% url 'delete-stock' stock.pk %}" class="btn ghost-red"> Delete Stock </a>
+                        {# <a href="{% url 'delete-stock' stock.pk %}" class="btn ghost-red"> Delete Stock </a> #}
                     </td>          
                 </tr>
             {% endfor %}                   
