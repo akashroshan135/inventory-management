@@ -21,7 +21,7 @@ class HomeView(View):
             'sales'     : sales,
             'purchases' : purchases
         }
-        return render(request, 'home.html', context)
+        return render(request, self.template_name, context)
 
 class AboutView(TemplateView):
     template_name = "about.html"

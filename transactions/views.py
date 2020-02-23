@@ -83,13 +83,11 @@ class SupplierView(View):
 
 
 # shows the list of bills of all purchases 
-class PurchaseView(View):
+class PurchaseView(ListView):
     model = PurchaseBill
     template_name = "purchases/purchases_list.html"
-
-    def get(self, request, *args, **kwargs):
-        bills = PurchaseBill.objects.order_by('-time')
-        return render(request, self.template_name, {'bills': bills})
+    context_object_name = 'bills'
+    ordering = ['-time']
 
 
 # used to select the supplier
@@ -176,13 +174,11 @@ class PurchaseDeleteView(SuccessMessageMixin, DeleteView):
 
 
 # shows the list of bills of all sales 
-class SaleView(View):
+class SaleView(ListView):
     model = SaleBill
     template_name = "sales/sales_list.html"
-
-    def get(self, request, *args, **kwargs):
-        bills = SaleBill.objects.order_by('-time')
-        return render(request, self.template_name, {'bills': bills})
+    context_object_name = 'bills'
+    ordering = ['-time']
 
 
 # used to generate a bill object and save items
@@ -196,7 +192,7 @@ class SaleCreateView(View):
         context = {
             'form'      : form,
             'formset'   : formset,
-            'stocks'     : stocks
+            'stocks'    : stocks
         }
         return render(request, self.template_name, context)
 
