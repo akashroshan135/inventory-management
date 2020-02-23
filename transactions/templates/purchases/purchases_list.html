@@ -17,10 +17,10 @@
                 <th width="10%">Bill No</th>
                 <th width="15%">Customer</th>
                 <th width="15%">Stocks Purchased</th>
-                <th width="15%">Quantity Purchased</th>
+                <th width="10%">Quantity Purchased</th>
                 <th width="15%">Total Purchased Price</th>
-                <th width="15%">Purchased Date</th>
-                <th width="15%">Options</th>
+                <th width="10%">Purchased Date</th>
+                <th width="25%">Options</th>
             </tr>
         </thead>
 
@@ -35,7 +35,7 @@
                 <td class="align-middle">{% for item in purchase.get_items_list %} {{ item.quantity }} <br> {% endfor %}</td>     
                 <td class="align-middle">{{ purchase.get_total_price }}</td>
                 <td class="align-middle">{{ purchase.time.date }}</td>
-                <td class="align-middle"> <a href="{% url 'purchase-bill' purchase.billno %}" class="btn ghost-pink">View Bill</a> </td>
+                <td class="align-middle"> <a href="{% url 'purchase-bill' purchase.billno %}" class="btn ghost-pink">View Bill</a> <a href="{% url 'delete-purchase' purchase.pk %}" class="btn ghost-red">Delete Bill</a> </td>
             </tr>
             {% endfor %}
         </tbody>

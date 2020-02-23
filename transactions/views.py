@@ -3,7 +3,8 @@ from django.views.generic import (
     View, 
     ListView,
     CreateView,
-    UpdateView
+    UpdateView,
+    DeleteView
 )
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
@@ -155,6 +156,33 @@ class PurchaseCreateView(View):
         return render(request, self.template_name, context)
 
 
+# used to delete a bill object
+class PurchaseDeleteView(SuccessMessageMixin, DeleteView):
+    model = PurchaseBill
+    template_name = "purchases/delete_purchase.html"
+    success_url = '/transactions/purchases'
+    
+    def delete(self, *args, **kwargs):
+        self.object = self.get_object()
+        items = PurchaseItem.objects.filter(billno=self.object.billno)
+        for item in items:
+            stock = get_object_or_404(Stock, name=item.stock.name)
+            stock.quantity -= item.quantity
+            stock.save()
+        messages.success(self.request, "Purchase bill has been deleted successfully")
+        return super(PurchaseDeleteView, self).delete(*args, **kwargs)
+
+
+
+
+# shows the list of bills of all sales 
+class SaleView(View):
+    model = SaleBill
+    template_name = "sales/sales_list.html"
+
+    def get(self, request, *args, **kwargs):
+        bills = SaleBill.objects.order_by('-time')
+        return render(request, self.template_name, {'bills': bills})
 
 
 # used to generate a bill object and save items
@@ -206,6 +234,23 @@ class SaleCreateView(View):
         return render(request, self.template_name, context)
 
 
+# used to delete a bill object
+class SaleDeleteView(SuccessMessageMixin, DeleteView):
+    model = SaleBill
+    template_name = "sales/delete_sale.html"
+    success_url = '/transactions/sales'
+    
+    def delete(self, *args, **kwargs):
+        self.object = self.get_object()
+        items = SaleItem.objects.filter(billno=self.object.billno)
+        for item in items:
+            stock = get_object_or_404(Stock, name=item.stock.name)
+            stock.quantity += item.quantity
+            stock.save()
+        messages.success(self.request, "Sale bill has been deleted successfully")
+        return super(SaleDeleteView, self).delete(*args, **kwargs)
+
+
 
 
 # used to display the purchase bill object
@@ -240,6 +285,7 @@ class PurchaseBillView(View):
             billdetailsobj.total = request.POST.get("total")
 
             billdetailsobj.save()
+            messages.success(request, "Bill details have been modified successfully")
         context = {
             'bill'          : PurchaseBill.objects.get(billno=billno),
             'items'         : PurchaseItem.objects.filter(billno=billno),
@@ -281,6 +327,7 @@ class SaleBillView(View):
             billdetailsobj.total = request.POST.get("total")
 
             billdetailsobj.save()
+            messages.success(request, "Bill details have been modified successfully")
         context = {
             'bill'          : SaleBill.objects.get(billno=billno),
             'items'         : SaleItem.objects.filter(billno=billno),

@@ -10,15 +10,6 @@
     
     <table class="table table-css"><div style="color: #ea2088; font-style: bold; font-size: 3rem;">Sales List</div>
         
-        <form method="get">
-            <div class="input-group search">
-                {% render_field filter.form.name class="form-control textinput" placeholder="Search by customer name" %}
-                <div class="input-group-append">
-                   <button type="submit" class="btn btn-pink"> Search </button>
-                </div>
-            </div>
-        </form>
-
         <br>
         
         <thead class="thead-inverse align-middle">
@@ -26,17 +17,17 @@
                 <th width="10%">Bill No</th>
                 <th width="15%">Customer</th>
                 <th width="15%">Stocks Sold</th>
-                <th width="20%">Quantity Sold</th>
+                <th width="10%">Quantity Sold</th>
                 <th width="10%">Total Sold Price</th>
                 <th width="15%">Sale Date</th>
-                <th width="15%">Options</th>
+                <th width="25%">Options</th>
             </tr>
         </thead>
 
-{% if filter.qs %}
+{% if bills %}
 
         <tbody>
-            {% for sale in filter.qs %}
+            {% for sale in bills %}
             <tr>
                 <td class="align-middle"> <h3>{{ sale.billno }}</h3> </td>
                 <td class=""> {{ sale.name }} <br> <small style="color: #909494">Ph No : {{ sale.phone }}</small> </td>
@@ -44,7 +35,8 @@
                 <td class="align-middle">{% for item in sale.get_items_list %} {{ item.quantity }} <br> {% endfor %}</td>     
                 <td class="align-middle">{{ sale.get_total_price }}</td>
                 <td class="align-middle">{{ sale.time.date }}</td>
-                <td class="align-middle"> <a href="{% url 'sale-bill' sale.billno %}" class="btn ghost-pink">View Bill</a> </td>
+                <td class="align-middle"> <a href="{% url 'sale-bill' sale.billno %}" class="btn ghost-pink">View Bill</a> <a href="{% url 'delete-sale' sale.pk %}" class="btn ghost-red">Delete Bill</a> </td>
+                <td class="align-middle"> </td>
             </tr>
             {% endfor %}
         </tbody>
