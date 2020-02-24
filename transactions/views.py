@@ -176,8 +176,9 @@ class PurchaseDeleteView(SuccessMessageMixin, DeleteView):
         items = PurchaseItem.objects.filter(billno=self.object.billno)
         for item in items:
             stock = get_object_or_404(Stock, name=item.stock.name)
-            stock.quantity -= item.quantity
-            stock.save()
+            if stock.is_deleted == False:
+                stock.quantity -= item.quantity
+                stock.save()
         messages.success(self.request, "Purchase bill has been deleted successfully")
         return super(PurchaseDeleteView, self).delete(*args, **kwargs)
 
@@ -253,8 +254,9 @@ class SaleDeleteView(SuccessMessageMixin, DeleteView):
         items = SaleItem.objects.filter(billno=self.object.billno)
         for item in items:
             stock = get_object_or_404(Stock, name=item.stock.name)
-            stock.quantity += item.quantity
-            stock.save()
+            if stock.is_deleted == False:
+                stock.quantity += item.quantity
+                stock.save()
         messages.success(self.request, "Sale bill has been deleted successfully")
         return super(SaleDeleteView, self).delete(*args, **kwargs)
 

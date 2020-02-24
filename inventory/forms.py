@@ -9,11 +9,4 @@ class StockForm(forms.ModelForm):
 
     class Meta:
         model = Stock
-        fields = ['name', 'description', 'quantity']
-        widgets = {
-            'description' : forms.Textarea(
-                attrs = {
-                    'class' : 'textinput form-control'
-                }
-            )
-        }
+        fields = ['name', 'quantity']
