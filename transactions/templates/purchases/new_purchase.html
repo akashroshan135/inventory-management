@@ -91,8 +91,12 @@
 
     <!-- Custom JS to add and remove item forms -->
     <script type="text/javascript" src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/dialogbox.js' %}"></script>
     <script type="text/javascript">
         
+        //creates custom alert object
+        var custom_alert = new custom_alert();
+
         function updateElementIndex(el, prefix, ndx) {
             var id_regex = new RegExp('(' + prefix + '-\\d+)');
             var replacement = prefix + '-' + ndx;
@@ -141,7 +145,7 @@
                 }
                 total--;
             } else {
-                alert("Field cannot be deleted");
+                custom_alert.render("Field cannot be deleted");
             }
             return false;
         }

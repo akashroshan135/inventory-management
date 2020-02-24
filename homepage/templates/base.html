@@ -12,15 +12,26 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/bootstrap.min.css' %}">
 
-    <!-- Main CSS, then Sidebar CSS-->
+    <!-- Main CSS, then Sidebar CSS and Dialog Box CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">    
     <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">    
-    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dialogbox.css' %}">    
+
     <title>Software - {% block title %}Title Missing{% endblock title %}</title>
 
 </head>
 
 <body>
+
+    <!-- Dialog Box CSS  -->
+    <div id="dialogoverlay"></div>
+    <div id="dialogbox">
+        <div class="align-middle">
+            <div id="dialogboxhead"></div>
+            <div id="dialogboxbody"></div>
+            <div id="dialogboxfoot"></div>
+        </div>
+    </div>
 
     <main id="wrapper">
     

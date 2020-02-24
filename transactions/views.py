@@ -219,7 +219,7 @@ class SaleCreateView(View):
     def get(self, request):
         form = SaleForm(request.GET or None)
         formset = SaleItemFormset(request.GET or None)                          # renders an empty formset
-        stocks = Stock.objects.all()
+        stocks = Stock.objects.filter(is_deleted=False)
         context = {
             'form'      : form,
             'formset'   : formset,

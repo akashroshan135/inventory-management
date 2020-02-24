@@ -96,8 +96,12 @@
 
     <!-- Custom JS to add and remove item forms -->
     <script type="text/javascript" src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/dialogbox.js' %}"></script>
     <script type="text/javascript">
         
+        //creates custom alert object
+        var custom_alert = new custom_alert();
+
         function updateElementIndex(el, prefix, ndx) {
             var id_regex = new RegExp('(' + prefix + '-\\d+)');
             var replacement = prefix + '-' + ndx;
@@ -146,7 +150,7 @@
                 }
                 total--;
             } else {
-                alert("Field cannot be deleted");
+                custom_alert.render('Field cannot be deleted');
             }
             return false;
         }
@@ -193,14 +197,14 @@
                         quantity = quantity - 1;
                         if(quantity <= 1){
                             //no stocks are available. Attempts to delete field
-                            alert("Stocks are currently unavailable. Field will be removed");
+                            custom_alert.render('Stocks are currently unavailable. Field will be removed;');
                             //Sets quantity to 0 as failsafe for when the total no of item forms are 1
                             element.parents('.form-row').find('.quantity').val(0);
                             deleteForm('form', element);
                         } else {
                             element.parents('.form-row').find('.quantity').val(squantity-1);
                             quantity = squantity - 1;
-                            alert("Exceeded current stock available");
+                            custom_alert.render('Exceeded current stock available');
                         }
                     }
                 }
