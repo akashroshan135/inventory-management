@@ -51,9 +51,18 @@ class SupplierForm(forms.ModelForm):
         self.fields['name'].widget.attrs.update({'class': 'textinput form-control', 'pattern' : '[a-zA-Z\s]{1,50}', 'title' : 'Alphabets and Spaces only'})
         self.fields['phone'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '10', 'pattern' : '[0-9]{10}', 'title' : 'Numbers only'})
         self.fields['email'].widget.attrs.update({'class': 'textinput form-control'})
+        self.fields['gstin'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '15', 'pattern' : '[A-Z0-9]{15}', 'title' : 'GSTIN Format Required'})
     class Meta:
         model = Supplier
-        fields = ['name', 'phone', 'email']
+        fields = ['name', 'phone', 'address', 'email', 'gstin']
+        widgets = {
+            'address' : forms.Textarea(
+                attrs = {
+                    'class' : 'textinput form-control',
+                    'rows'  : '4'
+                }
+            )
+        }
 
 
 # form used to get customer details
@@ -63,9 +72,18 @@ class SaleForm(forms.ModelForm):
         self.fields['name'].widget.attrs.update({'class': 'textinput form-control', 'pattern' : '[a-zA-Z\s]{1,50}', 'title' : 'Alphabets and Spaces only', 'required': 'true'})
         self.fields['phone'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '10', 'pattern' : '[0-9]{10}', 'title' : 'Numbers only', 'required': 'true'})
         self.fields['email'].widget.attrs.update({'class': 'textinput form-control'})
+        self.fields['gstin'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '15', 'pattern' : '[A-Z0-9]{15}', 'title' : 'GSTIN Format Required'})
     class Meta:
         model = SaleBill
-        fields = ['name', 'phone', 'email']
+        fields = ['name', 'phone', 'address', 'email', 'gstin']
+        widgets = {
+            'address' : forms.Textarea(
+                attrs = {
+                    'class' : 'textinput form-control',
+                    'rows'  : '4'
+                }
+            )
+        }
 
 # form used to render a single stock item form
 class SaleItemForm(forms.ModelForm):

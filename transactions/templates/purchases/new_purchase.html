@@ -14,20 +14,21 @@
         <div class="panel panel-default">
             <div class="panel-heading panel-heading-text">Supplier Details</div>
             <div class="panel-body">
-                
+                    
+                <div class="form-group">
+                    <label for="id_name" class="panel-body-text">Supplier Name:</label>
+                    <input type="text" class="form-control textinput" id="id_name" value="{{ supplier.name }}" disabled>
+                </div>
+
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="id_name" class="panel-body-text">Supplier Name</label>
-                        <input type="text" class="form-control textinput" id="id_name" value="{{ supplier.name }}" disabled>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="id_phone" class="panel-body-text">Phone No</label>
+                        <label for="id_phone" class="panel-body-text">Phone No:</label>
                         <input type="text" class="form-control textinput" id="id_phone" value="{{ supplier.phone }}" disabled>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="id_email" class="panel-body-text">Email</label>
-                    <input type="email" class="form-control textinput" id="id_email" value="{{ supplier.email }}" disabled>
+                    <div class="form-group col-md-6">
+                        <label for="id_gstin" class="panel-body-text">GSTIN No:</label>
+                        <input type="gstin" class="form-control textinput" id="id_gstin" value="{{ supplier.gstin }}" disabled>
+                    </div>
                 </div>
 
             </div>

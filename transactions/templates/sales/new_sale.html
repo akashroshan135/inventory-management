@@ -18,24 +18,36 @@
 
         <div class="panel-heading panel-heading-text">Customer Details</div>
         <div class="panel-body">
-                        
+            
+            {{ form.name.errors }}
+            {{ form.phone.errors }}
+            {{ form.email.errors }}
+            {{ form.address.errors }}
+            {{ form.gstin.errors }}
+
             <div class="form-group">
-                {{ form.name.errors }}
-                <label for="{{ form.name.id_for_label }}" class="panel-body-text">Customer Name</label>
+                <label for="{{ form.name.id_for_label }}" class="panel-body-text">Customer Name:</label>
                 {{ form.name }}                
             </div>
 
             <div class="form-row">
-                <div class="form-group col-md-6">
-                    {{ form.phone.errors }}
-                    <label for="{{ form.phone.id_for_label }}" class="panel-body-text">Phone No</label>
+                <div class="form-group col-md-6"> 
+                    <label for="{{ form.phone.id_for_label }}" class="panel-body-text">Phone No:</label>
                     {{ form.phone }}
                 </div>
-                <div class="form-group col-md-6">
-                    {{ form.email.errors }}
-                    <label for="{{ form.email.id_for_label }}" class="panel-body-text">Email</label>
+                <div class="form-group col-md-6">              
+                    <label for="{{ form.email.id_for_label }}" class="panel-body-text">Email:</label>
                     {{ form.email }}
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.address.id_for_label }}" class="panel-body-text">Address:</label>
+                {{ form.address }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.gstin.id_for_label }}" class="panel-body-text">GSTIN No:</label>
+                {{ form.gstin }}
             </div>
 
         </div>

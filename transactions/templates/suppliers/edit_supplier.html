@@ -6,7 +6,7 @@
 
 {% block content %}
 
-    <div style="color:#ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">{{title}}</div><br>
+    <div style="color:#ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">{{title}}</div> <br>
     
     <form method="post">
     
@@ -15,7 +15,9 @@
         
         {{ form.name.errors }}
         {{ form.phone.errors }}
+        {{ form.address.errors }}
         {{ form.email.errors }}
+        {{ form.gstin.errors }}
 
         <div class="form-group">
             <label for="{{ form.name.id_for_label }}">Name:</label>
@@ -31,6 +33,15 @@
                 <label for="{{ form.email.id_for_label }}">Email ID:</label>
                 {{ form.email }}
             </div>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.address.id_for_label }}">Address:</label>
+            {{ form.address }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.gstin.id_for_label }}">GSTIN No:</label>
+            {{ form.gstin }}
         </div>
 
         <br>
