@@ -1,10 +1,10 @@
 from django import forms
 from django.forms import formset_factory
 from .models import (
+    Supplier, 
     PurchaseBill, 
     PurchaseItem,
     PurchaseBillDetails, 
-    Supplier, 
     SaleBill, 
     SaleItem,
     SaleBillDetails
@@ -16,6 +16,7 @@ from inventory.models import Stock
 class SelectSupplierForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['supplier'].queryset = Supplier.objects.filter(is_deleted=False)
         self.fields['supplier'].widget.attrs.update({'class': 'textinput form-control'})
     class Meta:
         model = PurchaseBill

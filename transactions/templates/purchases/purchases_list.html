@@ -35,7 +35,14 @@
             {% for purchase in bills %}
             <tr>
                 <td class="align-middle"> <h3>{{ purchase.billno }}</h3> </td>
-                <td class=""> <a href="{% url 'supplier' purchase.supplier.name %}">{{ purchase.supplier }}</a> <br> <small style="color: #909494">Ph No : {{ purchase.supplier.phone }}</small> </td>
+                <td class=""> 
+                    {% if purchase.supplier.is_deleted %}
+                        {{ purchase.supplier }}<br> 
+                    {% else %}
+                        <a href="{% url 'supplier' purchase.supplier.name %}">{{ purchase.supplier }}</a> <br> 
+                    {% endif %}
+                    <small style="color: #909494">Ph No : {{ purchase.supplier.phone }}</small> 
+                </td>
                 <td class="align-middle">{% for item in purchase.get_items_list %} {{ item.stock.name }} <br> {% endfor %}</td>
                 <td class="align-middle">{% for item in purchase.get_items_list %} {{ item.quantity }} <br> {% endfor %}</td>     
                 <td class="align-middle">{{ purchase.get_total_price }}</td>

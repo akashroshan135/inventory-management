@@ -41,7 +41,7 @@
                 <button type="reset" class="btn ghost-blue" >Reset</button>
             {% endif %}
             {% if delbtn %}
-                <a href="#" class="btn ghost-red"> Delete Supplier </a>
+                <a href="{% url 'delete-supplier' supplier.pk %}" class="btn ghost-red"> Delete Supplier </a>
             {% endif %}
             <a href="{% url 'suppliers-list' %}" class="btn ghost-button">Cancel</a>
         </div>
