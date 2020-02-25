@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'widget_tweaks',                            # uses 'django-widget-tweaks' app
+    'crispy_forms',                             # uses 'django-crispy-forms' app
+    'login_required',                           # uses 'django-login-required-middleware' app
 
     'homepage.apps.HomepageConfig',
     'inventory.apps.InventoryConfig',
@@ -54,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'login_required.middleware.LoginRequiredMiddleware',    # middleware used for global login
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -125,3 +129,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'                     # bootstrap template crispy-form uses
+
+LOGIN_REDIRECT_URL = 'home'                             # sets the login redirect to the 'home' page after login
+
+LOGIN_URL = 'login'                                     # sets the 'login' page as default when user tries to illegally access profile or other hidden pages
+
+LOGIN_REQUIRED_IGNORE_VIEW_NAMES = [                    # urls ignored by the login_required. Can be accessed with out logging in
+    'login',
+    'logout',
+    'about',
+]

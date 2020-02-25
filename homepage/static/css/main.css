@@ -253,6 +253,9 @@ html { width: 100%; height:100%; overflow:hidden; }
   font-family: Audiowide;
 }
 
+.align-middle{
+  text-align: center;
+}
 
 .textinput{
   background-color: #4F102B;
@@ -329,9 +332,9 @@ html { width: 100%; height:100%; overflow:hidden; }
 
 
 .ghost-green {
-  color: #00ff00;
+  color: #27ff34;
   background-color: transparent;
-  border: 2px solid #00ff00;
+  border: 2px solid #27ff34;
   font-size: 17px;
   padding: 7px 12px;
   font-weight: bolder;
@@ -346,7 +349,7 @@ html { width: 100%; height:100%; overflow:hidden; }
 .ghost-green:hover, .ghost-green:active {
   color:#fff;
   background-color:transparent;
-  box-shadow: 0 2px 7px #00ff00;
+  box-shadow: 0 2px 7px #27ff34;
 }
  
 
@@ -373,9 +376,9 @@ html { width: 100%; height:100%; overflow:hidden; }
 
 
 .ghost-red {
-  color: #ff0000;
+  color:#ff3c16;
   background-color: transparent;
-  border: 2px solid #ff0000;
+  border: 2px solid #ff3c16;
   font-size: 17px;
   padding: 7px 12px;
   font-weight: bolder;
@@ -390,7 +393,7 @@ html { width: 100%; height:100%; overflow:hidden; }
 .ghost-red:hover, .ghost-red:active {
   color:#fff;
   background-color:transparent;
-  box-shadow: 0 2px 7px #ff0000;
+  box-shadow: 0 2px 7px #ff3c16;
 }
 
 

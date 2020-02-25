@@ -8,46 +8,85 @@
 
 {% block content %}
     
-    <table class="table table-css"><div style="color: #ea2088; font-style: bold; font-size: 3rem;">Inventory List</div> <br>
-        
+    <div style="color: #ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">
+        Inventory List
+        <a class="btn ghost-blue" style="float: right;" href="{% url 'new-stock' %}">Add New Stock</a>
+    </div> 
+    
+    <br>
+
+    <table class="table table-css">
+
         <form method="get">
             <div class="input-group search">
-                {% render_field filter.form.name class="form-control textinput" placeholder="Search for stocks" %}
+                {% render_field filter.form.name class="form-control textinput" placeholder="Search by stock name" %}
                 <div class="input-group-append">
                    <button type="submit" class="btn btn-pink"> Search </button>
                 </div>
             </div>
         </form>
 
-        <br><br>
+        <br>
         
-        {# FIXME: adjust column sizes#}
-        <thead class="thead-inverse">
+        <thead class="thead-inverse align-middle">
             <tr>
-                <th width="55%">Stock Name</th>
-                <th width="15%">Current Stock</th>
-                <th width="15%">Current Price</th>
-                <th width="15%">Options</th>
+                <th width="50%">Stock Name</th>
+                <th width="20%">Current Stock in Inventory</th>
+                <th width="30%">Options</th>
             </tr>
         </thead>
-      
-        <tbody>
-            {% for stock in filter.qs %}
-            <tr>
-                <td>
-                    <h4> <a href="#">{{ stock.name }}</a> </h4>
-                </td>
-                <td class="align-middle">{{ stock.quantity }}</td>
-                <td class="align-middle">{{ stock.price }}</td>
-                <td class="align-middle">
-                    <center>
+                  
+{% if object_list %}
+
+        <tbody>         
+            {% for stock in object_list %}
+                <tr>
+                    <td>
+                        <h4>{{ stock.name }}</h4>
+                    </td>
+                    <td class="align-middle">{{ stock.quantity }}</td>
+                    <td class="align-middle">
                         <a href="{% url 'edit-stock' stock.pk %}" class="btn ghost-button">Edit Details</a>
-                    </center>
-                </td>          
-            </tr>
-            {% endfor %}
+                        <a href="{% url 'delete-stock' stock.pk %}" class="btn ghost-red"> Delete Stock </a>
+                    </td>          
+                </tr>
+            {% endfor %}                   
         </tbody>
 
+    </table>  
+
+    <div class="align-middle">
+        {% if is_paginated %}
+
+            {% if page_obj.has_previous %}
+                <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+
+        {% endif %}
+    </div>
+
+{% else %}
+
+        <tbody></tbody>   
     </table>
+
+    <br><br><br><br><br><br><br><br>
+    <div style="color: #ea2088; font-style: bold; font-size: 1.5rem; text-align: center;">WOW, SUCH EMPTY</div>
+
+{% endif %}
 
 {% endblock content %}

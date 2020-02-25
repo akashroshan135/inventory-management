@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block title %} Delete Purchase {% endblock title %}
+
+
+{% block content %}
+                
+    <form method="post">
+        
+        {% csrf_token %}
+        
+        <fieldset class="form-group">
+            <div style="color:#ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">Delete Purchase Bill</div> <br>
+            <h2>Are you sure you want to delete the Purchase Bill No: {{ object.billno }}?</h2>
+        </fieldset>
+
+        <div class="form-group">  
+            <button type="submit" class="btn ghost-red">Yes, Delete</button>
+            <a href="{% url 'purchases-list' %}" class="btn ghost-button">Cancel</a>
+        </div>
+        
+    </form>
+
+{% endblock content %}

@@ -1,15 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import (
-    TemplateView, 
-    ListView,
+    View,
     CreateView, 
-    UpdateView,
-    DeleteView
+    UpdateView
 )
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from .models import Stock
 from .forms import StockForm
+from django_filters.views import FilterView
+from .filters import StockFilter
+
+
+class StockListView(FilterView):
+    filterset_class = StockFilter
+    queryset = Stock.objects.filter(is_deleted=False)
+    template_name = 'inventory.html'
+    paginate_by = 10
 
 
 class StockCreateView(SuccessMessageMixin, CreateView):                                 # createview class to add new stock, mixin used to display message
@@ -41,14 +48,17 @@ class StockUpdateView(SuccessMessageMixin, UpdateView):                         
         return context
 
 
-class StockDeleteView(DeleteView):                                                      # deleteview class to delete stock
-    model = Stock                                                                       # setting 'Stock' model as model
+class StockDeleteView(View):                                                            # view class to delete stock
     template_name = "delete_stock.html"                                                 # 'delete_stock.html' used as the template
-    success_url = '/inventory'                                                          # redirects to 'inventory' page in the url after submitting the form
     success_message = "Stock has been deleted successfully"                             # displays message when form is submitted
+    
+    def get(self, request, pk):
+        stock = get_object_or_404(Stock, pk=pk)
+        return render(request, self.template_name, {'object' : stock})
 
-    def delete(self, request, *args, **kwargs):                                         #used to show success message after object is deleted
-        messages.success(self.request, self.success_message)
-        return super(StockDeleteView, self).delete(request, *args, **kwargs)
-
-#TODO: add individual stock view that shows bills and charts
+    def post(self, request, pk):  
+        stock = get_object_or_404(Stock, pk=pk)
+        stock.is_deleted = True
+        stock.save()                                               
+        messages.success(request, self.success_message)
+        return redirect('inventory')

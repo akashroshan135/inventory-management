@@ -1,0 +1,73 @@
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/bootstrap.min.css' %}">
+
+    <!-- Main CSS, then Sidebar CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">    
+    
+    <title>Invi - Login</title>
+
+</head>
+
+<body>
+
+<div class="align-middle" style="color: #ea2088; font-style: bold; font-size: 3rem;">Invi</div>
+<div class="align-middle" style="color: #fff">An Inventory Management System</div>
+<br><br><br>
+
+<div class="row d-flex justify-content-center">
+    <div class="col-md-6">
+        {% if user.is_authenticated %}
+            
+            <br><br>
+            <h2 class="align-middle">You are already logged in, {{ request.user.username }}!</h2>
+            <div class="border-top pt-3 align-middle"> <br>
+                <a class="btn ghost-blue" href="{% url 'home' %}">Go back home</a> <br><br>
+                <a class="btn ghost-red" href="{% url 'logout' %}">Log Out</a>
+            </div>
+        
+        {% else %}
+
+            <div class="content-section">
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <div class="align-middle"><legend class="border-bottom mb-4">Please Login to use Invi</legend></div>
+                        {{ form|crispy }}
+                    </fieldset>
+                    <div class="form-group">
+                        <div class="align-middle"> 
+                            <button class="ghost-pink" type="submit">Log In</button>         
+                            {# <button class="ml-2 ghost-red">Exit</button> #}
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="align-middle"> <a href="{% url 'about' %}">About</a> </div>
+
+        {% endif %}
+
+    </div>
+</div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'bootstrap/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'bootstrap/popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap/bootstrap.min.js' %}"></script>
+
+</body>
+
+</html>

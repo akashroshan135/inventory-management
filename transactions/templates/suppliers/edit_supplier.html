@@ -6,44 +6,56 @@
 
 {% block content %}
 
-    <div style="color:#ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">{{title}}</div><br>
+    <div style="color:#ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">{{title}}</div> <br>
     
     <form method="post">
     
         {% csrf_token %}
         {{ form.non_field_errors }}
         
+        {{ form.name.errors }}
+        {{ form.phone.errors }}
+        {{ form.address.errors }}
+        {{ form.email.errors }}
+        {{ form.gstin.errors }}
+
         <div class="form-group">
-            {{ form.name.errors }}
             <label for="{{ form.name.id_for_label }}">Name:</label>
             {{ form.name }}
         </div>
 
         <div class="form-row">
             <div class="form-group col-md-6">
-                {{ form.phone.errors }}
                 <label for="{{ form.phone.id_for_label }}">Phone No:</label>
                 {{ form.phone }}
             </div>
             <div class="form-group col-md-6">
-                {{ form.email.errors }}
                 <label for="{{ form.email.id_for_label }}">Email ID:</label>
                 {{ form.email }}
             </div>
         </div>
 
+        <div class="form-group">
+            <label for="{{ form.address.id_for_label }}">Address:</label>
+            {{ form.address }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.gstin.id_for_label }}">GSTIN No:</label>
+            {{ form.gstin }}
+        </div>
+
         <br>
 
-        <center>
+        <div class="align-middle">
             <button type="submit" class="btn ghost-green">{{ savebtn }}</button>
             {% if title == "New Supplier" %}
                 <button type="reset" class="btn ghost-blue" >Reset</button>
             {% endif %}
             {% if delbtn %}
-                <a href="#" class="btn ghost-red"> Delete Supplier </a>
+                <a href="{% url 'delete-supplier' supplier.pk %}" class="btn ghost-red"> Delete Supplier </a>
             {% endif %}
             <a href="{% url 'suppliers-list' %}" class="btn ghost-button">Cancel</a>
-        </center>
+        </div>
         
     </form>
 

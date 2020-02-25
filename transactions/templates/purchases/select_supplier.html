@@ -6,7 +6,9 @@
 
 {% block content %}
 
-    <div style="color:#ea2088; font-style: bold; font-size: 3rem;">New Purchase</div>
+    <div style="color:#ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">New Purchase</div> 
+    
+    <br>
     
     <form method="post">
 
@@ -20,10 +22,10 @@
         {% endfor %}
 
         <br>
-        <center>
+        <div class="align-middle">
             <button type="submit" class="btn ghost-green">Next</button>
             <a href="{% url 'purchases-list' %}" class="btn ghost-button">Cancel</a>
-        </center>
+        </div>
         
     </form>
 

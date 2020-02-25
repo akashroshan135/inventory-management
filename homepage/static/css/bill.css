@@ -1,0 +1,30 @@
+.outer-box{
+    border-collapse: collapse;
+}
+
+.inner-box{
+    border: 1px solid #000;
+}
+
+.wrapper{
+    text-align: center;
+}
+
+.center{
+    position: relative;
+}
+
+.bg{
+    background-color: #fff;
+    color: #000;
+}
+
+.bg-black{
+    background-color: #000;
+    color: #fff;
+}
+
+p{
+    background-color: #fff;
+    color: #000;
+}

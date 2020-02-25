@@ -1,12 +1,103 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 
 {% block title %} Home {% endblock title %}
 
 
 {% block content %}
 
-{# TODO: Put some actual stuff on this page#}
-<center> <span style="color: white;">test</span> </center>
+    <div style="color:#ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid #fff">Welcome, {{ request.user.username }}</div>
+
+    <br>
+
+    <div id="container" style="position: relative; height:45vh; border: 2mm ridge #4F102B; border-radius: 30px;" class="align-middle table-bordered">
+        <canvas id="bar-graph"></canvas>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{% url 'select-supplier' %}" class="btn ghost-blue btn-lg btn-block btn-huge">New Incoming Stock</a>
+        </div>
+        <div class="col-md-6">
+            <a href="{% url 'new-sale' %}" class="btn ghost-blue btn-lg btn-block btn-huge">New Outgoing Stock</a>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="content-section">
+        <div class="row">
+
+            <div class="col-md-6">
+                <div style="color:#ea2088; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #fff">Most Recent Sales</div><br>
+                {% for item in sales %}
+                    {% if not forloop.first %}
+                        <br><div style="border-bottom: 0.5px solid #fff"></div><br>
+                    {% endif %}
+                    <div class="row">               
+                        <div class="col-md-9"> 
+                            Bill No: {{ item.billno }} <br> 
+                            Purchased by {{ item.name }} <br>
+                            <small>{{ item.time.date }}</small>
+                        </div>
+                        <div class="col-md-2"> {{ item.get_total_price }} <br> <br> <a href="{% url 'sale-bill' item.billno %}">View Bill</a> </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-6">
+                <div style="color:#ea2088; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #fff">Most Recent Purchases</div><br>
+                {% for item in purchases %}
+                    {% if not forloop.first %}
+                        <br><div style="border-bottom: 0.5px solid #fff"></div><br>
+                    {% endif %}
+                    <div class="row">               
+                        <div class="col-md-9"> 
+                            Bill No: {{ item.billno }} <br> 
+                            Purchased by {{ item.supplier.name }} <br>
+                            <small>{{ item.time.date }}</small>
+                        </div>
+                        <div class="col-md-2"> {{ item.get_total_price }} <br> <br> <a href="{% url 'purchase-bill' item.billno %}">View Bill</a> </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Loading Chart JS -->
+    <script src="{% static 'js/Chart.min.js' %}"></script>  
+    <script>
+        Chart.defaults.global.defaultFontColor = '#fff';
+
+        //configuration for the bar graph
+        var barConfig = {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    backgroundColor: '#ea2088',
+                    label: 'Stock in Inventory',
+                    data: {{ data|safe }},
+                }],
+                labels: {{ labels|safe }}
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            },
+        };
+
+
+        //runs all charts on loading the webpage
+        window.onload = function() {
+            var ctx = document.getElementById('bar-graph').getContext('2d');
+            window.BarStock = new Chart(ctx, barConfig);
+        };
+
+    </script>
 
 {% endblock content %}
