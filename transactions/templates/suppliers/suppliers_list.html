@@ -8,9 +8,11 @@
 
 {% block content %}
     
-    <div style="color: #ea2088; font-style: bold; font-size: 3rem;">
-        Suppliers List
-        <a class="btn ghost-blue" style="float: right;" href="{% url 'new-supplier' %}">Add New Supplier</a>
+    <div class="row" style="color: #ea2088; font-style: bold; font-size: 3rem;">
+        <div class="col-md-8">Suppliers List</div>
+        <div class="col-md-4">               
+            <div style="float:right;"> <a class="btn ghost-blue" href="{% url 'new-supplier' %}">Add New Supplier</a> </div>
+        </div>
     </div>
 
     <br>
@@ -21,7 +23,7 @@
             <tr>
                 <th width="25%">Name</th>
                 <th width="20%">Phone No</th>
-                <th width="25%">Email Address</th>
+                <th width="25%">GSTIN No</th>
                 <th width="30%">Actions</th>
             </tr>
         </thead>
@@ -34,8 +36,8 @@
                 <td>
                     <h3> <a href="{% url 'supplier' supplier.name %}">{{ supplier.name }}</a> </h3>
                 </td>
-                <td class=""> {{ supplier.phone }} </td>
-                <td class="align-middle"> {{ supplier.email }} </td>
+                <td class="align-middle"> {{ supplier.phone }} </td>
+                <td class="align-middle"> {{ supplier.gstin }} </td>
                 <td class="align-middle">
                     <div class="align-middle">
                         <a href="{% url 'edit-supplier' supplier.pk %}" class="btn ghost-button">Edit Details</a>

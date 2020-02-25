@@ -8,10 +8,14 @@
 
 {% block content %}
     
-    <div style="color: #ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">
-        Inventory List
-        <a class="btn ghost-blue" style="float: right;" href="{% url 'new-stock' %}">Add New Stock</a>
-    </div> 
+    <div class="row" style="color: #ea2088; font-style: bold; font-size: 3rem; ">
+        <div class="col-md-8">Inventory List</div>
+        <div class="col-md-4">               
+            <div style="float:right;"> <a class="btn ghost-blue" href="{% url 'new-stock' %}">Add New Stock</a> </div>
+        </div>
+    </div>
+    
+    <div style="border-bottom: 1px solid white;"></div>
     
     <br>
 

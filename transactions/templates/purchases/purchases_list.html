@@ -8,9 +8,11 @@
 
 {% block content %}
     
-    <div style="color: #ea2088; font-style: bold; font-size: 3rem;">
-        Purchases List
-        <a class="btn ghost-blue" style="float: right;" href="{% url 'select-supplier' %}">New Incoming Stock</a>
+    <div class="row" style="color: #ea2088; font-style: bold; font-size: 3rem;">
+        <div class="col-md-8">Purchases List</div>
+        <div class="col-md-4">               
+            <div style="float:right;"> <a class="btn ghost-blue" href="{% url 'select-supplier' %}">New Incoming Stock</a> </div>
+        </div>
     </div>
 
     <br>

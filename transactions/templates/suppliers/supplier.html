@@ -11,11 +11,22 @@
     <div class="content-section">
         <div class="media">
             <div class="media-body">
-            <h2 style="color:#ea2088;" class="account-heading">{{ supplier.name }}</h2>
-            <p class="fal">
-                Phone no        : {{ supplier.phone }} <br>
-                Email Id        : {{ supplier.email }} <br>
-            </p>
+                <h2 style="color:#ea2088;" class="account-heading">&nbsp;{{ supplier.name }}</h2>
+                <a href="{% url 'edit-supplier' supplier.pk %}" class="btn ghost-button" style="float: right;">Edit Details</a>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="fal">
+                            Phone No &nbsp; : {{ supplier.phone }} <br>
+                            Email Id &nbsp;&nbsp;&nbsp;&nbsp; : {{ supplier.email }} <br>
+                            GSTIN No &nbsp; : {{ supplier.gstin }} <br>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="fal">
+                            Address: <br> {{ supplier.address|linebreaks }}
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
