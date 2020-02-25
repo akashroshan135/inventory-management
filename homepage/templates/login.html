@@ -18,13 +18,13 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">    
     <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">    
     
-    <title>Software - Login</title>
+    <title>Invi - Login</title>
 
 </head>
 
 <body>
 
-<div class="align-middle" style="color: #ea2088; font-style: bold; font-size: 3rem;">Software</div>
+<div class="align-middle" style="color: #ea2088; font-style: bold; font-size: 3rem;">Invi</div>
 <div class="align-middle" style="color: #fff">An Inventory Management System</div>
 <br><br><br>
 
@@ -45,7 +45,7 @@
                 <form method="POST">
                     {% csrf_token %}
                     <fieldset class="form-group">
-                        <div class="align-middle"><legend class="border-bottom mb-4">Please Login to use Software</legend></div>
+                        <div class="align-middle"><legend class="border-bottom mb-4">Please Login to use Invi</legend></div>
                         {{ form|crispy }}
                     </fieldset>
                     <div class="form-group">
