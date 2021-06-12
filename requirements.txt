@@ -1,11 +1,14 @@
-﻿asgiref==3.2.3
+appdirs==1.4.4
+asgiref==3.3.4
 astroid==2.3.3
 colorama==0.4.3
+distlib==0.3.1
 Django==3.1.12
 django-crispy-forms==1.8.1
-django-filter==2.2.0
+django-filter==2.4.0
 django-login-required-middleware==0.4
 django-widget-tweaks==1.4.5
+filelock==3.0.12
 isort==4.3.21
 lazy-object-proxy==1.4.3
 mccabe==0.6.1
@@ -13,4 +16,5 @@ pylint==2.4.4
 pytz==2019.3
 six==1.13.0
 sqlparse==0.3.0
+virtualenv==20.4.3
 wrapt==1.11.2
