@@ -169,10 +169,13 @@ class PurchaseCreateView(View):
                 # calculates the total price
                 billitem.totalprice = billitem.perprice * billitem.quantity
                 # updates quantity in stock db
-                stock.quantity += billitem.quantity                              # updates quantity
+                stock.quantity += billitem.quantity                             # updates quantity
+                billdetailsobj.total += billitem.totalprice
                 # saves bill item and stock
                 stock.save()
                 billitem.save()
+
+            billdetailsobj.save()
             messages.success(request, "Purchased items have been registered successfully")
             return redirect('purchase-bill', billno=billobj.billno)
         formset = PurchaseItemFormset(request.GET or None)
@@ -246,10 +249,13 @@ class SaleCreateView(View):
                 # calculates the total price
                 billitem.totalprice = billitem.perprice * billitem.quantity
                 # updates quantity in stock db
-                stock.quantity -= billitem.quantity   
+                stock.quantity -= billitem.quantity
+                billdetailsobj.total += billitem.totalprice 
                 # saves bill item and stock
                 stock.save()
                 billitem.save()
+
+            billdetailsobj.save()
             messages.success(request, "Sold items have been registered successfully")
             return redirect('sale-bill', billno=billobj.billno)
         form = SaleForm(request.GET or None)
