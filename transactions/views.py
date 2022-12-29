@@ -29,16 +29,12 @@ from .forms import (
 )
 from inventory.models import Stock
 
-
-
-
 # shows a lists of all suppliers
 class SupplierListView(ListView):
     model = Supplier
     template_name = "suppliers/suppliers_list.html"
     queryset = Supplier.objects.filter(is_deleted=False)
     paginate_by = 10
-
 
 # used to add a new supplier
 class SupplierCreateView(SuccessMessageMixin, CreateView):
@@ -53,7 +49,6 @@ class SupplierCreateView(SuccessMessageMixin, CreateView):
         context["title"] = 'New Supplier'
         context["savebtn"] = 'Add Supplier'
         return context     
-
 
 # used to update a supplier's info
 class SupplierUpdateView(SuccessMessageMixin, UpdateView):
@@ -70,7 +65,6 @@ class SupplierUpdateView(SuccessMessageMixin, UpdateView):
         context["delbtn"] = 'Delete Supplier'
         return context
 
-
 # used to delete a supplier
 class SupplierDeleteView(View):
     template_name = "suppliers/delete_supplier.html"
@@ -86,7 +80,6 @@ class SupplierDeleteView(View):
         supplier.save()                                               
         messages.success(request, self.success_message)
         return redirect('suppliers-list')
-
 
 # used to view a supplier's profile
 class SupplierView(View):
@@ -107,9 +100,6 @@ class SupplierView(View):
         }
         return render(request, 'suppliers/supplier.html', context)
 
-
-
-
 # shows the list of bills of all purchases 
 class PurchaseView(ListView):
     model = PurchaseBill
@@ -117,7 +107,6 @@ class PurchaseView(ListView):
     context_object_name = 'bills'
     ordering = ['-time']
     paginate_by = 10
-
 
 # used to select the supplier
 class SelectSupplierView(View):
@@ -135,7 +124,6 @@ class SelectSupplierView(View):
             supplier = get_object_or_404(Supplier, id=supplierid)
             return redirect('new-purchase', supplier.pk)
         return render(request, self.template_name, {'form': form})
-
 
 # used to generate a bill object and save items
 class PurchaseCreateView(View):                                                 
@@ -155,11 +143,33 @@ class PurchaseCreateView(View):
         supplierobj = get_object_or_404(Supplier, pk=pk)                        # gets the supplier object
         if formset.is_valid():
             # saves bill
-            billobj = PurchaseBill(supplier=supplierobj)                        # a new object of class 'PurchaseBill' is created with supplier field set to 'supplierobj'
-            billobj.save()                                                      # saves object into the db
-            # create bill details object
-            billdetailsobj = PurchaseBillDetails(billno=billobj)
-            billdetailsobj.save()
+            try:
+                billobj = form.save(commit=False)
+                billobj.save()
+
+            except Exception as exc:
+                print('Exception error! ',exc)
+                context = {
+                    'form'      : form,
+                    'formset'   : formset,
+                }
+                return render(request, self.template_name, context)
+            
+            try:
+                # create bill details object
+                billdetailsobj = SaleBillDetails(billno=billobj)
+                billdetailsobj.save()
+
+            except Exception as exc:
+                print('Exception error! ',exc)
+                # Removing purchase transaction to keep transaction data clean
+                billobj.delete()
+                context = {
+                    'form'      : form,
+                    'formset'   : formset,
+                }
+                return render(request, self.template_name, context)
+
             for form in formset:                                                # for loop to save each individual form as its own object
                 # false saves the item and links bill to the item
                 billitem = form.save(commit=False)
@@ -185,7 +195,6 @@ class PurchaseCreateView(View):
         }
         return render(request, self.template_name, context)
 
-
 # used to delete a bill object
 class PurchaseDeleteView(SuccessMessageMixin, DeleteView):
     model = PurchaseBill
@@ -203,9 +212,6 @@ class PurchaseDeleteView(SuccessMessageMixin, DeleteView):
         messages.success(self.request, "Purchase bill has been deleted successfully")
         return super(PurchaseDeleteView, self).delete(*args, **kwargs)
 
-
-
-
 # shows the list of bills of all sales 
 class SaleView(ListView):
     model = SaleBill
@@ -213,7 +219,6 @@ class SaleView(ListView):
     context_object_name = 'bills'
     ordering = ['-time']
     paginate_by = 10
-
 
 # used to generate a bill object and save items
 class SaleCreateView(View):                                                      
@@ -235,11 +240,33 @@ class SaleCreateView(View):
         formset = SaleItemFormset(request.POST)                                 # recieves a post method for the formset
         if form.is_valid() and formset.is_valid():
             # saves bill
-            billobj = form.save(commit=False)
-            billobj.save()     
-            # create bill details object
-            billdetailsobj = SaleBillDetails(billno=billobj)
-            billdetailsobj.save()
+            try:
+                billobj = form.save(commit=False)
+                billobj.save()
+
+            except Exception as exc:
+                print('Exception error! ',exc)
+                context = {
+                    'form'      : form,
+                    'formset'   : formset,
+                }
+                return render(request, self.template_name, context)
+            
+            try:
+                # create bill details object
+                billdetailsobj = SaleBillDetails(billno=billobj)
+                billdetailsobj.save()
+
+            except Exception as exc:
+                print('Exception error! ',exc)
+                # Removing purchase transaction to keep transaction data clean
+                billobj.delete()
+                context = {
+                    'form'      : form,
+                    'formset'   : formset,
+                }
+                return render(request, self.template_name, context)
+
             for form in formset:                                                # for loop to save each individual form as its own object
                 # false saves the item and links bill to the item
                 billitem = form.save(commit=False)
@@ -266,7 +293,6 @@ class SaleCreateView(View):
         }
         return render(request, self.template_name, context)
 
-
 # used to delete a bill object
 class SaleDeleteView(SuccessMessageMixin, DeleteView):
     model = SaleBill
@@ -283,9 +309,6 @@ class SaleDeleteView(SuccessMessageMixin, DeleteView):
                 stock.save()
         messages.success(self.request, "Sale bill has been deleted successfully")
         return super(SaleDeleteView, self).delete(*args, **kwargs)
-
-
-
 
 # used to display the purchase bill object
 class PurchaseBillView(View):
@@ -327,7 +350,6 @@ class PurchaseBillView(View):
             'bill_base'     : self.bill_base,
         }
         return render(request, self.template_name, context)
-
 
 # used to display the sale bill object
 class SaleBillView(View):
