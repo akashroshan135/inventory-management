@@ -59,7 +59,7 @@ class PurchaseBillDetails(models.Model):
     igst = models.CharField(max_length=50, blank=True, null=True)
     cess = models.CharField(max_length=50, blank=True, null=True)
     tcs = models.CharField(max_length=50, blank=True, null=True)
-    total = models.CharField(max_length=50, blank=True, null=True)
+    total = models.IntegerField(default=0)
 
     def __str__(self):
 	    return "Bill no: " + str(self.billno.billno)
@@ -114,7 +114,7 @@ class SaleBillDetails(models.Model):
     igst = models.CharField(max_length=50, blank=True, null=True)
     cess = models.CharField(max_length=50, blank=True, null=True)
     tcs = models.CharField(max_length=50, blank=True, null=True)
-    total = models.CharField(max_length=50, blank=True, null=True)
+    total = models.IntegerField(default=0)
 
     def __str__(self):
 	    return "Bill no: " + str(self.billno.billno)

@@ -63,7 +63,7 @@
                 <div id="stockitem"> 
                     <div class="panel-body">
                     {% for iform in formset %}
-                        <div class="row form-row">
+                        <div class="row form-row clone-row">
                             <div class="form-group col-md-6">
                                 {{ iform.stock.errors }}
                                 <label class="panel-body-text">Stock:</label>
@@ -152,8 +152,8 @@
         function deleteForm(prefix, btn) {
             //var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
             if (total > 1){
-                btn.closest('.form-row').remove();
-                var forms = $('.form-row');
+                btn.closest('.clone-row').remove();
+                var forms = $('.clone-row');
                 $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
                 for (var i=0, formCount=forms.length; i<formCount; i++) {
                     $(forms.get(i)).find(':input').each(function() {
@@ -169,7 +169,7 @@
         
         $(document).on('click', '.add-form-row', function(e){
             e.preventDefault();
-            cloneMore('.form-row:last', 'form');
+            cloneMore('.clone-row:last', 'form');
             return false;
         });
         

@@ -46,7 +46,7 @@
                 <div id="stockitem"> 
                     <div class="panel-body">
                     {% for form in formset %}
-                        <div class="row form-row">
+                        <div class="row form-row clone-row">
                             <div class="form-group col-md-6">
                                 {{ form.stock.errors }}
                                 <label class="panel-body-text">Stock:</label>
@@ -99,19 +99,19 @@
         var custom_alert = new custom_alert();
 
         function updateElementIndex(el, prefix, ndx) {
+            // Replace/reorder the numbers of the forms in formset
+            // I.E. inspection_report_form-0, ... -1, ... -2 if you delete -1 then two forms are left and reorder:
+            // inspection_report_form-0, and then inspection_report_form-2 becomes -1
             var id_regex = new RegExp('(' + prefix + '-\\d+)');
-            var replacement = prefix + '-' + ndx;
+            var replacement = prefix + '-' + ndx;   
             if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
             if (el.id) el.id = el.id.replace(id_regex, replacement);
             if (el.name) el.name = el.name.replace(id_regex, replacement);
-        }
-        
-        //stores the total no of item forms
-        var total = 1;
+        };
 
         function cloneMore(selector, prefix) {
             var newElement = $(selector).clone(true);
-            //var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+            var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
             newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function() {
                 var name = $(this).attr('name')
                 if(name) {
@@ -123,8 +123,8 @@
             newElement.find('label').each(function() {
                 var forValue = $(this).attr('for');
                 if (forValue) {
-                forValue = forValue.replace('-' + (total-1) + '-', '-' + total + '-');
-                $(this).attr({'for': forValue});
+                    forValue = forValue.replace('-' + (total-1) + '-', '-' + total + '-');
+                    $(this).attr({'for': forValue});
                 }
             });
             total++;
@@ -134,10 +134,10 @@
         }
         
         function deleteForm(prefix, btn) {
-            //var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+            var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
             if (total > 1){
-                btn.closest('.form-row').remove();
-                var forms = $('.form-row');
+                btn.closest('.clone-row').remove();
+                var forms = $('.clone-row');
                 $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
                 for (var i=0, formCount=forms.length; i<formCount; i++) {
                     $(forms.get(i)).find(':input').each(function() {
@@ -146,14 +146,14 @@
                 }
                 total--;
             } else {
-                custom_alert.render("Field cannot be deleted");
+                custom_alert.render('Field cannot be deleted');
             }
             return false;
-        }
-        
+        };
+                
         $(document).on('click', '.add-form-row', function(e){
             e.preventDefault();
-            cloneMore('.form-row:last', 'form');
+            cloneMore('.clone-row:last', 'form');
             return false;
         });
         
